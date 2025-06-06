@@ -126,9 +126,19 @@ a:hover { color: var(--current-accent-hover); }
 .navbar .container { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; max-width: 1200px; }
 .nav-logo a {
     font-size: 1.85rem; font-weight: 700; color: var(--current-text);
-    letter-spacing: -0.035em; transition: transform var(--transition-duration-fast) var(--easing-expressive);
+    letter-spacing: -0.035em;
+    transition: transform var(--transition-duration-fast) var(--easing-expressive);
+    display: flex; /* For aligning image if text is removed */
+    align-items: center; /* For aligning image */
 }
-.nav-logo a:hover { transform: scale(1.05) rotate(-2deg); }
+.nav-logo img { /* Added this */
+    height: 50px; /* Or your desired height */
+    transition: opacity var(--transition-duration-fast) ease-in-out, transform var(--transition-duration-fast) var(--easing-expressive);
+    will-change: opacity, transform;
+}
+.nav-logo a:hover img { /* Optional: hover effect on logo image */
+    transform: scale(1.05);
+}
 
 .nav-links { display: flex; align-items: center; }
 .nav-links li { margin-left: 2.5rem; }
