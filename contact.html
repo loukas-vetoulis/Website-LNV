@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with Loukas-Nikolaos Vetoulis to discuss projects, collaborations, or any inquiries.">
+    <title>Contact | Loukas-Nikolaos Vetoulis</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-logo"><a href="index.html">LNV</a></div>
+            <nav class="main-nav">
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
+    <!-- Text Node for "Dark Mode" or "Light Mode" will be first child -->
+    Dark Mode <!-- This text will be updated by JS -->
+    <span class="icon-wrapper">
+        <!-- SVGs will be injected here by JS -->
+    </span>
+</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="contact-section" class="container">
+            <div class="section-title-container fade-in-up">
+                <h2>Let's Connect</h2>
+                <p class="secondary">I'm always open to discussing new ideas, projects, or opportunities. Feel free to reach out through the form below or via my contact details.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-form-container fade-in-up delay-100ms">
+                    <h2>Send a Message</h2>
+                    <form id="contact-form" class="contact-form" action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject (Optional)</label>
+                            <input type="text" id="subject" name="subject" placeholder="Project Inquiry">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Hello Loukas,..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="contact-details-container fade-in-up delay-200ms">
+                    <h2>Contact Information</h2>
+                    <ul class="contact-details-list" id="contact-details-list">
+                        <!-- Contact details injected here by JS -->
+                    </ul>
+                    <div class="contact-socials">
+                        <h4>Follow Me</h4>
+                        <div class="social-links-list">
+                             <a id="contact-github-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.475 2 2 6.475 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.869-.014-1.705-2.782.602-3.369-1.34-3.369-1.34-.455-1.158-1.11-1.468-1.11-1.468-.908-.62.069-.608.069-.608 1.004.071 1.532 1.03 1.532 1.03.891 1.529 2.341 1.089 2.91.833.091-.647.349-1.086.635-1.336-2.22-.251-4.555-1.111-4.555-4.942 0-1.091.39-1.984 1.029-2.682-.103-.252-.446-1.27.098-2.645 0 0 .84-.269 2.75 1.025A9.547 9.547 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.203 2.393.1 2.645.64.702 1.028 1.595 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.307.679.917.679 1.852 0 1.336-.012 2.415-.012 2.741 0 .268.18.578.688.48C19.138 20.163 22 16.419 22 12c0-5.525-4.475-10-10-10z"></path></svg>
+                            </a>
+                            <a id="contact-linkedin-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                                <svg viewBox="0 0 24 24"><path d="M6.94 5.032C6.935 5.537 6.745 6.02 6.398 6.372C6.05 6.723 5.572 6.919 5.065 6.924C4.56 6.93 4.078 6.74 3.73 6.392C3.383 6.045 3.192 5.567 3.187 5.06C3.182 4.555 3.372 4.073 3.72 3.725C4.067 3.377 4.545 3.187 5.052 3.182C5.557 3.177 6.039 3.367 6.387 3.715C6.734 4.062 6.925 4.54 6.93 5.047M7.031 8.25H3.062V19h3.969ZM14.906 8.25h-3.844V19h3.969v-5.531c0-3.094 1.719-3.375 2.313-1.656V19h3.969v-6.094C21.313 9.375 17.72 9.344 14.906 12.062V8.25Z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p id="footer-text">© 2024 Loukas-Nikolaos Vetoulis.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
