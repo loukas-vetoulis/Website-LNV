@@ -1,51 +1,51 @@
 /* css/style.css */
 
 :root {
-    /* Light Mode (Refined Apple Inspired) */
+    /* Light Mode (Apple Inspired - with BLACK accents) */
     --bg-light: #FDFDFE; /* Almost pure white */
-    --text-light: #111113; /* Deep, crisp black */
-    --accent-light: #007AFF; /* Standard Apple Blue for clarity */
-    --accent-light-hover: #0060C0; /* Darker for hover */
+    --text-light: #111113; /* Deep, crisp black (Primary text) */
+    /* --- MODIFIED ACCENT FOR LIGHT MODE --- */
+    --accent-light: #111113; /* Black for accents (was #007AFF) */
+    --accent-light-hover: #333333; /* Dark grey for hover (was #0060C0) */
+    /* --- END MODIFICATION --- */
     --card-bg-light: #FFFFFF;
     --border-light: #D8D8DC; /* Softer border */
-    --secondary-text-light: #55555C;
+    --secondary-text-light: #55555C; /* This could also be a slightly lighter black if desired */
     --subtle-highlight-light: #F4F4F6;
 
-    /* Dark Mode (Sophisticated Deep Navy) */
-    --bg-dark: #0B1726; /* Even deeper Navy */
-    --text-dark: #EFF0F5; /* Brighter for better contrast */
-    --accent-dark: #389BFF; /* More vibrant, yet soft blue */
+    /* Dark Mode (Sophisticated Deep Navy - remains with blue accents) */
+    --bg-dark: #0B1726;
+    --text-dark: #EFF0F5;
+    --accent-dark: #389BFF; /* Blue accent for dark mode */
     --accent-dark-hover: #58ACFF;
-    --card-bg-dark: #152335; /* A touch lighter than bg */
+    --card-bg-dark: #152335;
     --border-dark: #263750;
     --secondary-text-dark: #A0A8B8;
     --subtle-highlight-dark: #1D2D44;
 
 
-    /* Global */
+    /* Global (These don't change theme-wise, but are used by themes) */
     --font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    --border-radius-main: 16px; /* Consistent, soft rounding */
+    --border-radius-main: 16px;
     --border-radius-medium: 12px;
     --border-radius-small: 8px;
     --transition-duration-fast: 0.28s;
     --transition-duration-medium: 0.45s;
     --transition-duration-slow: 0.65s;
-    /* Expressive easing for delight */
     --easing-expressive: cubic-bezier(0.34, 1.56, 0.64, 1);
     --easing-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --easing-smooth-in-out: cubic-bezier(0.42, 0, 0.58, 1);
-
 
     --box-shadow-light: 0 6px 20px rgba(0, 0, 0, 0.06);
     --box-shadow-light-hover: 0 10px 25px rgba(0, 0, 0, 0.09);
     --box-shadow-dark: 0 8px 24px rgba(0, 0, 0, 0.28);
     --box-shadow-dark-hover: 0 12px 30px rgba(0, 0, 0, 0.35);
 
-    /* Initialize with light mode */
+    /* Initialize with light mode colors (these use the vars from above) */
     --current-bg: var(--bg-light);
     --current-text: var(--text-light);
-    --current-accent: var(--accent-light);
-    --current-accent-hover: var(--accent-light-hover);
+    --current-accent: var(--accent-light); /* This will now be black for light mode */
+    --current-accent-hover: var(--accent-light-hover); /* Dark grey for light mode hover */
     --current-card-bg: var(--card-bg-light);
     --current-border: var(--border-light);
     --current-secondary-text: var(--secondary-text-light);
@@ -54,6 +54,7 @@
     --current-subtle-highlight: var(--subtle-highlight-light);
 }
 
+/* Dark mode still uses its blue accents as defined in --accent-dark and --accent-dark-hover */
 .dark-mode {
     --current-bg: var(--bg-dark);
     --current-text: var(--text-dark);
@@ -69,6 +70,88 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 17px; } /* Slightly larger for luxe feel */
+
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--current-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transition-duration-medium) var(--easing-smooth-in-out),
+                visibility var(--transition-duration-medium) var(--easing-smooth-in-out);
+}
+
+#loader-wrapper.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Increase the size of this container significantly */
+    width: 180px;  /* <<< INCREASED from 80px */
+    height: 180px; /* <<< INCREASED from 80px */
+}
+
+.loader-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Increase logo size, but ensure it still fits well within the new spinner size */
+    width: 80px;   /* <<< INCREASED from 40px (Adjust as needed relative to spinner) */
+    height: auto;
+    z-index: 2;
+}
+
+.loader-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    /* Increase spinner diameter */
+    width: 150px;  /* <<< INCREASED from 70px */
+    height: 150px; /* <<< INCREASED from 70px */
+    /* Optionally, increase border thickness for a bolder look */
+    border: 8px solid transparent;        /* <<< INCREASED from 5px */
+    border-top: 8px solid var(--current-accent);   /* <<< INCREASED from 5px */
+    border-right: 8px solid var(--current-accent); /* <<< INCREASED from 5px */
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite; /* Slightly slower spin for a larger element */
+    will-change: transform;
+    z-index: 1;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+/* Ensure content is hidden initially if JS is disabled or slow */
+body > header,
+body > main,
+body > footer {
+    opacity: 0; /* Hide content initially */
+    transition: opacity 0.5s ease-in-out;
+}
+
+body.page-loaded > header,
+body.page-loaded > main,
+body.page-loaded > footer {
+    opacity: 1; /* Reveal content when page-loaded class is added */
+}
 
 body {
     font-family: var(--font-family-system);
@@ -261,7 +344,17 @@ a:hover { color: var(--current-accent-hover); }
     transform: translateY(-4px) scale(1.03);
     box-shadow: 0 6px 15px color-mix(in srgb, var(--current-accent) 25%, transparent);
 }
-.dark-mode .btn-secondary:hover { color: color-mix(in srgb, var(--bg-dark) 80%, #000); }
+.light-mode .btn-primary { /* Or just .btn-primary if its default color: #fff; is good */
+    /* If --current-accent makes bg black, color: #fff (or var(--bg-light)) is needed */
+    color: var(--current-bg); /* Makes text color the page background color, i.e., whiteish */
+}
+.light-mode .btn-secondary:hover {
+     color: var(--current-bg);
+}
+.dark-mode .btn-secondary { background-color: transparent; color: var(--current-accent); border-color: var(--current-accent); }
+.dark-mode .btn-secondary { background-color: transparent; color: var(--current-accent); border-color: var(--current-accent); }
+
+/* .dark-mode .btn-secondary:hover { color: color-mix(in srgb, var(--bg-dark) 80%, #000); } */
 
 /* --- Section Styling --- */
 .section-title-container { text-align: center; margin-bottom: 5rem; }
