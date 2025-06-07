@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof FOOTER_CONTENT !== 'undefined') {
         const footerTextEl = document.getElementById('footer-text');
         if (footerTextEl) {
-            footerTextEl.innerHTML = `© ${FOOTER_CONTENT.year || new Date().getFullYear()} ${FOOTER_CONTENT.name || "Your Name"}. Crafted with passion.`;
+            footerTextEl.innerHTML = `© ${FOOTER_CONTENT.year || new Date().getFullYear()} ${FOOTER_CONTENT.name || "Your Name"}. Craft with vision and precision.`;
         }
     }
 

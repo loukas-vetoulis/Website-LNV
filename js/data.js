@@ -130,8 +130,7 @@ const CONTACT_DETAILS = {
   phone: "+30 6940504661",
   github: HERO_CONTENT.github,
   linkedin: HERO_CONTENT.linkedin,
-  address: "Laodikis 10, 16674 Glyfada, Athens, Greece"
-};
+  address: "Athens, Greece",};
 
 const FOOTER_CONTENT = {
     name: "Loukas-Nikolaos Vetoulis",
