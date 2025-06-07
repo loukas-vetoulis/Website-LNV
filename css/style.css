@@ -451,40 +451,112 @@ a:hover { color: var(--current-accent-hover); }
 .project-card-content p { font-size: 1.05rem; color: var(--current-secondary-text); margin-bottom: 1.75rem; flex-grow: 1; }
 .project-stack { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 2rem; }
 .project-stack span {
-    font-size: 0.9rem; font-weight: 500; background-color: var(--current-subtle-highlight);
-    color: var(--current-secondary-text); padding: 0.6rem 1.1rem;
-    border-radius: var(--border-radius-small); border: 1px solid var(--current-border);
+    background-color: var(--current-subtle-highlight);
+    padding: 0.85rem 1.5rem; border-radius: var(--border-radius-medium);
+    margin-bottom: 0.85rem; font-size: 1rem; font-weight: 500;
+    border: 1px solid var(--current-border); color: var(--current-secondary-text);
+    transition: all var(--transition-duration-fast) var(--easing-expressive);
+    will-change: transform, border-color, color, box-shadow;
+}
+.project-stack span:hover {
+    border-color: var(--current-accent); color: var(--current-accent);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 3px 10px color-mix(in srgb, var(--current-accent) 15%, transparent);
+    background-color: color-mix(in srgb, var(--current-accent) 10%, transparent);
 }
 .project-links { margin-top: auto; display: flex; gap: 1.5rem; }
 .project-links a { font-size: 1rem; }
 
 /* --- Contact Page --- */
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
-@media (min-width: 900px) { .contact-grid { grid-template-columns: 1.4fr 1fr; gap: 6rem; } }
+@media (min-width: 900px) { .contact-grid { grid-template-columns: 1.2fr 1fr; gap: 6rem; } }
 .contact-form-container, .contact-details-container {
     padding: 3.5rem; background-color: var(--current-card-bg);
     border: 1px solid var(--current-border);
     border-radius: var(--border-radius-main); box-shadow: var(--current-box-shadow);
 }
-.contact-form-container h2, .contact-details-container h2 { margin-bottom: 3rem; font-size: 2rem; }
-.form-group { margin-bottom: 2rem; }
-.form-group label { display: block; font-size: 1.05rem; font-weight: 500; margin-bottom: 0.75rem; color: var(--current-secondary-text); }
-.form-group input, .form-group textarea {
-    width: 100%; padding: 1.1rem 1.2rem; border: 1px solid var(--current-border);
+.contact-form-container h2,
+.contact-details-container h2 {
+    /* You might want less bottom margin if you have intro text below these */
+    /* Original: margin-bottom: 3rem; */
+    margin-bottom: 1.5rem; /* Example adjustment */
+}
+
+.contact-form-container p.secondary,
+.contact-details-container p.secondary {
+    margin-bottom: 2rem;
+    text-align: left; /* Or 'center' if you prefer this intro text centered */
+}
+
+/* Styling for the Calendly widget container */
+.calendly-inline-widget {
+    border: 1px solid var(--current-border);
+    border-radius: var(--border-radius-main); /* Use your main border radius */
+    overflow: hidden; /* Important for applying rounded corners to iframe content */
+    box-shadow: var(--current-box-shadow); /* Optional: add a subtle shadow */
+}
+
+/* Container for direct email/phone options */
+.direct-contact-options {
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem; /* Add some space before socials */
+}
+
+.contact-option {
+    display: flex;
+    align-items: flex-start; /* Align icon to the top of the text block */
+    gap: 1.5rem;          /* Space between icon and text block */
+    padding: 1.75rem 0;     /* Generous vertical padding for each option */
+    border-bottom: 1px solid var(--current-subtle-highlight); /* Subtle separator */
+}
+.contact-option:last-child {
+    border-bottom: none;
+    /* padding-bottom: 0; /* Remove padding for the last item if social directly follows */
+}
+
+.contact-icon-wrapper {
+    flex-shrink: 0; /* Prevent icon from shrinking */
+    background-color: var(--current-subtle-highlight);
+    padding: 0.85rem; /* Increased padding for a nicer icon background */
     border-radius: var(--border-radius-medium);
-    background-color: var(--current-bg); color: var(--current-text);
-    font-family: inherit; font-size: 1.05rem;
-    transition: border-color var(--transition-duration-fast) var(--easing-out-quad), box-shadow var(--transition-duration-fast) var(--easing-out-quad);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--current-border); /* Optional border for icon wrapper */
 }
-.form-group input:focus, .form-group textarea:focus {
-    outline: none; border-color: var(--current-accent);
-    box-shadow: 0 0 0 3.5px color-mix(in srgb, var(--current-accent) 20%, transparent);
+.contact-method-icon {
+    width: 28px; /* Consistent icon size */
+    height: 28px;
+    fill: var(--current-accent);
 }
-.form-group textarea { min-height: 160px; resize: vertical; }
-.contact-details-list li { display: flex; align-items: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--current-text); }
-.contact-details-list li svg { width: 26px; height: 26px; margin-right: 1.75rem; fill: var(--current-accent); flex-shrink: 0; }
-.contact-details-list li a { color: var(--current-text); }
-.contact-details-list li a:hover { color: var(--current-accent); }
+
+.contact-info h3 {
+    margin-top: 0;
+    margin-bottom: 0.35rem;
+    font-size: 1.35rem; /* Or your preferred heading size */
+    color: var(--current-text);
+}
+.contact-info p.secondary { /* The small description under email/call me */
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Adjustments to the main grid if Calendly affects height distribution */
+.contact-grid {
+    align-items: flex-start; /* Align top of both columns */
+}
+
+/* Responsive adjustments for the new contact elements */
+@media (max-width: 500px) {
+    .contact-option {
+        /* flex-direction: column; */ /* Stacks icon above text - keep if desired */
+        /* align-items: center; */ /* Centers content if stacked */
+        /* text-align: center; */ /* Centers text if stacked */
+    }
+    /* .contact-action-btn is already made full-width by general .btn rules at this breakpoint in your full CSS */
+}
+
 .contact-socials { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--current-border); }
 .contact-socials h4 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--current-secondary-text); }
 .contact-socials .social-links-list { display: flex; gap: 2rem; }

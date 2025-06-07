@@ -43,46 +43,58 @@
         </div>
     </header>
 
+    <!-- contact.html -->
     <main>
         <section id="contact-section" class="container">
             <div class="section-title-container fade-in-up">
-                <h2>Let's Connect</h2>
-                <p class="secondary">I'm always open to discussing new ideas, projects, or opportunities. Feel free to reach out through the form below or via my contact details.</p>
+                <h2>Let's Craft Your Vision.</h2>
+                <p class="secondary">I craft digital experiences with vision and precision, turning complexity into powerful simplicity. Let's discuss your project – schedule a time or send an inquiry.</p>
             </div>
 
-            <div class="contact-grid">
-                <div class="contact-form-container fade-in-up delay-100ms">
-                    <h2>Send a Message</h2>
-                    <form id="contact-form" class="contact-form" action="#" method="POST">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject (Optional)</label>
-                            <input type="text" id="subject" name="subject" placeholder="Project Inquiry">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Hello Loukas,..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
 
-                <div class="contact-details-container fade-in-up delay-200ms">
-                    <h2>Contact Information</h2>
-                    <ul class="contact-details-list" id="contact-details-list">
-                        <!-- Contact details injected here by JS -->
-                    </ul>
-                    <div class="contact-socials">
-                        <h4>Follow Me</h4>
+            <div class="contact-grid">
+                <div class="contact-form-container animated-item animate-slide-in-left" data-animation-delay="100ms">
+                    <h2>Schedule a Meeting</h2>
+                    <!-- Calendly inline widget begin -->
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/loukasvetoulis/30min?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:300px; width: 100%; height:650px;"></div>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                    <!-- Calendly inline widget end -->
+                </div>  
+
+                <div class="contact-details-container animated-item animate-slide-in-right" data-animation-delay="200ms">
+                    <h2>Direct Contact</h2>
+                    <div class="direct-contact-options">
+                        <div class="contact-option email-option">
+                            <div class="contact-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="contact-method-icon"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"></path></svg>
+                            </div>
+                            <div class="contact-info">
+                                <h3>Email Me</h3>
+                                <p class="secondary">Best for detailed inquiries or sending documents.</p>
+                                <a href="#" class="btn btn-secondary contact-action-btn" id="email-contact-btn">
+                                    <span class="btn-text">Send an Email</span> <!-- Generic Text -->
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="contact-option phone-option">
+                            <div class="contact-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="contact-method-icon"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg>
+                            </div>
+                            <div class="contact-info">
+                                <h3>Call Me</h3>
+                                <p class="secondary">For urgent matters or a quick chat.</p>
+                                <a href="#" class="btn btn-secondary contact-action-btn" id="phone-contact-btn">
+                                    <span class="btn-text">Make a Call</span> <!-- Generic Text -->
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-socials" style="margin-top: 3rem;"> <!-- Adjusted margin -->
+                        <h4>Connect & Follow</h4>
                         <div class="social-links-list">
-                             <a id="contact-github-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                            <a id="contact-github-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
                                 <svg viewBox="0 0 24 24"><path d="M12 2C6.475 2 2 6.475 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.869-.014-1.705-2.782.602-3.369-1.34-3.369-1.34-.455-1.158-1.11-1.468-1.11-1.468-.908-.62.069-.608.069-.608 1.004.071 1.532 1.03 1.532 1.03.891 1.529 2.341 1.089 2.91.833.091-.647.349-1.086.635-1.336-2.22-.251-4.555-1.111-4.555-4.942 0-1.091.39-1.984 1.029-2.682-.103-.252-.446-1.27.098-2.645 0 0 .84-.269 2.75 1.025A9.547 9.547 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.203 2.393.1 2.645.64.702 1.028 1.595 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.307.679.917.679 1.852 0 1.336-.012 2.415-.012 2.741 0 .268.18.578.688.48C19.138 20.163 22 16.419 22 12c0-5.525-4.475-10-10-10z"></path></svg>
                             </a>
                             <a id="contact-linkedin-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">

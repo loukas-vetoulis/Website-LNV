@@ -7,7 +7,7 @@ const HERO_CONTENT = {
     ctaText: "View My Projects",
     cvLink: "CV_Loukas_Nikolaos_Vetoulis.pdf",
     github: "https://github.com/loukas-vetoulis",
-    linkedin: "https://www.linkedin.com/in/your-linkedin-id/", // REPLACE with your LinkedIn
+    linkedin: "https://www.linkedin.com/in/loukas-vetoulis-483b892b8/", // REPLACE with your LinkedIn
     email: "loukasvetoulis@gmail.com",
 };
 
