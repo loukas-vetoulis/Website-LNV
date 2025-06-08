@@ -88,7 +88,7 @@ const PROJECTS = [
         stack: ["Python", "Flask", "GPT-4 API", "JavaScript", "HTML", "CSS"],
         imageUrl: "images/projects-logo/ai-chatbot-logo.webp", // REPLACE
         liveLink: "#", // Optional
-        githubLink: "https://github.com/loukas-vetoulis", // Or specific repo
+        githubLink: "https://github.com/loukas-vetoulis/Ai-Chatbot", // Or specific repo
     },
     {
         type: "Freelance", // Added type to differentiate
@@ -97,7 +97,6 @@ const PROJECTS = [
         stack: ["Python", "Selenium", "Google Sheets API", "CSV"],
         imageUrl: "images/projects-logo/spitogatos-scraper-logo.png", // REPLACE
         liveLink: "#", // Optional
-        githubLink: "https://github.com/loukas-vetoulis", // Or specific repo
     },
     {
         type: "Academic",
@@ -105,23 +104,23 @@ const PROJECTS = [
         description: "Engineered a robust distributed backend in Java for an online food delivery platform, designed for high-volume order processing and efficient management of store/product data. The system architecture featured a multithreaded Master server coordinating Worker nodes (TCP), MapReduce for filtering store data based on user criteria, consistent hashing for balanced data distribution. This backend supported an Android mobile front-end for user interaction.",
         stack: ["Java", "TCP/IP", "Multithreading", "MapReduce", "JSON", "Android Studio"],
         imageUrl: "images/projects-logo/freefood-logo.png", // REPLACE
-        githubLink: "https://github.com/loukas-vetoulis/Distributed-Systems-Project", // REPLACE with actual or remove
+        githubLink: "https://github.com/PPavlou/freefood", // REPLACE with actual or remove
     },
     {
         type: "Academic",
         title: "AI Sentiment Classification System",
         description: "Architected a sentiment classifier for IMDB movie reviews, realizing ~90% predictive accuracy. The system was built by implementing fundamental machine learning algorithms (Naive Bayes, Logistic Regression) from scratch, with performance critically evaluated against Scikit-learn GAU benchmarks and a PyTorch-based Bi-directional RNN (LSTM/GRU). The project emphasized the importance of data preprocessing, feature extraction, and model evaluation in machine learning workflows.",
         stack: ["Python", "NumPy", "Pandas", "Scikit-learn", "PyTorch"],
-        imageUrl: "images/placeholder-project1.webp", // REPLACE
-        githubLink: "https://github.com/loukas-vetoulis/AI-Sentiment-Analysis", // REPLACE with actual or remove
+        imageUrl: "images/projects-logo/machine-learning-logo.jpg", // REPLACE
+        githubLink: "https://github.com/loukas-vetoulis/LSTM-ML-Compare", // REPLACE with actual or remove
     },
     {
         type: "Academic",
         title: "C++ Game with SGG Library",
         description: "Engineered core gameplay systems in C++ for a [mention game genre if brief, e.g., 2D arcade game], leveraging the SGG library. This involved implementing robust collision detection, dynamic object management for entities like projectiles and enemies, and responsive player controls. Sound design and power-up mechanics were integrated to enrich the player experience. Object-Oriented Programming and effective dynamic memory management were central to the development.",
         stack: ["C++", "SGG Library", "OOP", "Game Development"],
-        imageUrl: "images/projects-logo/asteroid-logo.webp", // REPLACE
-        githubLink: "https://github.com/loukas-vetoulis/CPP-SGG-Game", // REPLACE with actual or remove
+        imageUrl: "images/projects-logo/asteroid-cpp-logo.webp", // REPLACE
+        githubLink: "https://github.com/loukas-vetoulis/C-SGG-Asteroids-Arcade", // REPLACE with actual or remove
     },
     {
         type: "Professional - Confidential",

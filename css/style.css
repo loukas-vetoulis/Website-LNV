@@ -390,6 +390,43 @@ a:hover { color: var(--current-accent-hover); }
 .dark-mode .btn-secondary { background-color: transparent; color: var(--current-accent); border-color: var(--current-accent); }
 .dark-mode .btn-secondary { background-color: transparent; color: var(--current-accent); border-color: var(--current-accent); }
 
+.btn-disabled {
+    background-color: var(--current-subtle-highlight) !important; /* Override regular btn styles */
+    border-color: var(--current-border) !important;
+    color: var(--current-secondary-text) !important;
+    opacity: 0.7;
+    cursor: not-allowed; /* Indicate it's not clickable */
+    /* Ensure it still takes up space like a button */
+    padding: 1rem 2.25rem; /* Match your .btn padding */
+    font-weight: 600; /* Match .btn */
+    font-size: 1.1rem; /* Match .btn */
+    border-radius: var(--border-radius-main); /* Match .btn */
+    display: inline-flex; /* To align text inside if using btn-text span */
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    box-shadow: none !important; /* Remove hover shadows */
+    transform: none !important; /* Remove hover transforms */
+}
+
+.btn-disabled .btn-text {
+    position: relative; /* For consistency if shimmer was there, though shimmer shouldn't apply */
+    z-index: 1;
+}
+
+/* Ensure hover effects are explicitly removed if any exist through cascading */
+.btn-disabled:hover {
+    background-color: var(--current-subtle-highlight) !important;
+    border-color: var(--current-border) !important;
+    color: var(--current-secondary-text) !important;
+    transform: none !important;
+}
+
+/* Optional: if you used the ::before for shimmer on .btn, explicitly hide it for .btn-disabled */
+.btn-disabled::before {
+    display: none !important;
+}
+
 /* .dark-mode .btn-secondary:hover { color: color-mix(in srgb, var(--bg-dark) 80%, #000); } */
 
 /* --- Section Styling --- */

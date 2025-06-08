@@ -261,21 +261,53 @@ document.addEventListener('DOMContentLoaded', () => {
         PROJECTS.forEach((project, index) => {
             const card = document.createElement('article');
             card.classList.add('project-card', 'animated-item', 'animate-scale-in');
+            if (project.isConfidential) { // Add specific class for confidential cards
+                card.classList.add('project-card-confidential');
+            }
             card.dataset.animationDelay = `${index * 120}ms`;
-            const githubButton = project.githubLink ? `<a href="${project.githubLink}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><span class="btn-text">GitHub</span></a>` : '';
-            const liveButton = (project.liveLink && project.liveLink !== "#") ? `<a href="${project.liveLink}" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><span class="btn-text">View Live</span></a>` : '';
 
+            // Stack items (styled with .tech-pill from previous discussions)
+            const stackHtml = project.stack.map(tech => 
+                `<span class="tech-pill">${tech}</span>`
+            ).join('');
+
+            // --- GitHub Button Logic ---
+            let githubButtonHTML = '';
+            if (project.githubLink && typeof project.githubLink === 'string' && project.githubLink.trim() !== '') {
+                // Public GitHub link exists
+                githubButtonHTML = `<a href="${project.githubLink}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><span class="btn-text">GitHub</span></a>`;
+            } else if (!project.isConfidential) {
+                // No public GitHub link, and it's NOT a fully confidential project
+                githubButtonHTML = `<span class="btn btn-secondary btn-disabled" aria-disabled="true" title="Repository is private or not publicly available."><span class="btn-text">Private Repo</span></span>`;
+            }
+            // For project.isConfidential === true, githubButtonHTML remains empty
+
+            // --- Live Link Button Logic ---
+            const liveButtonHTML = (!project.isConfidential && project.liveLink && project.liveLink !== "#")
+                ? `<a href="${project.liveLink}" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><span class="btn-text">View Live</span></a>`
+                : '';
+
+            // --- Image Alt Text Logic ---
+            let imageAltText = `${project.title} preview`; // Default
+            if (project.isConfidential) {
+                imageAltText = `${project.title} icon`;
+            } else if (project.imageUrl && project.imageUrl.endsWith('.svg')) {
+                imageAltText = `${project.title} logo`;
+            }
+
+            // --- Card Inner HTML ---
             card.innerHTML = `
                 <div class="project-card-inner">
-                    ${project.imageUrl ? `<img src="${project.imageUrl}" alt="${project.title} screenshot">` : ''}
+                    ${project.imageUrl ? `<img src="${project.imageUrl}" alt="${imageAltText}" class="${project.isConfidential ? 'confidential-project-image' : ''}">` : ''}
                     <div class="project-card-content">
-                        ${project.type ? `<p class="project-type">${project.type}</p>` : ''}
+                        <p class="project-type">${project.type} ${project.company ? `| ${project.company}` : ''} ${project.period ? `(${project.period})` : ''}</p>
                         <h3>${project.title}</h3>
                         <p>${project.description}</p>
-                        <div class="project-stack">${project.stack.map(tech => `<span>${tech}</span>`).join('')}</div>
-                        <div class="project-links">${githubButton}${liveButton}</div>
+                        <div class="project-stack">${stackHtml}</div>
+                        <div class="project-links">${githubButtonHTML}${liveButtonHTML}</div>
                     </div>
                 </div>`;
+
             projectsGrid.appendChild(card);
         });
     }
