@@ -1,0 +1,35 @@
+<!-- images/projects-logo/confidential-project.svg -->
+<svg width="100" height="100" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <style>
+        .lock-body {
+            stroke-width: 1.5;
+            /* --- DEFAULT (LIGHT MODE) --- */
+            stroke: #55555C; /* Using secondary text color */
+            fill: var(--current-subtle-highlight); /* Subtle fill */
+        }
+        .lock-shackle {
+            stroke-width: 1.5;
+            stroke: #55555C;
+            fill: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .lock-body {
+                stroke: #A0A8B8;
+                fill: var(--current-subtle-highlight);
+            }
+            .lock-shackle {
+                stroke: #A0A8B8;
+            }
+        }
+    </style>
+    <path class="lock-shackle" stroke-linecap="round" stroke-linejoin="round" d="M12 11V8C12 5.23858 9.76142 3 7 3C4.23858 3 2 5.23858 2 8V11"/> <!-- Part of shackle if you make it more detailed -->
+    <path class="lock-shackle" d="M17 11V8C17 5.23858 14.7614 3 12 3C9.23858 3 7 5.23858 7 8V11"/>
+    <rect class="lock-body" x="3" y="10" width="18" height="11" rx="2"/>
+    <circle class="lock-body" cx="12" cy="15.5" r="1.5" fill="#55555C"/> <!-- Keyhole, use fill for solid look -->
+    <style>
+      @media (prefers-color-scheme: dark) {
+        #spitogatos-scraper-logo .lock-body circle { fill: #A0A8B8; } /* Keyhole color in dark mode */
+      }
+    </style>
+</svg>

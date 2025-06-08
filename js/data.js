@@ -7,7 +7,7 @@ const HERO_CONTENT = {
     ctaText: "View My Projects",
     cvLink: "CV_Loukas_Nikolaos_Vetoulis.pdf",
     github: "https://github.com/loukas-vetoulis",
-    linkedin: "https://www.linkedin.com/in/loukas-vetoulis-483b892b8/", // REPLACE with your LinkedIn
+    linkedin: "https://www.linkedin.com/in/loukas-vetoulis/", // REPLACE with your LinkedIn
     email: "loukasvetoulis@gmail.com",
 };
 
@@ -82,35 +82,35 @@ const AWARDS_CERTIFICATES = [
 
 const PROJECTS = [
     {
-        type: "Freelance", // Added type to differentiate
-        title: "Spitogatos Scraper",
-        description: "Developed a custom web scraper for Aquarium Real Estate that extracts private property listings from spitogatos and exports data to Google Sheets/CSVs. Integrated advanced anti-bot evasion and automation features, saving agents 5–10 hours per week and €300–€600 per agent monthly.",
-        stack: ["Python", "Selenium", "Google Sheets API", "CSV"],
-        imageUrl: "images/placeholder-project1.webp", // REPLACE
+        type: "Freelance",
+        title: "Real Estate AI Chatbot",
+        description: "Leveraged Flask and advanced GPT-4 capabilities to construct a secure, property-contextual AI chatbot for the real estate industry. This system, featuring robust data protection via encrypted identifiers and simplified iframe embedding, optimizes agent workflow by saving 3-5 hours in follow-up activities per property weekly.",
+        stack: ["Python", "Flask", "GPT-4 API", "JavaScript", "HTML", "CSS"],
+        imageUrl: "images/projects-logo/ai-chatbot-logo.webp", // REPLACE
         liveLink: "#", // Optional
         githubLink: "https://github.com/loukas-vetoulis", // Or specific repo
     },
     {
-        type: "Freelance",
-        title: "Perspective AI Chatbot",
-        description: "Built a secure, property-specific AI chatbot using Flask and GPT-4 for real estate clients during virtual tours. Features encrypted property identifiers and easy iframe deployment. Reduces agent follow-up time by 3–5 hours per property, saving €150–€400 per property.",
-        stack: ["Python", "Flask", "GPT-4 API", "JavaScript"],
-        imageUrl: "images/placeholder-project2.webp", // REPLACE
+        type: "Freelance", // Added type to differentiate
+        title: "Real Estate Scraper",
+        description: "Engineered a bespoke web scraping solution for a real estate agency, automating the extraction of private property listings from multiple platforms into Google Sheets and CSVs. Implemented sophisticated anti-bot measures and automation, resulting in a 5-10 hour weekly productivity gain per agent.",
+        stack: ["Python", "Selenium", "Google Sheets API", "CSV"],
+        imageUrl: "images/projects-logo/spitogatos-scraper-logo.png", // REPLACE
         liveLink: "#", // Optional
         githubLink: "https://github.com/loukas-vetoulis", // Or specific repo
     },
     {
         type: "Academic",
         title: "Distributed Food Delivery Backend",
-        description: "Developed a distributed backend for an online food delivery platform in Java. Implemented a multithreaded Master server, Worker nodes (TCP), MapReduce architecture, console manager, consistent hashing, and in-memory storage. Android front-end.",
+        description: "Engineered a robust distributed backend in Java for an online food delivery platform, designed for high-volume order processing and efficient management of store/product data. The system architecture featured a multithreaded Master server coordinating Worker nodes (TCP), MapReduce for filtering store data based on user criteria, consistent hashing for balanced data distribution. This backend supported an Android mobile front-end for user interaction.",
         stack: ["Java", "TCP/IP", "Multithreading", "MapReduce", "JSON", "Android Studio"],
-        imageUrl: "images/placeholder-project3.webp", // REPLACE
+        imageUrl: "images/projects-logo/freefood-logo.png", // REPLACE
         githubLink: "https://github.com/loukas-vetoulis/Distributed-Systems-Project", // REPLACE with actual or remove
     },
     {
         type: "Academic",
         title: "AI Sentiment Classification System",
-        description: "Developed a sentiment classification system on the IMDB dataset. Implemented Naive Bayes (Bernoulli & Multinomial) and Logistic Regression from scratch. Achieved ~89% accuracy. Compared with Scikit-learn and a stacked bidirectional RNN (LSTM/GRU) in PyTorch.",
+        description: "Architected a sentiment classifier for IMDB movie reviews, realizing ~90% predictive accuracy. The system was built by implementing fundamental machine learning algorithms (Naive Bayes, Logistic Regression) from scratch, with performance critically evaluated against Scikit-learn GAU benchmarks and a PyTorch-based Bi-directional RNN (LSTM/GRU). The project emphasized the importance of data preprocessing, feature extraction, and model evaluation in machine learning workflows.",
         stack: ["Python", "NumPy", "Pandas", "Scikit-learn", "PyTorch"],
         imageUrl: "images/placeholder-project1.webp", // REPLACE
         githubLink: "https://github.com/loukas-vetoulis/AI-Sentiment-Analysis", // REPLACE with actual or remove
@@ -118,10 +118,23 @@ const PROJECTS = [
     {
         type: "Academic",
         title: "C++ Game with SGG Library",
-        description: "Designed and implemented core gameplay mechanics (collision detection, dynamic object management, player controls) using C++ and the SGG library. Applied OOP principles and dynamic memory management. Enhanced user experience with power-ups and sound effects.",
+        description: "Engineered core gameplay systems in C++ for a [mention game genre if brief, e.g., 2D arcade game], leveraging the SGG library. This involved implementing robust collision detection, dynamic object management for entities like projectiles and enemies, and responsive player controls. Sound design and power-up mechanics were integrated to enrich the player experience. Object-Oriented Programming and effective dynamic memory management were central to the development.",
         stack: ["C++", "SGG Library", "OOP", "Game Development"],
-        imageUrl: "images/placeholder-project2.webp", // REPLACE
+        imageUrl: "images/projects-logo/asteroid-logo.webp", // REPLACE
         githubLink: "https://github.com/loukas-vetoulis/CPP-SGG-Game", // REPLACE with actual or remove
+    },
+    {
+        type: "Professional - Confidential",
+        title: "Enterprise Systems Development & Automation", // Broader, more encompassing title
+        company: "Mellon Group", // Use if permissible and as on your CV
+        description: "Contributed to mission-critical enterprise systems, focusing on process automation and system reliability. Key responsibilities included developing a Python-based automated system to monitor and manage Process Errors in banking terminals—significantly improving error detection efficiency through automated log parsing, database integration, a visualization UI, and alert notifications. Currently also involved in architecting and building a reusable test automation library using Appium for Android EFTPOS terminals to streamline QA processes and enhance testing coverage for payment systems. Due to confidentiality agreements, further specific details about these projects and their proprietary technologies cannot be publicly shared.",
+        stack: [
+            "Appium",
+            "Data Processing & Analysis",
+            "Automation",
+            "System Monitoring",
+        ], // Consolidate relevant skills
+        imageUrl: "images/projects-logo/confidential-enterprise-systems.svg"
     },
 ];
 

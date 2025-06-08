@@ -198,13 +198,23 @@ a {
 a:hover { color: var(--current-accent-hover); }
 
 /* --- Navbar --- */
+/* --- Navbar --- */
 .navbar {
-    padding: 2rem 0; border-bottom: 1px solid var(--current-border);
-    background-color: color-mix(in srgb, var(--current-bg) 85%, transparent);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    position: sticky; top: 0; z-index: 1000;
-    transition: all var(--transition-duration-medium) var(--easing-smooth-in-out);
-    will-change: background-color, border-color;
+    padding: 2rem 0; /* Your existing padding */
+    border-bottom: 1px solid var(--current-border);
+
+    background-color: color-mix(in srgb, var(--current-bg) 75%, transparent);
+
+    backdrop-filter: blur(16px); /* Example: Increased blur */
+    -webkit-backdrop-filter: blur(16px); /* Safari prefix */
+
+    position: sticky;
+    top: 0;
+    z-index: 1000; 
+    transition: background-color var(--transition-duration-medium) var(--easing-smooth-in-out),
+                border-color var(--transition-duration-medium) var(--easing-smooth-in-out),
+                backdrop-filter var(--transition-duration-medium) var(--easing-smooth-in-out); /* Added backdrop-filter to transition */
+    will-change: background-color, border-color, backdrop-filter;
 }
 .navbar .container { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; max-width: 1200px; }
 .nav-logo a {
@@ -446,10 +456,15 @@ a:hover { color: var(--current-accent-hover); }
     width: 100%; height: 100%; display: flex; flex-direction: column;
 }
 .project-card img {
-    width: 100%; height: 240px; object-fit: cover; border-bottom: 1px solid var(--current-border);
-    transition: transform var(--transition-duration-medium) var(--easing-out-quad);
+    width: 100%;
+    height: 230px; /* Or your desired height */
+    object-fit: contain;
+    border-bottom: 1px solid var(--current-border);
+    padding: 1rem;
+    /* REMOVE color: var(--current-accent); if you had it here to style the SVG
+       because the SVG will now style itself based on prefers-color-scheme. */
 }
-.project-card:hover img { transform: scale(1.03); } /* Image zoom on general hover */
+
 .project-card-content { padding: 2.25rem; flex-grow: 1; display: flex; flex-direction: column; }
 .project-card-content .project-type { font-size: 0.9rem; font-weight: 600; color: var(--current-accent); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; }
 .project-card-content h3 { font-size: 1.55rem; margin-bottom: 1rem; color: var(--current-text); }
