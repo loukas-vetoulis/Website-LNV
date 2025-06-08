@@ -323,14 +323,19 @@ a:hover { color: var(--current-accent-hover); }
 .social-links-hero { margin-top: 4rem; display: flex; gap: 2rem; }
 .social-links-hero a { display: inline-block; } /* For transform origin */
 .social-links-hero a svg {
-    width: 28px; height: 28px; fill: var(--current-secondary-text);
+    width: 28px; /* Or your chosen size */
+    height: 28px;
+    fill: var(--current-secondary-text);
     transition: fill var(--transition-duration-fast) var(--easing-out-quad),
-                transform var(--transition-duration-medium) var(--easing-expressive);
-    will-change: transform;
+                opacity var(--transition-duration-fast) var(--easing-out-quad),
+                transform var(--transition-duration-fast) var(--easing-out-quad); /* Keep transform for subtle scale */
+    will-change: fill, opacity, transform; /* Added opacity and transform */
 }
+
 .social-links-hero a:hover svg {
     fill: var(--current-accent);
-    transform: scale(1.15) rotate(-8deg) translateY(-2px);
+    opacity: 0.85; /* Optional: slight fade for a softer hover */
+    /* transform: scale(1.05); */ /* Optional: very subtle scale up, barely perceptible */
 }
 
 /* --- Buttons --- */
@@ -561,8 +566,21 @@ a:hover { color: var(--current-accent-hover); }
 .contact-socials h4 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--current-secondary-text); }
 .contact-socials .social-links-list { display: flex; gap: 2rem; }
 .contact-socials .social-links-list a { display: inline-block; }
-.contact-socials .social-links-list a svg { width: 28px; height: 28px; fill: var(--current-secondary-text); transition: all var(--transition-duration-medium) var(--easing-expressive); will-change: transform; }
-.contact-socials .social-links-list a:hover svg { fill: var(--current-accent); transform: scale(1.2) rotate(-10deg) translateY(-3px); }
+.contact-socials .social-links-list a svg {
+    width: 28px; /* Or your chosen size */
+    height: 28px;
+    fill: var(--current-secondary-text);
+    transition: fill var(--transition-duration-fast) var(--easing-out-quad),
+                opacity var(--transition-duration-fast) var(--easing-out-quad),
+                transform var(--transition-duration-fast) var(--easing-out-quad); /* Keep transform for subtle scale */
+    will-change: fill, opacity, transform;
+}
+
+.contact-socials .social-links-list a:hover svg {
+    fill: var(--current-accent);
+    opacity: 0.85; /* Optional: slight fade */
+    /* transform: scale(1.05); */ /* Optional: very subtle scale */
+}
 
 /* --- Animations (Scroll Triggered) --- */
 .animated-item {
