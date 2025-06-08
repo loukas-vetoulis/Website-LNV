@@ -8,20 +8,11 @@
             stroke: #55555C; /* Neutral grey for light mode */
             fill: none;      /* Most parts are outlines */
         }
-        .lock-body-fill {
-            fill: var(--current-subtle-highlight); /* Use subtle highlight for the body fill */
-        }
-        .lock-keyhole-fill {
-            fill: #55555C; /* Darker keyhole for light mode */
-        }
+
 
         @media (prefers-color-scheme: dark) {
             .lock-component {
                 stroke: #A0A8B8; /* Lighter grey for dark mode outlines */
-            }
-            .lock-body-fill {
-                 /* In dark mode, current-subtle-highlight is dark, so body fill might be darker too */
-                fill: var(--current-subtle-highlight);
             }
             .lock-keyhole-fill {
                 fill: #A0A8B8; /* Lighter keyhole for dark mode */
