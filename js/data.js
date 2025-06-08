@@ -134,7 +134,7 @@ const PROJECTS = [
             "Automation",
             "System Monitoring",
         ], // Consolidate relevant skills
-        imageUrl: "images/projects-logo/confidential-enterprise-systems.svg"
+        imageUrl: "images/projects-logo/confidential-logo.svg"
     },
 ];
 
