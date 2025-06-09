@@ -1,5 +1,3 @@
-/* css/style.css */
-
 :root {
     /* Light Mode (Apple Inspired - with BLACK accents) */
     --bg-light: #FDFDFE; /* Almost pure white */
@@ -825,7 +823,9 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 .animate-fade-in { opacity: 0; /* Default state, visibility handles it */ }
 /* Updated mobile menu closing animation - replace the existing mobile nav section */
 
-@media (max-width: 768px) {
+/* Updated mobile menu closing animation - replace the existing mobile nav section */
+
+@media (max-width: 3768px) {
     html { font-size: 16px; }
 
     .navbar .container {
@@ -838,71 +838,68 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     nav.main-nav ul.nav-links {
         display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 100%;
+        justify-content: center;
+        align-items: center;
+        
+        /* FULL SCREEN POSITIONING */
+        position: fixed;
+        top: 0;
         left: 0;
-        width: 100%;
+        width: 100vw;
+        height: 100vh;
         
-        /* Premium Apple-inspired background with subtle blur */
+        /* Premium full-screen background with blur */
         background: linear-gradient(135deg, 
-            color-mix(in srgb, var(--current-card-bg) 85%, transparent) 0%,
-            color-mix(in srgb, var(--current-card-bg) 90%, transparent) 100%);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
+            color-mix(in srgb, var(--current-card-bg) 95%, transparent) 0%,
+            color-mix(in srgb, var(--current-card-bg) 98%, transparent) 100%);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
         
-        /* Elegant borders and shadows */
-        border: 1px solid color-mix(in srgb, var(--current-border) 60%, transparent);
-        border-top: none;
-        border-radius: 0 0 var(--border-radius-main) var(--border-radius-main);
+        /* Elegant overlay effect */
+        border: none;
+        border-radius: 0;
         
-        /* Premium shadow with multiple layers */
+        /* Premium shadow for depth */
         box-shadow: 
-            0 8px 32px color-mix(in srgb, var(--current-text) 8%, transparent),
-            0 4px 16px color-mix(in srgb, var(--current-text) 4%, transparent),
-            0 2px 8px color-mix(in srgb, var(--current-text) 2%, transparent),
+            inset 0 0 100px color-mix(in srgb, var(--current-text) 3%, transparent),
             inset 0 1px 0 color-mix(in srgb, var(--current-card-bg) 40%, transparent);
         
-        padding: 0.75rem 0 1.25rem 0;
-        z-index: 998;
+        padding: 2rem 0;
+        z-index: 9999; /* High z-index to cover everything */
 
         /* ===== IMPROVED CLOSING ANIMATION ===== */
         /* Closed state */
-        max-height: 0;
         opacity: 0;
-        overflow: hidden;
         visibility: hidden;
-        transform: translateY(-12px) scale(0.95);
-        transform-origin: top center;
+        transform: scale(1.05);
+        transform-origin: center center;
 
         /* Smooth bidirectional transitions with refined timing */
-        transition-property: max-height, opacity, visibility, transform, box-shadow;
-        transition-duration: 0.45s, 0.3s, 0.3s, 0.45s, 0.45s;
+        transition-property: opacity, visibility, transform;
+        transition-duration: 0.4s, 0.4s, 0.5s;
         transition-timing-function: 
-            cubic-bezier(0.25, 0.1, 0.25, 1),      /* max-height: smoother collapse */
             cubic-bezier(0.25, 0.1, 0.25, 1),      /* opacity: smooth fade */
             cubic-bezier(0.25, 0.1, 0.25, 1),      /* visibility */
-            cubic-bezier(0.34, 1.56, 0.64, 1),     /* transform: subtle bounce */
-            cubic-bezier(0.25, 0.1, 0.25, 1);      /* box-shadow */
+            cubic-bezier(0.34, 1.56, 0.64, 1);     /* transform: subtle bounce */
         
         /* Delay for closing to ensure smooth collapse */
-        transition-delay: 0s, 0.1s, 0.1s, 0s, 0s;
+        transition-delay: 0s, 0.1s, 0s;
     }
 
     /* ===== OPENING STATE ===== */
     nav.main-nav ul.nav-links.active {
-        max-height: 400px;
         opacity: 1;
         visibility: visible;
-        transform: translateY(0) scale(1);
+        transform: scale(1);
         
         /* Faster opening, no delays */
-        transition-delay: 0s, 0s, 0s, 0s, 0s;
+        transition-delay: 0s, 0s, 0s;
     }
 
     /* ===== MENU ITEMS CLOSING ANIMATION ===== */
     nav.main-nav ul.nav-links li {
-        margin: 0;
-        width: 100%;
+        margin: 0 0 1.5rem 0;
+        width: auto;
         opacity: 1;
         transform: translateY(0);
         
@@ -914,34 +911,34 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     /* When menu is closing, fade out items quickly */
     nav.main-nav ul.nav-links:not(.active) li {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateY(-15px);
         transition-delay: 0s; /* No stagger on close */
     }
 
     /* Opening animation for menu items */
     nav.main-nav ul.nav-links.active li {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(20px);
         
         /* Staggered entrance animation */
-        animation: fadeInMenuItem 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        animation: fadeInMenuItem 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
 
     /* Staggered timing for opening */
-    nav.main-nav ul.nav-links.active li:nth-child(1) { animation-delay: 0.08s; }
-    nav.main-nav ul.nav-links.active li:nth-child(2) { animation-delay: 0.16s; }
-    nav.main-nav ul.nav-links.active li:nth-child(3) { animation-delay: 0.24s; }
-    nav.main-nav ul.nav-links.active li:nth-child(4) { animation-delay: 0.32s; }
-    nav.main-nav ul.nav-links.active li:nth-child(5) { animation-delay: 0.40s; }
+    nav.main-nav ul.nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+    nav.main-nav ul.nav-links.active li:nth-child(2) { animation-delay: 0.2s; }
+    nav.main-nav ul.nav-links.active li:nth-child(3) { animation-delay: 0.3s; }
+    nav.main-nav ul.nav-links.active li:nth-child(4) { animation-delay: 0.4s; }
+    nav.main-nav ul.nav-links.active li:nth-child(5) { animation-delay: 0.5s; }
 
     @keyframes fadeInMenuItem {
         0% {
             opacity: 0;
-            transform: translateY(12px);
+            transform: translateY(20px);
         }
         60% {
             opacity: 0.8;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
         100% {
             opacity: 1;
@@ -949,61 +946,130 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
         }
     }
 
-    /* Rest of the mobile nav styling remains the same */
+    /* Full screen menu links styling */
     nav.main-nav ul.nav-links.active a {
         display: block;
-        padding: 1rem 6%;
-        margin: 0.25rem 4%;
+        padding: 1.5rem 3rem;
+        margin: 0.5rem 0;
         text-align: center;
         
-        font-size: 1.05rem;
-        font-weight: 500;
-        letter-spacing: -0.01em;
+        font-size: 1.8rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
         
-        background: color-mix(in srgb, var(--current-subtle-highlight) 40%, transparent);
-        border-radius: calc(var(--border-radius-medium) - 2px);
-        border: 1px solid color-mix(in srgb, var(--current-border) 30%, transparent);
+        background: color-mix(in srgb, var(--current-subtle-highlight) 60%, transparent);
+        border-radius: var(--border-radius-main);
+        border: 1px solid color-mix(in srgb, var(--current-border) 50%, transparent);
         
-        transition: all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         
-        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--current-card-bg) 20%, transparent);
+        box-shadow: 
+            0 4px 20px color-mix(in srgb, var(--current-text) 5%, transparent),
+            inset 0 1px 0 color-mix(in srgb, var(--current-card-bg) 40%, transparent);
         
         position: relative;
         overflow: hidden;
+        min-width: 280px;
     }
 
     nav.main-nav ul.nav-links.active a:hover,
     nav.main-nav ul.nav-links.active a:active {
-        background: color-mix(in srgb, var(--current-accent) 12%, var(--current-subtle-highlight));
-        border-color: color-mix(in srgb, var(--current-accent) 25%, transparent);
+        background: color-mix(in srgb, var(--current-accent) 15%, var(--current-subtle-highlight));
+        border-color: color-mix(in srgb, var(--current-accent) 40%, transparent);
         color: var(--current-accent);
         
-        transform: translateY(-1px) scale(1.02);
+        transform: translateY(-3px) scale(1.05);
         
         box-shadow: 
-            inset 0 1px 0 color-mix(in srgb, var(--current-accent) 15%, transparent),
-            0 4px 12px color-mix(in srgb, var(--current-accent) 8%, transparent),
-            0 2px 4px color-mix(in srgb, var(--current-accent) 12%, transparent);
+            0 8px 30px color-mix(in srgb, var(--current-accent) 15%, transparent),
+            0 4px 15px color-mix(in srgb, var(--current-accent) 20%, transparent),
+            inset 0 1px 0 color-mix(in srgb, var(--current-accent) 20%, transparent);
     }
 
     nav.main-nav ul.nav-links.active a.active {
         color: var(--current-accent);
-        background: color-mix(in srgb, var(--current-accent) 15%, var(--current-subtle-highlight));
-        border-color: color-mix(in srgb, var(--current-accent) 30%, transparent);
-        font-weight: 600;
+        background: color-mix(in srgb, var(--current-accent) 20%, var(--current-subtle-highlight));
+        border-color: color-mix(in srgb, var(--current-accent) 50%, transparent);
+        font-weight: 700;
         
         box-shadow: 
-            inset 0 2px 0 color-mix(in srgb, var(--current-accent) 20%, transparent),
-            0 2px 8px color-mix(in srgb, var(--current-accent) 10%, transparent);
+            0 6px 25px color-mix(in srgb, var(--current-accent) 20%, transparent),
+            inset 0 2px 0 color-mix(in srgb, var(--current-accent) 25%, transparent);
     }
 
     nav.main-nav ul.nav-links.active a:active {
-        transform: translateY(0) scale(0.98);
-        transition-duration: 0.1s;
+        transform: translateY(-1px) scale(1.02);
+        transition-duration: 0.15s;
     }
 
     nav.main-nav ul.nav-links.active a::after { 
         display: none; 
+    }
+
+    /* Close button for full screen menu */
+    nav.main-nav ul.nav-links::before {
+        content: "×";
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        font-size: 3rem;
+        font-weight: 300;
+        color: var(--current-secondary-text);
+        cursor: pointer;
+        z-index: 10000;
+        
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--current-subtle-highlight) 80%, transparent);
+        border: 1px solid color-mix(in srgb, var(--current-border) 60%, transparent);
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        
+        box-shadow: 
+            0 4px 15px color-mix(in srgb, var(--current-text) 8%, transparent),
+            inset 0 1px 0 color-mix(in srgb, var(--current-card-bg) 50%, transparent);
+    }
+
+    nav.main-nav ul.nav-links::before:hover {
+        color: var(--current-accent);
+        background: color-mix(in srgb, var(--current-accent) 15%, var(--current-subtle-highlight));
+        border-color: color-mix(in srgb, var(--current-accent) 30%, transparent);
+        transform: rotate(90deg) scale(1.1);
+        
+        box-shadow: 
+            0 6px 20px color-mix(in srgb, var(--current-accent) 15%, transparent),
+            inset 0 1px 0 color-mix(in srgb, var(--current-accent) 20%, transparent);
+    }
+
+    /* Add a subtle brand/logo at the top of full screen menu */
+    nav.main-nav ul.nav-links::after {
+        content: "";
+        position: absolute;
+        top: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        
+        width: 40px;
+        height: 40px;
+        background: var(--current-accent);
+        border-radius: 50%;
+        opacity: 0.3;
+        
+        box-shadow: 
+            0 0 20px color-mix(in srgb, var(--current-accent) 30%, transparent),
+            0 0 40px color-mix(in srgb, var(--current-accent) 15%, transparent);
+        
+        animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+        50% { opacity: 0.6; transform: translateX(-50%) scale(1.1); }
     }
 
     nav.main-nav {
@@ -1108,9 +1174,24 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     }
 
     nav.main-nav ul.nav-links.active a {
-        margin: 0.2rem 3%;
-        padding: 0.9rem 5%;
-        font-size: 1rem;
+        margin: 0.4rem 0;
+        padding: 1.2rem 2.5rem;
+        font-size: 1.6rem;
+        min-width: 250px;
+    }
+
+    nav.main-nav ul.nav-links::before {
+        top: 1.5rem;
+        right: 1.5rem;
+        font-size: 2.5rem;
+        width: 45px;
+        height: 45px;
+    }
+
+    nav.main-nav ul.nav-links::after {
+        top: 1.5rem;
+        width: 35px;
+        height: 35px;
     }
 
     .theme-toggle-btn {
@@ -1124,4 +1205,11 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
         width: 15px;
         height: 15px;
     }
+}
+
+/* Add body scroll lock when mobile menu is open */
+body.mobile-menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
 }

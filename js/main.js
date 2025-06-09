@@ -15,6 +15,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const sunIconSVG = `<svg class="icon icon-sun" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1s-1-.448-1-1V6c0-.552.448-1 1-1zm0 12c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1s-1-.448-1-1v-2c0-.552.448-1 1-1zm7.778-8.707l1.414-1.414a.997.997 0 000-1.414.999.999 0 00-1.414 0l-1.414 1.414a.999.999 0 001.414 1.414zM4.222 19.778l1.414-1.414a.999.999 0 10-1.414-1.414l-1.414 1.414a.999.999 0 001.414 1.414zM20 12c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1s.448-1 1-1h2c.552 0 1 .448 1 1zM5 12c0 .552-.448 1-1 1H2c-.552 0-1-.448-1-1s.448-1 1-1h2c.552 0 1 .448 1 1zm12.778-5.707a.999.999 0 000-1.414l-1.414-1.414a.999.999 0 10-1.414 1.414l1.414 1.414a.997.997 0 001.414 0zm-11.314 11.314a.999.999 0 000-1.414l-1.414-1.414a.999.999 0 00-1.414 1.414l1.414 1.414a.997.997 0 001.414 0zM12 9a3 3 0 100 6 3 3 0 000-6z"></path></svg>`;
     const moonIconSVG = `<svg class="icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.578 16.838a.998.998 0 01.487-1.925 7.992 7.992 0 00-2.649-1.887C17.781 11.56 18.5 9.33 18.5 7c0-4.136-3.364-7.5-7.5-7.5S3.5 2.864 3.5 7c0 2.443.796 4.686 2.064 6.407a8.024 8.024 0 00-3.61 11.131.998.998 0 001.579.566 10.018 10.018 0 0116.045-8.266zM11 19.5a5.984 5.984 0 01-3.397-1.006A7.968 7.968 0 005.5 13.44V7c0-2.982 2.208-5.5 5.5-5.5S16.5 4.018 16.5 7v.012A6 6 0 0111 19.5z"></path></svg>`;
 
+    // --- Helper function to close mobile menu ---
+    const closeMobileMenu = () => {
+        if (navLinks && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            if (mobileNavToggle) {
+                mobileNavToggle.innerHTML = '☰';
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+            }
+            // Remove body scroll lock if it exists
+            document.body.classList.remove('mobile-menu-open');
+        }
+    };
+
     // --- Theme Management ---
     const applyTheme = (theme, isInitialLoad = false) => {
         const body = document.body;
@@ -89,6 +102,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const isActive = navLinks.classList.toggle('active');
             mobileNavToggle.innerHTML = isActive ? '×' : '☰';
             mobileNavToggle.setAttribute('aria-expanded', isActive.toString());
+            
+            // Add/remove body scroll lock
+            if (isActive) {
+                document.body.classList.add('mobile-menu-open');
+            } else {
+                document.body.classList.remove('mobile-menu-open');
+            }
+        });
+
+        // Handle clicks on the mobile nav menu itself
+        navLinks.addEventListener('click', (e) => {
+            // Check if click is on the close button area (top-right corner)
+            const rect = navLinks.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            
+            // Close button is positioned at top: 2rem, right: 2rem with 50px width/height
+            // Adjust these values based on your CSS
+            const closeButtonArea = {
+                left: rect.width - 70, // 2rem + 50px button width + some padding
+                top: 0,
+                right: rect.width,
+                bottom: 70 // 2rem + 50px button height + some padding
+            };
+            
+            // If click is in the close button area, close the menu
+            if (clickX >= closeButtonArea.left && clickX <= closeButtonArea.right &&
+                clickY >= closeButtonArea.top && clickY <= closeButtonArea.bottom) {
+                closeMobileMenu();
+                return;
+            }
+            
+            // If click is on the background (not on a menu item), close the menu
+            if (e.target === navLinks) {
+                closeMobileMenu();
+            }
         });
     }
 
@@ -101,12 +150,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (navLinks) { // Ensure navLinks exists before adding event listener
             link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                    if (mobileNavToggle) mobileNavToggle.innerHTML = '☰';
-                    if (mobileNavToggle) mobileNavToggle.setAttribute('aria-expanded', 'false');
-                }
+                closeMobileMenu(); // Use the helper function
             });
+        }
+    });
+
+    // --- Close mobile menu when clicking outside or on overlay ---
+    document.addEventListener('click', (e) => {
+        // Only run this on mobile (when mobile menu could be active)
+        if (window.innerWidth <= 768 && navLinks && navLinks.classList.contains('active')) {
+            // If the click is outside the navigation area and not on the toggle button
+            if (!navLinks.contains(e.target) && !mobileNavToggle.contains(e.target)) {
+                closeMobileMenu();
+            }
+        }
+    });
+
+    // --- Close mobile menu on escape key ---
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks && navLinks.classList.contains('active')) {
+            closeMobileMenu();
         }
     });
 
