@@ -823,112 +823,241 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 .animate-slide-in-right { transform: translateX(50px); }
 .animate-scale-in { transform: scale(0.9); }
 .animate-fade-in { opacity: 0; /* Default state, visibility handles it */ }
-@media (max-width: 768px) { /* Mobile Navigation Active (e.g., Tablets and Phones) */
+/* Updated mobile menu closing animation - replace the existing mobile nav section */
+
+@media (max-width: 768px) {
     html { font-size: 16px; }
 
     .navbar .container {
-        position: relative; /* Enable absolute positioning for children */
-        display: flex; /* Keep flex for logo and theme toggle positioning */
-        justify-content: space-between; /* Push logo left, theme toggle right */
+        position: relative;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
     }
 
     nav.main-nav ul.nav-links {
-        display: flex; /* Keep it flex for internal alignment even when hidden/transitioning */
+        display: flex;
         flex-direction: column;
         position: absolute;
-        top: 100%; /* Position it right below the navbar */
-                   /* Or: top: var(--navbar-height, 70px); if you define navbar height */
+        top: 100%;
         left: 0;
         width: 100%;
-        background-color: var(--current-card-bg);
-        border-bottom: 1px solid var(--current-border);
-        box-shadow: var(--current-box-shadow);
-        padding: 0.5rem 0; /* Adjusted padding for items inside */
-        z-index: 998; /* Below loader, above page content */
+        
+        /* Premium Apple-inspired background with subtle blur */
+        background: linear-gradient(135deg, 
+            color-mix(in srgb, var(--current-card-bg) 85%, transparent) 0%,
+            color-mix(in srgb, var(--current-card-bg) 90%, transparent) 100%);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        
+        /* Elegant borders and shadows */
+        border: 1px solid color-mix(in srgb, var(--current-border) 60%, transparent);
+        border-top: none;
+        border-radius: 0 0 var(--border-radius-main) var(--border-radius-main);
+        
+        /* Premium shadow with multiple layers */
+        box-shadow: 
+            0 8px 32px color-mix(in srgb, var(--current-text) 8%, transparent),
+            0 4px 16px color-mix(in srgb, var(--current-text) 4%, transparent),
+            0 2px 8px color-mix(in srgb, var(--current-text) 2%, transparent),
+            inset 0 1px 0 color-mix(in srgb, var(--current-card-bg) 40%, transparent);
+        
+        padding: 0.75rem 0 1.25rem 0;
+        z-index: 998;
 
-        /* --- ANIMATION PROPERTIES --- */
-        max-height: 0; /* Initially collapsed */
+        /* ===== IMPROVED CLOSING ANIMATION ===== */
+        /* Closed state */
+        max-height: 0;
         opacity: 0;
-        overflow: hidden; /* Important to hide content during collapse */
-        visibility: hidden; /* Hide from accessibility tree when collapsed */
-        transform: translateY(-10px); /* Optional: slight upward movement on open */
+        overflow: hidden;
+        visibility: hidden;
+        transform: translateY(-12px) scale(0.95);
+        transform-origin: top center;
 
-        transition-property: max-height, opacity, visibility, transform;
-        transition-duration: var(--transition-duration-medium); /* e.g., 0.45s */
-        transition-timing-function: var(--easing-smooth-in-out); /* e.g., cubic-bezier(0.42, 0, 0.58, 1) */
+        /* Smooth bidirectional transitions with refined timing */
+        transition-property: max-height, opacity, visibility, transform, box-shadow;
+        transition-duration: 0.45s, 0.3s, 0.3s, 0.45s, 0.45s;
+        transition-timing-function: 
+            cubic-bezier(0.25, 0.1, 0.25, 1),      /* max-height: smoother collapse */
+            cubic-bezier(0.25, 0.1, 0.25, 1),      /* opacity: smooth fade */
+            cubic-bezier(0.25, 0.1, 0.25, 1),      /* visibility */
+            cubic-bezier(0.34, 1.56, 0.64, 1),     /* transform: subtle bounce */
+            cubic-bezier(0.25, 0.1, 0.25, 1);      /* box-shadow */
+        
+        /* Delay for closing to ensure smooth collapse */
+        transition-delay: 0s, 0.1s, 0.1s, 0s, 0s;
     }
 
+    /* ===== OPENING STATE ===== */
     nav.main-nav ul.nav-links.active {
-        max-height: 50vh; /* Or a sufficiently large height, e.g., 500px or calc(100vh - var(--navbar-height)) */
-                          /* Needs to be large enough to accommodate all menu items */
+        max-height: 400px;
         opacity: 1;
         visibility: visible;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        
+        /* Faster opening, no delays */
+        transition-delay: 0s, 0s, 0s, 0s, 0s;
     }
 
-    /* Styling for items within the opened mobile menu */
-    nav.main-nav ul.nav-links.active li {
+    /* ===== MENU ITEMS CLOSING ANIMATION ===== */
+    nav.main-nav ul.nav-links li {
         margin: 0;
         width: 100%;
-        opacity: 0; /* For staggered item animation */
-        transform: translateX(-15px); /* For staggered item animation */
-        animation: fadeInMenuItem var(--transition-duration-fast) var(--easing-out-quad) forwards;
+        opacity: 1;
+        transform: translateY(0);
+        
+        /* Smooth exit transition for menu items */
+        transition: opacity 0.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+                   transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    /* Stagger the animation of list items */
-    nav.main-nav ul.nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
-    nav.main-nav ul.nav-links.active li:nth-child(2) { animation-delay: 0.15s; }
-    nav.main-nav ul.nav-links.active li:nth-child(3) { animation-delay: 0.2s; }
-    nav.main-nav ul.nav-links.active li:nth-child(4) { animation-delay: 0.25s; }
-    /* Add more if you have more links */
+    /* When menu is closing, fade out items quickly */
+    nav.main-nav ul.nav-links:not(.active) li {
+        opacity: 0;
+        transform: translateY(-8px);
+        transition-delay: 0s; /* No stagger on close */
+    }
+
+    /* Opening animation for menu items */
+    nav.main-nav ul.nav-links.active li {
+        opacity: 0;
+        transform: translateY(12px);
+        
+        /* Staggered entrance animation */
+        animation: fadeInMenuItem 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    /* Staggered timing for opening */
+    nav.main-nav ul.nav-links.active li:nth-child(1) { animation-delay: 0.08s; }
+    nav.main-nav ul.nav-links.active li:nth-child(2) { animation-delay: 0.16s; }
+    nav.main-nav ul.nav-links.active li:nth-child(3) { animation-delay: 0.24s; }
+    nav.main-nav ul.nav-links.active li:nth-child(4) { animation-delay: 0.32s; }
+    nav.main-nav ul.nav-links.active li:nth-child(5) { animation-delay: 0.40s; }
 
     @keyframes fadeInMenuItem {
-        to {
+        0% {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        60% {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+        100% {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
         }
     }
 
-
-    nav.main-nav ul.nav-links.active li:first-child { margin-left: 0; } /* Should already be covered */
+    /* Rest of the mobile nav styling remains the same */
     nav.main-nav ul.nav-links.active a {
         display: block;
-        padding: 0.9rem 5%; /* Adjusted padding for tappability */
+        padding: 1rem 6%;
+        margin: 0.25rem 4%;
         text-align: center;
-        /* color: var(--current-text); Ensure it has a color */
-    }
-    nav.main-nav ul.nav-links.active a::after { display: none; } /* Hide desktop underline */
-    nav.main-nav ul.nav-links.active a.active { /* Style for the current page link in mobile menu */
-        color: var(--current-accent);
-        background-color: var(--current-subtle-highlight);
+        
+        font-size: 1.05rem;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        
+        background: color-mix(in srgb, var(--current-subtle-highlight) 40%, transparent);
+        border-radius: calc(var(--border-radius-medium) - 2px);
+        border: 1px solid color-mix(in srgb, var(--current-border) 30%, transparent);
+        
+        transition: all 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        
+        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--current-card-bg) 20%, transparent);
+        
+        position: relative;
+        overflow: hidden;
     }
 
-    /* Adjust <nav class="main-nav"> which now only effectively contains the toggle on mobile */
+    nav.main-nav ul.nav-links.active a:hover,
+    nav.main-nav ul.nav-links.active a:active {
+        background: color-mix(in srgb, var(--current-accent) 12%, var(--current-subtle-highlight));
+        border-color: color-mix(in srgb, var(--current-accent) 25%, transparent);
+        color: var(--current-accent);
+        
+        transform: translateY(-1px) scale(1.02);
+        
+        box-shadow: 
+            inset 0 1px 0 color-mix(in srgb, var(--current-accent) 15%, transparent),
+            0 4px 12px color-mix(in srgb, var(--current-accent) 8%, transparent),
+            0 2px 4px color-mix(in srgb, var(--current-accent) 12%, transparent);
+    }
+
+    nav.main-nav ul.nav-links.active a.active {
+        color: var(--current-accent);
+        background: color-mix(in srgb, var(--current-accent) 15%, var(--current-subtle-highlight));
+        border-color: color-mix(in srgb, var(--current-accent) 30%, transparent);
+        font-weight: 600;
+        
+        box-shadow: 
+            inset 0 2px 0 color-mix(in srgb, var(--current-accent) 20%, transparent),
+            0 2px 8px color-mix(in srgb, var(--current-accent) 10%, transparent);
+    }
+
+    nav.main-nav ul.nav-links.active a:active {
+        transform: translateY(0) scale(0.98);
+        transition-duration: 0.1s;
+    }
+
+    nav.main-nav ul.nav-links.active a::after { 
+        display: none; 
+    }
+
     nav.main-nav {
-        flex-grow: 1;             /* Allows it to take available middle space */
-        display: flex;            /* Use flex to center its child (the toggle) */
-        justify-content: center;  /* Center the .mobile-nav-toggle HORIZONTALLY within main-nav */
-        align-items: center;      /* Center the .mobile-nav-toggle VERTICALLY within main-nav */
-        order: 1;                 /* Visual order: Logo(0), MainNav(1), ThemeToggle(2) */
-        /* Remove padding/margin from main-nav itself if it causes issues with centering its content */
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        order: 1;
         padding: 0;
         margin: 0;
     }
 
     nav.main-nav .mobile-nav-toggle {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .mobile-nav-toggle {
-        display: block !important; /* Show the hamburger icon */
+        display: block !important;
+        
+        background: color-mix(in srgb, var(--current-subtle-highlight) 60%, transparent);
+        border: 1px solid color-mix(in srgb, var(--current-border) 40%, transparent);
+        border-radius: calc(var(--border-radius-small) + 2px);
+        padding: 0.6rem;
+        
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        
+        box-shadow: 
+            0 2px 8px color-mix(in srgb, var(--current-text) 4%, transparent),
+            inset 0 1px 0 color-mix(in srgb, var(--current-card-bg) 30%, transparent);
+    }
+
+    .mobile-nav-toggle:hover,
+    .mobile-nav-toggle:active {
+        background: color-mix(in srgb, var(--current-accent) 12%, var(--current-subtle-highlight));
+        border-color: color-mix(in srgb, var(--current-accent) 25%, transparent);
+        color: var(--current-accent);
+        
+        transform: translate(-50%, -50%) scale(1.05);
+        
+        box-shadow: 
+            0 4px 12px color-mix(in srgb, var(--current-accent) 8%, transparent),
+            inset 0 1px 0 color-mix(in srgb, var(--current-accent) 15%, transparent);
+    }
+
+    .mobile-nav-toggle:active {
+        transform: translate(-50%, -50%) scale(0.95);
+        transition-duration: 0.1s;
     }
 
     .nav-logo {
-        order: 0; /* Logo first */
+        order: 0;
         flex-shrink: 0;
     }
     .nav-logo img {
@@ -936,44 +1065,61 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     }
 
     .theme-toggle-btn {
-        order: 2; /* Theme toggle last */
+        order: 2;
         flex-shrink: 0;
-        margin-left: 0.75rem; /* Space between centered toggle area and theme button */
-                               /* Adjust this if it looks too close or too far */
+        margin-left: 0.75rem;
         padding: 0.6rem 0.8rem;
         font-size: 0.9rem;
         gap: 0.5rem;
+        
+        border-radius: calc(var(--border-radius-small) + 2px);
+        transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
+    
+    .theme-toggle-btn:hover {
+        transform: translateY(-1px) scale(1.03);
+    }
+    
+    .theme-toggle-btn:active {
+        transform: translateY(0) scale(0.97);
+        transition-duration: 0.1s;
+    }
+    
     .theme-toggle-btn .icon-wrapper {
         width: 18px;
         height: 18px;
     }
 }
 
-
-@media (max-width: 480px) { /* Specific for very small phones */
+@media (max-width: 480px) { /* Very small phones - refined */
     html { font-size: 15px; }
 
     .nav-logo img {
         height: 40px;
     }
+    
     .navbar .container {
-        padding: 0 3%; /* Tighter padding for navbar on small screens */
+        padding: 0 3%;
     }
 
     .mobile-nav-toggle {
-        font-size: 1.8rem; /* Hamburger size for small screens */
-        padding: 0.4rem; /* Adjust tappable area if needed */
+        font-size: 1.8rem;
+        padding: 0.5rem;
     }
-    
-    /* nav.main-nav already configured for centering the toggle */
+
+    nav.main-nav ul.nav-links.active a {
+        margin: 0.2rem 3%;
+        padding: 0.9rem 5%;
+        font-size: 1rem;
+    }
 
     .theme-toggle-btn {
         padding: 0.45rem 0.65rem;
         font-size: 0.8rem;
-        margin-left: 0.5rem; /* Even tighter margin if necessary */
+        margin-left: 0.5rem;
         gap: 0.35rem;
     }
+    
     .theme-toggle-btn .icon-wrapper {
         width: 15px;
         height: 15px;
