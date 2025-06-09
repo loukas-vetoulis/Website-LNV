@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Intersection Observer for Scroll Animations ---
     const animatedItems = document.querySelectorAll('.animated-item');
-    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.05 };
     const observer = new IntersectionObserver((entries, observerInstance) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {

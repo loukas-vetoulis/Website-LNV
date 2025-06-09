@@ -123,10 +123,10 @@ const PROJECTS = [
         githubLink: "https://github.com/loukas-vetoulis/C-SGG-Asteroids-Arcade", // REPLACE with actual or remove
     },
     {
-        type: "Professional - Confidential",
+        type: "Professional",
         title: "Enterprise Systems Development & Automation", // Broader, more encompassing title
         company: "Mellon Group", // Use if permissible and as on your CV
-        description: "Contributed to mission-critical enterprise systems, focusing on process automation and system reliability. Key responsibilities included developing a Python-based automated system to monitor and manage Process Errors in banking terminals—significantly improving error detection efficiency through automated log parsing, database integration, a visualization UI, and alert notifications. Currently also involved in architecting and building a reusable test automation library using Appium for Android EFTPOS terminals to streamline QA processes and enhance testing coverage for payment systems. Due to confidentiality agreements, further specific details about these projects and their proprietary technologies cannot be publicly shared.",
+        description: "Contributed to mission-critical enterprise systems, enhancing process automation and reliability. Developed a Python-based system for banking terminals that automated Process Error monitoring and management (log parsing, DB integration, visualization UI, alerts), significantly boosting error detection. Currently architecting and building a reusable Appium test automation library for Android EFTPOS terminals to improve QA and payment system testing coverage. (Specific project details are confidential.)",
         stack: [
             "Appium",
             "Data Processing & Analysis",

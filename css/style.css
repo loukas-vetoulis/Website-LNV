@@ -174,7 +174,6 @@ body {
 } */
 
 .container { width: 90%; max-width: 1120px; margin: 0 auto; padding: 5rem 0; }
-@media (max-width: 768px) { .container { padding: 3.5rem 0; } }
 
 /* --- Typography --- */
 h1, h2, h3, h4 {
@@ -200,53 +199,144 @@ a:hover { color: var(--current-accent-hover); }
 /* --- Navbar --- */
 /* --- Navbar --- */
 .navbar {
-    padding: 2rem 0; /* Your existing padding */
+    padding: 2rem 0;
     border-bottom: 1px solid var(--current-border);
-
     background-color: color-mix(in srgb, var(--current-bg) 75%, transparent);
-
-    backdrop-filter: blur(16px); /* Example: Increased blur */
-    -webkit-backdrop-filter: blur(16px); /* Safari prefix */
-
-    position: sticky;
-    top: 0;
-    z-index: 1000; 
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: sticky; top: 0; z-index: 1000;
     transition: background-color var(--transition-duration-medium) var(--easing-smooth-in-out),
                 border-color var(--transition-duration-medium) var(--easing-smooth-in-out),
-                backdrop-filter var(--transition-duration-medium) var(--easing-smooth-in-out); /* Added backdrop-filter to transition */
+                backdrop-filter var(--transition-duration-medium) var(--easing-smooth-in-out);
     will-change: background-color, border-color, backdrop-filter;
 }
-.navbar .container { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; max-width: 1200px; }
-.nav-logo a {
-    font-size: 1.85rem; font-weight: 700; color: var(--current-text);
-    letter-spacing: -0.035em;
-    transition: transform var(--transition-duration-fast) var(--easing-expressive);
-    display: flex; /* For aligning image if text is removed */
-    align-items: center; /* For aligning image */
-}
-.nav-logo img { /* Added this */
-    height: 50px; /* Or your desired height */
-    transition: opacity var(--transition-duration-fast) ease-in-out, transform var(--transition-duration-fast) var(--easing-expressive);
-    will-change: opacity, transform;
-}
-.nav-logo a:hover img { /* Optional: hover effect on logo image */
-    transform: scale(1.05);
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between; /* This remains key */
+    align-items: center;
+    padding: 0 5%;
+    max-width: 1200px;
 }
 
-.nav-links { display: flex; align-items: center; }
-.nav-links li { margin-left: 2.5rem; }
-.nav-links a {
-    font-size: 1.05rem; font-weight: 500; color: var(--current-secondary-text);
-    position: relative; padding: 0.5rem 0.25rem; /* Padding for click area and underline effect */
+.nav-logo a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.75rem;
+    border-radius: var(--border-radius-main);
+    overflow: hidden;
+    transition: all var(--transition-duration-medium) var(--easing-expressive);
 }
-.nav-links a::after {
+
+.nav-logo a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, 
+        color-mix(in srgb, var(--current-accent) 15%, transparent) 0%,
+        color-mix(in srgb, var(--current-accent) 8%, transparent) 50%,
+        transparent 100%);
+    transform: translate(-50%, -50%);
+    transition: all var(--transition-duration-slow) var(--easing-expressive);
+    z-index: 0;
+}
+
+.nav-logo a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        color-mix(in srgb, var(--current-accent) 20%, transparent) 50%, 
+        transparent 100%);
+    transition: left var(--transition-duration-slow) var(--easing-smooth-in-out);
+    z-index: 1;
+}
+
+.nav-logo img {
+    height: 60px;
+    position: relative;
+    z-index: 2;
+    transition: all var(--transition-duration-medium) var(--easing-expressive);
+    transform-origin: center;
+    filter: brightness(1) contrast(1);
+}
+
+.nav-logo a:hover::before {
+    width: 120%;
+    height: 120%;
+    opacity: 0.8;
+}
+
+.nav-logo a:hover::after {
+    left: 100%;
+}
+
+.nav-logo a:hover img {
+    transform: rotateY(12deg) rotateX(3deg) scale(1.05);
+    filter: brightness(1.1) contrast(1.05) 
+            drop-shadow(0 4px 12px color-mix(in srgb, var(--current-accent) 30%, transparent));
+}
+
+.nav-logo a:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px color-mix(in srgb, var(--current-accent) 15%, transparent),
+        0 2px 8px color-mix(in srgb, var(--current-accent) 25%, transparent);
+}
+
+
+/* For DESKTOP view */
+nav.main-nav {
+    flex-grow: 1; /* Takes up space on desktop */
+    display: flex;
+    justify-content: center; /* Centers ul.nav-links within it on desktop */
+}
+nav.main-nav ul.nav-links { /* The actual list of links for desktop */
+    display: flex; /* Horizontal layout */
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+nav.main-nav ul.nav-links li { margin-left: 2.5rem; }
+nav.main-nav ul.nav-links li:first-child { margin-left: 0; } /* Good for exact centering */
+nav.main-nav ul.nav-links a {
+    font-size: 1.05rem; font-weight: 500; color: var(--current-secondary-text);
+    position: relative; padding: 0.5rem 0.25rem;
+}
+nav.main-nav ul.nav-links a::after { /* Underline effect */
     content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 0; height: 2px; background-color: var(--current-accent);
-    border-radius: 1px;
+    width: 0; height: 2px; background-color: var(--current-accent); border-radius: 1px;
     transition: width var(--transition-duration-medium) var(--easing-expressive);
 }
-.nav-links a:hover::after, .nav-links a.active::after { width: 110%; /* Slight overdraw */ }
-.nav-links a:hover, .nav-links a.active { color: var(--current-text); }
+nav.main-nav ul.nav-links a:hover::after,
+nav.main-nav ul.nav-links a.active::after { width: 110%; }
+nav.main-nav ul.nav-links a:hover,
+nav.main-nav ul.nav-links a.active { color: var(--current-text); }
+
+/* MOBILE NAV TOGGLE is part of nav.main-nav in HTML,
+   but its display behavior is primarily controlled by media queries */
+.mobile-nav-toggle {
+    display: none; /* Hidden on desktop by default */
+    font-size: 2rem; /* Base size, overridden in media queries */
+    color: var(--current-text);
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    margin: 0; /* Important: remove any margins that fight centering by parent */
+    line-height: 1; /* For better vertical alignment if icon is text based */
+}
+
 
 .theme-toggle-btn {
     background: var(--current-subtle-highlight);
@@ -257,18 +347,27 @@ a:hover { color: var(--current-accent-hover); }
     display: flex; align-items: center; gap: 0.6rem;
     transition: all var(--transition-duration-fast) var(--easing-expressive);
     will-change: transform, border-color, color;
+    margin-left: 2.5rem; /* Desktop margin from main nav area */
+    flex-shrink: 0; /* Prevent it from shrinking too much */
 }
 .theme-toggle-btn:hover {
-    border-color: var(--current-accent); color: var(--current-accent);
+    border-color: var(--current-accent);
+    color: var(--current-accent);
     transform: translateY(-2px) scale(1.03);
     box-shadow: 0 2px 8px color-mix(in srgb, var(--current-accent) 20%, transparent);
 }
 .theme-toggle-btn .icon-wrapper {
-    display: flex; align-items: center; justify-content: center;
-    width: 20px; height: 20px; position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;                        /* Desktop icon size */
+    height: 20px;                       /* Desktop icon size */
+    position: relative;
 }
 .theme-toggle-btn .icon {
-    width: 100%; height: 100%; position: absolute;
+    width: 100%;
+    height: 100%;
+    position: absolute;
     transition: transform var(--transition-duration-medium) var(--easing-expressive),
                 opacity var(--transition-duration-medium) var(--easing-out-quad);
 }
@@ -430,7 +529,7 @@ a:hover { color: var(--current-accent-hover); }
 /* .dark-mode .btn-secondary:hover { color: color-mix(in srgb, var(--bg-dark) 80%, #000); } */
 
 /* --- Section Styling --- */
-.section-title-container { text-align: center; margin-bottom: 5rem; }
+.section-title-container { text-align: center;}
 .section-title-container h2 { margin-bottom: 1.25rem; }
 .section-title-container p { max-width: 700px; margin-left: auto; margin-right: auto; color: var(--current-secondary-text); }
 
@@ -466,13 +565,19 @@ a:hover { color: var(--current-accent-hover); }
     will-change: transform, border-color, color, box-shadow;
 }
 .skill-category ul li:hover {
-    border-color: var(--current-accent); color: var(--current-accent);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 3px 10px color-mix(in srgb, var(--current-accent) 15%, transparent);
-    background-color: color-mix(in srgb, var(--current-accent) 10%, transparent);
+    border-color: var(--current-accent);
+    color: var(--current-accent);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 
+        0 4px 12px color-mix(in srgb, var(--current-accent) 12%, transparent),
+        0 1px 3px color-mix(in srgb, var(--current-accent) 20%, transparent);
+    background-color: color-mix(in srgb, var(--current-accent) 8%, transparent);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-#awards-list li { margin-bottom: 1rem; font-size: 1.05rem; }
 
+.skill-category ul li {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 /* --- Projects Page --- */
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 3.5rem; }
 .project-card {
@@ -516,17 +621,21 @@ a:hover { color: var(--current-accent-hover); }
     will-change: transform, border-color, color, box-shadow;
 }
 .project-stack span:hover {
-    border-color: var(--current-accent); color: var(--current-accent);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 3px 10px color-mix(in srgb, var(--current-accent) 15%, transparent);
-    background-color: color-mix(in srgb, var(--current-accent) 10%, transparent);
+    border-color: var(--current-accent);
+    color: var(--current-accent);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 
+        0 4px 12px color-mix(in srgb, var(--current-accent) 12%, transparent),
+        0 1px 3px color-mix(in srgb, var(--current-accent) 20%, transparent);
+    background-color: color-mix(in srgb, var(--current-accent) 8%, transparent);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .project-links { margin-top: auto; display: flex; gap: 1.5rem; }
 .project-links a { font-size: 1rem; }
 
 /* --- Contact Page --- */
-.contact-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
-@media (min-width: 900px) { .contact-grid { grid-template-columns: 1.2fr 1fr; gap: 6rem; } }
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: 4rem;     align-items: flex-start;}
+@media (min-width: 900px) { .contact-grid { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
 .contact-form-container, .contact-details-container {
     padding: 3.5rem; background-color: var(--current-card-bg);
     border: 1px solid var(--current-border);
@@ -537,6 +646,7 @@ a:hover { color: var(--current-accent-hover); }
     /* You might want less bottom margin if you have intro text below these */
     /* Original: margin-bottom: 3rem; */
     margin-bottom: 1.5rem; /* Example adjustment */
+    text-align: center;
 }
 
 .contact-form-container p.secondary,
@@ -649,36 +759,159 @@ a:hover { color: var(--current-accent-hover); }
 .animate-slide-in-right { transform: translateX(50px); }
 .animate-scale-in { transform: scale(0.9); }
 .animate-fade-in { opacity: 0; /* Default state, visibility handles it */ }
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* Mobile Navigation Active (e.g., Tablets and Phones) */
     html { font-size: 16px; }
-    h1 { font-size: clamp(2.4rem, 7vw, 3.25rem); }
-    h2 { font-size: clamp(1.8rem, 5vw, 2.25rem); margin-bottom: 3rem; }
-    .nav-links {
-        /* Mobile nav CSS from previous version */
-        display: none; flex-direction: column; position: absolute;
-        top: 100%; left: 0; width: 100%;
+
+    .navbar .container {
+        position: relative; /* Enable absolute positioning for children */
+        display: flex; /* Keep flex for logo and theme toggle positioning */
+        justify-content: space-between; /* Push logo left, theme toggle right */
+        align-items: center;
+    }
+
+    nav.main-nav ul.nav-links {
+        display: flex; /* Keep it flex for internal alignment even when hidden/transitioning */
+        flex-direction: column;
+        position: absolute;
+        top: 100%; /* Position it right below the navbar */
+                   /* Or: top: var(--navbar-height, 70px); if you define navbar height */
+        left: 0;
+        width: 100%;
         background-color: var(--current-card-bg);
         border-bottom: 1px solid var(--current-border);
-        box-shadow: var(--current-box-shadow); padding: 1rem 0;
+        box-shadow: var(--current-box-shadow);
+        padding: 0.5rem 0; /* Adjusted padding for items inside */
+        z-index: 998; /* Below loader, above page content */
+
+        /* --- ANIMATION PROPERTIES --- */
+        max-height: 0; /* Initially collapsed */
+        opacity: 0;
+        overflow: hidden; /* Important to hide content during collapse */
+        visibility: hidden; /* Hide from accessibility tree when collapsed */
+        transform: translateY(-10px); /* Optional: slight upward movement on open */
+
+        transition-property: max-height, opacity, visibility, transform;
+        transition-duration: var(--transition-duration-medium); /* e.g., 0.45s */
+        transition-timing-function: var(--easing-smooth-in-out); /* e.g., cubic-bezier(0.42, 0, 0.58, 1) */
     }
-    .nav-links.active { display: flex; }
-    .nav-links li { margin: 0; width: 100%; }
-    .nav-links a { display: block; padding: 1.25rem 5%; text-align: center; width: 100%; color: var(--current-text); font-size: 1.1rem; }
-    .nav-links a::after { display: none; }
-    .nav-links a.active { color: var(--current-accent); background-color: var(--current-subtle-highlight); }
+
+    nav.main-nav ul.nav-links.active {
+        max-height: 50vh; /* Or a sufficiently large height, e.g., 500px or calc(100vh - var(--navbar-height)) */
+                          /* Needs to be large enough to accommodate all menu items */
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* Styling for items within the opened mobile menu */
+    nav.main-nav ul.nav-links.active li {
+        margin: 0;
+        width: 100%;
+        opacity: 0; /* For staggered item animation */
+        transform: translateX(-15px); /* For staggered item animation */
+        animation: fadeInMenuItem var(--transition-duration-fast) var(--easing-out-quad) forwards;
+    }
+
+    /* Stagger the animation of list items */
+    nav.main-nav ul.nav-links.active li:nth-child(1) { animation-delay: 0.1s; }
+    nav.main-nav ul.nav-links.active li:nth-child(2) { animation-delay: 0.15s; }
+    nav.main-nav ul.nav-links.active li:nth-child(3) { animation-delay: 0.2s; }
+    nav.main-nav ul.nav-links.active li:nth-child(4) { animation-delay: 0.25s; }
+    /* Add more if you have more links */
+
+    @keyframes fadeInMenuItem {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+
+    nav.main-nav ul.nav-links.active li:first-child { margin-left: 0; } /* Should already be covered */
+    nav.main-nav ul.nav-links.active a {
+        display: block;
+        padding: 0.9rem 5%; /* Adjusted padding for tappability */
+        text-align: center;
+        /* color: var(--current-text); Ensure it has a color */
+    }
+    nav.main-nav ul.nav-links.active a::after { display: none; } /* Hide desktop underline */
+    nav.main-nav ul.nav-links.active a.active { /* Style for the current page link in mobile menu */
+        color: var(--current-accent);
+        background-color: var(--current-subtle-highlight);
+    }
+
+    /* Adjust <nav class="main-nav"> which now only effectively contains the toggle on mobile */
+    nav.main-nav {
+        flex-grow: 1;             /* Allows it to take available middle space */
+        display: flex;            /* Use flex to center its child (the toggle) */
+        justify-content: center;  /* Center the .mobile-nav-toggle HORIZONTALLY within main-nav */
+        align-items: center;      /* Center the .mobile-nav-toggle VERTICALLY within main-nav */
+        order: 1;                 /* Visual order: Logo(0), MainNav(1), ThemeToggle(2) */
+        /* Remove padding/margin from main-nav itself if it causes issues with centering its content */
+        padding: 0;
+        margin: 0;
+    }
+
+    nav.main-nav .mobile-nav-toggle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    }
+    
     .mobile-nav-toggle {
-        display: block; background: none; border: none;
-        font-size: 2rem; color: var(--current-text); cursor: pointer;
-        padding: 0.5rem; /* Make it easier to tap */
+        display: block !important; /* Show the hamburger icon */
     }
-    .theme-toggle-btn { margin-left: 1.5rem; padding: 0.6rem 0.8rem;}
-    .projects-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .container { padding: 3.5rem 20px; width: calc(100% - 40px); /* Ensure padding on mobile */ }
+
+    .nav-logo {
+        order: 0; /* Logo first */
+        flex-shrink: 0;
+    }
+    .nav-logo img {
+        height: 50px;
+    }
+
+    .theme-toggle-btn {
+        order: 2; /* Theme toggle last */
+        flex-shrink: 0;
+        margin-left: 0.75rem; /* Space between centered toggle area and theme button */
+                               /* Adjust this if it looks too close or too far */
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+        gap: 0.5rem;
+    }
+    .theme-toggle-btn .icon-wrapper {
+        width: 18px;
+        height: 18px;
+    }
 }
-@media (max-width: 480px) {
-    .hero h1 { letter-spacing: -0.01em; }
-    .btn { padding: 0.9rem 1.8rem; font-size: 1.05rem; }
-    .contact-form-container, .contact-details-container { padding: 2.5rem 1.5rem; }
+
+
+@media (max-width: 480px) { /* Specific for very small phones */
+    html { font-size: 15px; }
+
+    .nav-logo img {
+        height: 40px;
+    }
+    .navbar .container {
+        padding: 0 3%; /* Tighter padding for navbar on small screens */
+    }
+
+    .mobile-nav-toggle {
+        font-size: 1.8rem; /* Hamburger size for small screens */
+        padding: 0.4rem; /* Adjust tappable area if needed */
+    }
+    
+    /* nav.main-nav already configured for centering the toggle */
+
+    .theme-toggle-btn {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.8rem;
+        margin-left: 0.5rem; /* Even tighter margin if necessary */
+        gap: 0.35rem;
+    }
+    .theme-toggle-btn .icon-wrapper {
+        width: 15px;
+        height: 15px;
+    }
 }
