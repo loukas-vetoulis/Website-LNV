@@ -633,6 +633,53 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 .project-links { margin-top: auto; display: flex; gap: 1.5rem; }
 .project-links a { font-size: 1rem; }
 
+.inquiry-cta {
+    padding: 5rem 0;
+    text-align: center;
+}
+.inquiry-text {
+    font-size: clamp(1.4rem, 3.5vw, 1.9rem); /* Large, elegant text */
+    font-weight: 400; /* Lighter weight for sophistication */
+    color: var(--current-text);
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+}
+.inquiry-link {
+    color: var(--current-accent);
+    text-decoration: none;
+    font-weight: 500; /* Slightly bolder link */
+    position: relative; /* For the arrow or underline effect */
+    white-space: nowrap; /* Keep "Let's talk" and arrow together */
+}
+.inquiry-link .arrow {
+    display: inline-block;
+    margin-left: 0.5em;
+    transition: transform 0.3s var(--easing-out-quad);
+}
+.inquiry-link:hover {
+    color: var(--current-accent-hover);
+}
+.inquiry-link:hover .arrow {
+    transform: translateX(5px);
+}
+/* Optional subtle underline effect */
+.inquiry-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: -3px;
+    left: 0;
+    background-color: var(--current-accent-hover);
+    transform-origin: bottom right;
+    transition: transform 0.3s var(--easing-out-quad);
+}
+.inquiry-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
 /* --- Contact Page --- */
 .contact-grid {
     display: grid;
