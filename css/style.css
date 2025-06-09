@@ -634,12 +634,34 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 .project-links a { font-size: 1rem; }
 
 /* --- Contact Page --- */
-.contact-grid { display: grid; grid-template-columns: 1fr; gap: 4rem;     align-items: flex-start;}
-@media (min-width: 900px) { .contact-grid { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column by default for mobile */
+    gap: 2rem;                  /* Mobile gap */
+    align-items: flex-start;    /* Keeps content aligned to the top of each cell */
+}
+@media (min-width: 900px) { /* Your desktop breakpoint (or 800px, etc.) */
+    .contact-grid {
+        /* === THIS IS THE CRITICAL CHANGE === */
+        grid-template-columns: 1fr 1fr; /* Both columns are now 1fr, ensuring equal width */
+        /* OR for readability with multiple columns, you could use: */
+        /* grid-template-columns: repeat(2, 1fr); */
+
+        gap: 4rem; /* Desktop gap - adjust as desired (e.g., 2rem, 3rem, 4rem) */
+    }
+}
 .contact-form-container, .contact-details-container {
-    padding: 3.5rem; background-color: var(--current-card-bg);
+    padding: 1.5rem; /* Your current padding - this affects usable content space */
+    background-color: var(--current-card-bg);
     border: 1px solid var(--current-border);
-    border-radius: var(--border-radius-main); box-shadow: var(--current-box-shadow);
+    border-radius: var(--border-radius-main);
+    box-shadow: var(--current-box-shadow);
+
+    /* For internal layout and making them appear equally tall */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Key for allowing margin-top: auto on a child to work within the grid row's height */
+    min-width: 0; /* Important for grid/flex children to allow them to shrink if content is wide */
 }
 .contact-form-container h2,
 .contact-details-container h2 {
@@ -707,11 +729,6 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     margin-bottom: 1.25rem;
     font-size: 0.95rem;
     line-height: 1.5;
-}
-
-/* Adjustments to the main grid if Calendly affects height distribution */
-.contact-grid {
-    align-items: flex-start; /* Align top of both columns */
 }
 
 /* Responsive adjustments for the new contact elements */
