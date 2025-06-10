@@ -14,12 +14,12 @@ const HERO_CONTENT = {
 const CASE_STUDIES_DATA = [
     {
         id: "project-a", // Corresponds to a project in your main PROJECTS array if you want to link them
-        title: "Automated Banking Error Resolution",
-        subtitle: "Reducing operational overhead and improving system reliability for enterprise banking.",
-        thumbnailUrl: "images/case-study-thumbnails/project-a-thumbnail.webp", // Create this image
+        title: "Revolutionizing Real Estate Intelligence for Aquarium Real Estate",
+        subtitle: " Transforming tedious data collection into a strategic asset with an advanced, self-adapting web scraper.",
+        thumbnailUrl: "images/case-study-thumbnails/real_estate-screenshot.png", // Create this image
         link: "case-studies/case-study-project-a.html", // Path to the detail page
         tags: ["Python", "Automation", "Enterprise Systems", "FinTech"], // Optional tags
-        introduction: "A deep dive into developing a mission-critical system that revolutionized error processing..."
+        introduction: "Deep dive into the development of a sophisticated web scraping solution that automates data extraction for real estate agents, enhancing productivity and strategic decision-making."
     },
     {
         id: "project-b",

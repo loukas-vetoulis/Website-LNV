@@ -1,122 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        /* hide the “other” logo depending on the theme class on <html> */
+        html.dark-mode .loader-logo.light-logo,
+        html.light-mode .loader-logo.dark-logo {
+            display: none;
+            }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- UPDATE TITLE AND DESCRIPTION FOR EACH CASE STUDY -->
-    <meta name="description" content="Detailed case study of the Automated Banking Error Resolution project by Loukas-Nikolaos Vetoulis.">
-    <title>Case Study: Automated Banking Error Resolution | Loukas-Nikolaos Vetoulis</title>
-    <link rel="stylesheet" href="../css/style.css"> <!-- Note path to CSS -->
+    <!-- UPDATE TITLE AND DESCRIPTION FOR EACH SPECIFIC CASE STUDY -->
+    <meta name="description" content="Case Study: Revolutionizing real estate intelligence for Aquarium Real Estate with an advanced, self-adapting web scraper by Loukas-Nikolaos Vetoulis.">
+    <title>Case Study: Aquarium Real Estate Web Scraper | Loukas-Nikolaos Vetoulis</title>
+    <link rel="stylesheet" href="../css/style.css"> <!-- Path to CSS from subfolder -->
     <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/dark_logo.png">
 </head>
+
 <body>
-     <div id="loader-wrapper">
-        <div class="loader-content"> <!-- New wrapper for logo and spinner -->
-            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <img id="loader-logo-img" src="fallback.png" alt="LNV Logo">
             <div class="loader-spinner"></div>
         </div>
     </div>
+
     <header class="navbar">
         <div class="container">
             <div class="nav-logo">
-                <a href="index.html">
-                    <img src="images/dark_logo.png" alt="LNV Logo"/>
+                <a href="../index.html"> <!-- Path to root index -->
+                    <img id="navbar-logo-img" src="fallback.png" alt="LNV Logo">
                 </a>
             </div>
             <nav class="main-nav">
                  <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
                 <ul class="nav-links" id="nav-links">
+                    <!-- Populated by JS using root-relative paths from data.js -->
                     <li><a href="../index.html">Home</a></li>
-                    <li><a href="../projects.html">Projects</a></li>
                     <li><a href="../case-studies.html">Case Studies</a></li>
+                    <li><a href="../projects.html">Projects</a></li>
                     <li><a href="../contact.html">Contact</a></li>
                 </ul>
             </nav>
             <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
-    <!-- Text Node for "Dark Mode" or "Light Mode" will be first child -->
-     <!-- This text will be updated by JS -->
-            <span class="icon-wrapper">
-                <!-- SVGs will be injected here by JS -->
-            </span>
-        </button>
-                </div>
+                Dark Mode <span class="icon-wrapper"></span>
+            </button>
+        </div>
     </header>
 
     <main class="case-study-detail-page">
         <article class="container"> <!-- Use article for semantic content -->
+
             <header class="case-study-header animated-item animate-slide-up">
-                <h1>Automated Banking Error Resolution</h1>
-                <p class="cs-meta-info">Enterprise Systems / Process Automation / Python / FinTech</p>
+                <h1>Revolutionizing Real Estate Intelligence for Aquarium Real Estate</h1>
+                <p class="cs-sub-headline animated-item animate-slide-up" data-animation-delay="100ms">
+                    Transforming tedious data collection into a strategic asset with an advanced, self-adapting web scraper.
+                </p>
+                <!-- Optional: Meta info like tags if you have specific styles for them -->
+                <!-- <p class="cs-meta-info">PYTHON / AUTOMATION / DATA EXTRACTION / FINTECH</p> -->
             </header>
 
             <!-- Optional Hero Image for the Case Study -->
-            <!-- <figure class="case-study-hero-image animated-item animate-scale-in data-animation-delay="100ms">
-                <img src="../images/case-study-details/project-a-hero.webp" alt="System Overview">
-            </figure> -->
+            <!--
+            <figure class="case-study-hero-image animated-item animate-scale-in" data-animation-delay="150ms">
+                <img src="../images/case-study-details/aquarium-real-estate-hero.webp" alt="Aquarium Real Estate Scraper Solution Overview">
+                <figcaption>Conceptual overview of the automated data pipeline.</figcaption>
+            </figure>
+            -->
 
             <section class="case-study-content">
                 <div class="animated-item animate-slide-up" data-animation-delay="200ms">
-                    <h2>The Challenge</h2>
-                    <p>Mission-critical banking terminals experienced periodic Process Errors leading to operational downtime and requiring significant manual intervention for diagnosis and resolution. The existing process was slow, reactive, and prone to overlooking recurring patterns.</p>
+                    <h2>The Challenge: Operational Drain and Missed Opportunities</h2>
+                    <p>For Aquarium Real Estate, a significant portion of their agents' valuable time was consumed by the laborious manual collection of private property listings from Spitogatos. This wasn't just inefficient; it was a strategic bottleneck. The hours spent on repetitive data entry diverted focus from client engagement, deal negotiation, and market analysis, leading to increased operational costs and the risk of relying on outdated information in a fast-moving market. The core challenge was to transform this time-intensive, error-prone process into a reliable, real-time data pipeline that would empower agents and fuel strategic decision-making.</p>
+                </div>
+
+                <div class="animated-item animate-slide-up" data-animation-delay="250ms">
+                    <h2>The Vision: Automated Precision, Strategic Clarity</h2>
+                    <p>Our vision was to deliver more than just a scraper; we aimed to engineer an intelligent data acquisition system. Adhering to our philosophy of <strong>"Craft with vision and precision,"</strong> the objective was to create a solution that was not only technically robust enough to navigate sophisticated anti-bot defenses but also "self-healing" to ensure long-term reliability with minimal maintenance. The ultimate goal: to provide Aquarium Real Estate with a seamless flow of accurate, actionable intelligence.</p>
                 </div>
 
                 <div class="animated-item animate-slide-up" data-animation-delay="300ms">
-                    <h2>My Role & Approach</h2>
-                    <p>As the lead developer on this initiative, my primary responsibility was to design and implement a fully automated system. Adhering to a philosophy of "Craft with vision and precision," the approach focused on creating a robust, reliable, and user-friendly solution that provided proactive insights rather than just reactive fixes. Simplicity in data presentation was key for quick adoption by the operations team.</p>
-                    <!-- Add more details about your specific contributions -->
+                    <h2>The Solution: An Intelligently Evasive, Self-Maintaining Scraper</h2>
+                    <p>Navigating modern web defenses requires a nuanced and adaptive approach. Standard scraping tools are easily thwarted by multi-layered anti-bot systems like those on Spitogatos, which include IP tracking, CAPTCHAs, browser fingerprinting, and JavaScript challenges.</p>
+                    <p>Our custom-engineered solution deployed a sophisticated, multi-pronged evasion strategy:</p>
+                    <ul>
+                        <li><strong>Dynamic IP Orchestration:</strong> Leveraging vast pools of residential proxies to ensure each request presented a unique, legitimate fingerprint.</li>
+                        <li><strong>Authentic Browser Emulation:</strong> Meticulously crafting realistic HTTP headers and dynamically rotating User-Agents to mirror diverse, genuine browsing patterns.</li>
+                        <li><strong>Intelligent CAPTCHA Resolution:</strong> Integrating advanced automated solvers for consistent, high-success-rate CAPTCHA bypass.</li>
+                        <li><strong>Advanced Fingerprint Masking:</strong> Actively modifying browser attributes (navigator.webdriver flags, WebRTC, canvas rendering) to make headless browsers virtually indistinguishable from authentic user sessions.</li>
+                        <li><strong>Behavioral Mimicry & Adaptive Throttling:</strong> Introducing randomized delays and emulating natural user interactions (mouse movements, clicks, scroll patterns) to avoid detection.</li>
+                        <li><strong>AI-Powered Adaptability:</strong> The system's core strength lies in its AI-driven capability to dynamically learn and adjust to website structural changes, autonomously updating its scraping logic to ensure continuous data extraction even as target sites evolve. This significantly reduces the brittleness common to traditional scrapers.</li>
+                    </ul>
+                    <h3>Seamless Integration, Actionable Data:</h3>
+                    <p>The extracted data – validated and structured – was delivered directly into Aquarium Real Estate's workflow via Google Sheets for real-time team collaboration and CSV exports for offline analysis or integration with other tools. This approach democratized data access, empowering every agent without requiring specialized IT intervention.</p>
                 </div>
+
+                <!-- Placeholder for an optional visual element like a simplified diagram or screenshot -->
+                <!--
+                <figure class="case-study-visual animated-item animate-scale-in" data-animation-delay="350ms">
+                    <img src="../images/case-study-details/data-flow-diagram.svg" alt="Data Flow Diagram">
+                    <figcaption>Simplified data acquisition and delivery pipeline.</figcaption>
+                </figure>
+                -->
 
                 <div class="animated-item animate-slide-up" data-animation-delay="400ms">
-                    <h2>The Solution Delivered</h2>
-                    <p>A Python-based automated system was developed to continuously monitor and manage Process Errors. Key components included:</p>
+                    <h2>The Impact: Reclaiming Time, Amplifying Focus, Gaining an Edge</h2>
+                    <p>The transformation for Aquarium Real Estate was immediate and profound:</p>
                     <ul>
-                        <li><strong>Automated Log Parsing:</strong> Scripts to ingest and parse complex terminal logs in real-time.</li>
-                        <li><strong>Intelligent Error Classification:</strong> Algorithms to categorize errors and identify known issues versus new anomalies.</li>
-                        <li><strong>Database Integration:</strong> Structured storage of error data for historical analysis and trend identification.</li>
-                        <li><strong>Visualization Dashboard:</strong> A web-based UI (e.g., using Flask/Dash or similar) presenting key metrics, error rates, and trends in an easily digestible format.</li>
-                        <li><strong>Automated Alerts:</strong> Real-time notifications (e.g., email, Slack) for critical or frequently recurring errors, enabling faster response.</li>
+                        <li><strong>Time Reclaimed, Expertise Unleashed:</strong> Each agent gained <strong>5–10 hours per week</strong>, time previously lost to manual data entry. This directly translated to increased capacity for client nurturing, property showings, and deal closures—core activities that drive revenue.</li>
+                        <li><strong>Operational Efficiency & Cost Reduction:</strong> The automation demonstrably reduced the operational burden and associated costs of manual data handling. With self-healing capabilities reducing ongoing maintenance by up to 90%, the solution provided a sustainable efficiency gain.</li>
+                        <li><strong>Enhanced Data Integrity & Reliability:</strong> Access to consistent, precise, and current private listings, supplementing MLS data, dramatically improved the quality and trustworthiness of Aquarium's data assets.</li>
+                        <li><strong>Strategic Advantage:</strong> The ability to gather exclusive data from sources without public APIs provided a distinct competitive edge, enabling superior market analysis, optimized pricing, and deeper business intelligence.</li>
                     </ul>
-                    <p>The system was built with modularity in mind, allowing for easy updates to parsing logic and alert rules.</p>
                 </div>
 
-                <!-- Optional: More images/diagrams within the content -->
-                <!-- <img src="../images/case-study-details/project-a-dashboard.webp" alt="Dashboard Screenshot" class="inline-image animated-item animate-scale-in"> -->
+                <!-- Table: The Transformation – Before & After Automated Data Acquisition -->
+                <!-- You can keep this table if you wish, or remove for more prose style -->
+                <div class="table-container animated-item animate-fade-in" data-animation-delay="450ms" style="overflow-x: auto; margin: 2rem 0;">
+                    <h3 style="text-align:center; margin-bottom:1rem;">Impact Snapshot</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Before Automation (Manual)</th>
+                                <th>After Automation (Custom Scraper)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Aspect"><strong>Data Collection</strong></td>
+                                <td data-label="Before">5–10 hrs/week per agent, error-prone, often outdated.</td>
+                                <td data-label="After">Real-time, automated extraction; hours reclaimed weekly; data accuracy & timeliness.</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Aspect"><strong>Agent Focus</strong></td>
+                                <td data-label="Before">Heavily skewed towards administrative data tasks.</td>
+                                <td data-label="After">Shifted to client engagement & high-value sales activities.</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Aspect"><strong>Operational Cost</strong></td>
+                                <td data-label="Before">Higher due to extensive manual labor.</td>
+                                <td data-label="After">Reduced manual effort & scraper maintenance (up to 90%).</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Aspect"><strong>Data Quality</strong></td>
+                                <td data-label="Before">Inconsistent, potential for inaccuracies.</td>
+                                <td data-label="After">Consistent, precise, validated, and structured.</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Aspect"><strong>Strategic Insight</strong></td>
+                                <td data-label="Before">Limited by manual capacity.</td>
+                                <td data-label="After">Access to exclusive, real-time private listing data.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
 
                 <div class="animated-item animate-slide-up" data-animation-delay="500ms">
-                    <h2>Technologies Utilized</h2>
-                    <ul>
-                        <li>Python (Core scripting, Pandas for data manipulation)</li>
-                        <li>Regular Expressions (for log parsing)</li>
-                        <li>SQL Database (e.g., PostgreSQL, SQLite for error data storage)</li>
-                        <li>Flask / Dash (for the visualization UI - specify which)</li>
-                        <li>Appium (mentioned for other projects, clarify if used here or separate)</li>
-                        <li>Git (for version control)</li>
-                        <!-- Add any other relevant tools/libraries -->
-                    </ul>
+                    <h2>The Difference is Precision.</h2>
+                    <p>This project for Aquarium Real Estate wasn't merely about building a tool; it was about engineering a sustainable, intelligent solution that delivers ongoing strategic value. Our commitment to <strong>"Craft with vision and precision"</strong> ensures that the systems we build are not only powerful today but are designed to adapt and perform reliably into the future, allowing our clients to focus on their core business with confidence.</p>
+                    <p>The "self-healing" nature of the scraper, driven by AI, exemplifies this perfectly – it’s the kind of thoughtful engineering that turns a technical utility into an almost invisible, indispensable asset.</p>
                 </div>
 
-                <div class="animated-item animate-slide-up" data-animation-delay="600ms">
-                    <h2>Results & Impact</h2>
-                    <p>The implementation of this automated system yielded significant improvements:</p>
-                    <ul>
-                        <li><strong>Drastically Reduced Error Detection Time:</strong> From hours of manual checking to near real-time identification.</li>
-                        <li><strong>Increased Operational Efficiency:</strong> Freed up significant man-hours previously spent on manual log analysis.</li>
-                        <li><strong>Proactive Problem Resolution:</strong> Enabled the team to identify and address root causes of recurring errors.</li>
-                        <li><strong>Enhanced System Reliability:</strong> Contributed to overall stability of the banking terminal network.</li>
-                        <li>While specific financial savings are confidential, the efficiency gains were estimated to save several hundreds of hours of specialized labor annually.</li>
-                    </ul>
-                </div>
-                <p style="margin-top:3rem; font-style:italic;" class="animated-item animate-fade-in" data-animation-delay="700ms">
-                    Due to confidentiality agreements, further specific details about internal metrics and proprietary technologies cannot be publicly shared.
+                <p style="margin-top:3rem; font-style:italic; font-size: 0.9em; color: var(--current-secondary-text);" class="animated-item animate-fade-in" data-animation-delay="550ms">
+                    Due to confidentiality agreements, further specific quantitative metrics and proprietary technologies associated with this enterprise project cannot be publicly shared.
                 </p>
             </section>
 
-             <!-- Optional: Back to Case Studies Link or CTA -->
-            <div style="text-align: center; margin-top: 4rem;" class="animated-item animate-fade-in" data-animation-delay="800ms">
-                <a href="../case-studies.html" class="btn btn-secondary"><span class="btn-text">← Back to All Case Studies</span></a>
+            <div style="text-align: center; margin-top: 4rem; padding-bottom: 2rem;" class="animated-item animate-fade-in" data-animation-delay="600ms">
+                <h2 style="font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 1.5rem;">Ready to elevate your own data strategy or automate complex processes with the same level of precision and expert care?</h2>
+                <a href="../contact.html" class="btn btn-primary cta-button-large">
+                    <span class="btn-text">Start the Conversation</span>
+                </a>
+                <p style="margin-top: 2rem; text-align: left;">
+                    <a href="../case-studies.html" class="subtle-link">← View All Case Studies</a>
+                </p>
             </div>
+
+
         </article>
     </main>
 
@@ -126,7 +190,7 @@
         </div>
     </footer>
 
-    <script src="../js/data.js"></script> <!-- Note path to JS -->
-    <script src="../js/main.js"></script>   <!-- Note path to JS -->
+    <script src="../js/data.js"></script> <!-- Path to JS from subfolder -->
+    <script src="../js/main.js"></script>   <!-- Path to JS from subfolder -->
 </body>
 </html>
