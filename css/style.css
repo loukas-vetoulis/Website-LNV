@@ -82,8 +82,8 @@ html { scroll-behavior: smooth; font-size: 17px; } /* Slightly larger for luxe f
     z-index: 9999;
     opacity: 1;
     visibility: visible;
-    transition: opacity var(--transition-duration-medium) var(--easing-smooth-in-out),
-                visibility var(--transition-duration-medium) var(--easing-smooth-in-out);
+    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                visibility 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 #loader-wrapper.loaded {
@@ -94,46 +94,32 @@ html { scroll-behavior: smooth; font-size: 17px; } /* Slightly larger for luxe f
 
 .loader-content {
     position: relative;
+    width: 120px;
+    height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Increase the size of this container significantly */
-    width: 180px;  /* <<< INCREASED from 80px */
-    height: 180px; /* <<< INCREASED from 80px */
 }
 
 .loader-logo {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* Increase logo size, but ensure it still fits well within the new spinner size */
-    width: 80px;   /* <<< INCREASED from 40px (Adjust as needed relative to spinner) */
+    width: 48px;
     height: auto;
     z-index: 2;
 }
 
 .loader-spinner {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(0deg);
-    /* Increase spinner diameter */
-    width: 150px;  /* <<< INCREASED from 70px */
-    height: 150px; /* <<< INCREASED from 70px */
-    /* Optionally, increase border thickness for a bolder look */
-    border: 8px solid transparent;        /* <<< INCREASED from 5px */
-    border-top: 8px solid var(--current-accent);   /* <<< INCREASED from 5px */
-    border-right: 8px solid var(--current-accent); /* <<< INCREASED from 5px */
+    width: 100px;
+    height: 100px;
+    border: 3px solid rgba(128, 128, 128, 0.15);
+    border-top-color: var(--current-accent);
     border-radius: 50%;
-    animation: spin 1.2s linear infinite; /* Slightly slower spin for a larger element */
-    will-change: transform;
-    z-index: 1;
+    animation: smoothSpin 1.2s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
 }
 
-@keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+@keyframes smoothSpin {
+    to { transform: rotate(360deg); }
 }
 
 
@@ -577,72 +563,179 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* --- Projects Page --- */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 3.5rem; }
+#projects-showcase { /* This is likely the <section> with class="container" */
+    /* Default container padding applies */
+}
+
+.section-title-container { /* For "My Work" / "Project Showcase." heading block */
+    text-align: center;
+    margin-bottom: 3rem; /* Adjusted from 5rem for tighter feel if desired */
+}
+.section-title-container h2 {
+    /* font-size: clamp(2rem, 5vw, 2.5rem); Default from H2 styles */
+    margin-bottom: 1rem; /* Adjusted from 1.25rem */
+}
+.section-title-container p.secondary { /* Description under the title */
+    /* font-size: 1rem; Default from p.secondary */
+    max-width: 650px; /* Constrain width */
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.65;
+}
+
+
+.projects-grid {
+    display: grid;
+    /* --- MOBILE FIRST: Default to a single column --- */
+    grid-template-columns: 1fr; /* Each card takes the full available width */
+    gap: 2.5rem; /* Gap between cards when stacked vertically on mobile */
+}
+
+/* --- DESKTOP OVERRIDE: Two cards per row on wider screens --- */
+/* Adjust this breakpoint to when you want the two-column layout to start */
+@media (min-width: 769px) { /* Example: tablets in landscape and up */
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr); /* Exactly two equal columns */
+        gap: 2rem; /* Gap for desktop two-column layout */
+    }
+}
+/* Optional: For very large screens, you could go back to more columns if desired, but 2 is your preference */
+/* @media (min-width: 1300px) {
+    .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); // Could allow 3 if space permits and min is adjusted
+    }
+} */
+
+
 .project-card {
-    background-color: var(--current-card-bg); border-radius: var(--border-radius-main);
-    border: 1px solid var(--current-border); box-shadow: var(--current-box-shadow);
-    overflow: hidden; display: flex; flex-direction: column;
+    background-color: var(--current-card-bg);
+    border-radius: var(--border-radius-main);
+    border: 1px solid var(--current-border);
+    box-shadow: var(--current-box-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     transition: all var(--transition-duration-medium) var(--easing-out-quad);
     will-change: transform, box-shadow;
-    transform-style: preserve-3d; /* For 3D tilt */
+    transform-style: preserve-3d;
     perspective: 1500px;
+    min-width: 0; /* Good for grid item flexibility */
 }
 .project-card:hover {
     box-shadow: var(--current-box-shadow-hover);
-    /* 3D tilt is handled by JS for finer control based on mouse position */
+    /* transform: translateY(-5px); Optional hover lift */
 }
-.project-card-inner { /* New wrapper for tilt content */
-    transition: transform var(--transition-duration-fast) var(--easing-out-quad); /* Smooth tilt reset */
+.project-card-inner { /* For the 3D tilt effect via JS */
+    transition: transform var(--transition-duration-fast) var(--easing-out-quad);
     width: 100%; height: 100%; display: flex; flex-direction: column;
 }
+
+/* Card Image - size suitable for both mobile (full width context) and desktop (half width context) */
 .project-card img {
     width: 100%;
-    height: 230px; /* Or your desired height */
+    height: 200px; /* Reduced slightly from 220px, better for single column mobile */
     object-fit: contain;
     border-bottom: 1px solid var(--current-border);
-    padding: 1rem;
-    /* REMOVE color: var(--current-accent); if you had it here to style the SVG
-       because the SVG will now style itself based on prefers-color-scheme. */
+    padding: 0.75rem;
+    /* SVG theming is internal */
 }
 
-.project-card-content { padding: 2.25rem; flex-grow: 1; display: flex; flex-direction: column; }
-.project-card-content .project-type { font-size: 0.9rem; font-weight: 600; color: var(--current-accent); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; }
-.project-card-content h3 { font-size: 1.55rem; margin-bottom: 1rem; color: var(--current-text); }
-.project-card-content p { font-size: 1.05rem; color: var(--current-secondary-text); margin-bottom: 1.75rem; flex-grow: 1; }
-.project-stack { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 2rem; }
-.project-stack span {
+/* Card Content - Font sizes should work for both mobile and desktop, as card width changes */
+.project-card-content {
+    padding: 1.5rem; /* Slightly reduced padding from 1.75rem */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card-content .project-type {
+    font-size: 0.75rem; /* Kept smaller for elegance */
+    font-weight: 600;
+    color: var(--current-accent);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.project-card-content h3 { /* Project Title */
+    font-size: 1.25rem;   /* Was 1.3rem. Adjusted for balance. */
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.6rem; /* Tighter */
+    color: var(--current-text);
+}
+
+.project-card-content p { /* Project Description */
+    font-size: 0.875rem;  /* Was 0.9rem. Slightly smaller for denser mobile cards. */
+    line-height: 1.65;     /* Good readability */
+    color: var(--current-secondary-text);
+    margin-bottom: 1rem; /* Tighter */
+    flex-grow: 1;
+    /* Optional Ellipsis (good for varying description lengths) */
+    /* display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show 3 lines before ellipsis
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+}
+
+.project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; /* Reduced gap for pills */
+    margin-bottom: 1.25rem; /* Tighter */
+}
+
+.project-stack span { /* Tech Stack Pills */
     background-color: var(--current-subtle-highlight);
-    padding: 0.85rem 1.5rem; border-radius: var(--border-radius-medium);
-    margin-bottom: 0.85rem; font-size: 1rem; font-weight: 500;
-    border: 1px solid var(--current-border); color: var(--current-secondary-text);
+    padding: 0.4rem 0.8rem; /* Smaller pills */
+    border-radius: var(--border-radius-small);
+    font-size: 0.75rem;    /* Smaller pill text */
+    font-weight: 500;
+    line-height: 1.3;
+    border: 1px solid var(--current-border);
+    color: var(--current-secondary-text);
     transition: all var(--transition-duration-fast) var(--easing-expressive);
     will-change: transform, border-color, color, box-shadow;
 }
-.project-stack span:hover {
+.project-stack span:hover { /* Keep hover style as it adapts well */
     border-color: var(--current-accent);
     color: var(--current-accent);
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 
-        0 4px 12px color-mix(in srgb, var(--current-accent) 12%, transparent),
-        0 1px 3px color-mix(in srgb, var(--current-accent) 20%, transparent);
-    background-color: color-mix(in srgb, var(--current-accent) 8%, transparent);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-1.5px) scale(1.02);
+    box-shadow:
+        0 3px 8px color-mix(in srgb, var(--current-accent) 10%, transparent),
+        0 1px 2px color-mix(in srgb, var(--current-accent) 15%, transparent);
+    background-color: color-mix(in srgb, var(--current-accent) 7%, transparent);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.project-links { margin-top: auto; display: flex; gap: 1.5rem; }
-.project-links a { font-size: 1rem; }
+
+.project-links {
+    margin-top: auto; /* Pushes to bottom */
+    display: flex;
+    gap: 0.75rem; /* Reduced gap */
+}
+.project-links a.btn { /* Target buttons to adjust their size within cards */
+    font-size: 0.85rem;  /* Smaller button text */
+    padding: 0.6rem 1.2rem; /* Smaller button padding */
+    /* Your global .btn styles for background, color, border, hover will apply */
+}
 
 .inquiry-cta {
-    padding: 5rem 0;
+    padding: 4rem 0; /* Adjusted padding */
     text-align: center;
+    border-top: 1px solid var(--current-subtle-highlight); /* Optional separator */
+    margin-top: 2rem; /* Space from project grid */
 }
 .inquiry-text {
-    font-size: clamp(1.4rem, 3.5vw, 1.9rem); /* Large, elegant text */
-    font-weight: 400; /* Lighter weight for sophistication */
+    /* Keep your elegant .inquiry-text and .inquiry-link styles */
+    font-size: clamp(1.3rem, 3vw, 1.8rem); /* Slightly adjusted for less dominance after cards */
+    font-weight: 400;
     color: var(--current-text);
     line-height: 1.6;
-    max-width: 700px;
+    max-width: 650px;
     margin: 0 auto;
 }
+
 .inquiry-link {
     color: var(--current-accent);
     text-decoration: none;
