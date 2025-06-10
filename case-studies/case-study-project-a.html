@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- UPDATE TITLE AND DESCRIPTION FOR EACH CASE STUDY -->
+    <meta name="description" content="Detailed case study of the Automated Banking Error Resolution project by Loukas-Nikolaos Vetoulis.">
+    <title>Case Study: Automated Banking Error Resolution | Loukas-Nikolaos Vetoulis</title>
+    <link rel="stylesheet" href="../css/style.css"> <!-- Note path to CSS -->
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/dark_logo.png">
+</head>
+<body>
+     <div id="loader-wrapper">
+        <div class="loader-content"> <!-- New wrapper for logo and spinner -->
+            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="images/dark_logo.png" alt="LNV Logo"/>
+                </a>
+            </div>
+            <nav class="main-nav">
+                 <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../projects.html">Projects</a></li>
+                    <li><a href="../case-studies.html">Case Studies</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
+    <!-- Text Node for "Dark Mode" or "Light Mode" will be first child -->
+     <!-- This text will be updated by JS -->
+            <span class="icon-wrapper">
+                <!-- SVGs will be injected here by JS -->
+            </span>
+        </button>
+                </div>
+    </header>
+
+    <main class="case-study-detail-page">
+        <article class="container"> <!-- Use article for semantic content -->
+            <header class="case-study-header animated-item animate-slide-up">
+                <h1>Automated Banking Error Resolution</h1>
+                <p class="cs-meta-info">Enterprise Systems / Process Automation / Python / FinTech</p>
+            </header>
+
+            <!-- Optional Hero Image for the Case Study -->
+            <!-- <figure class="case-study-hero-image animated-item animate-scale-in data-animation-delay="100ms">
+                <img src="../images/case-study-details/project-a-hero.webp" alt="System Overview">
+            </figure> -->
+
+            <section class="case-study-content">
+                <div class="animated-item animate-slide-up" data-animation-delay="200ms">
+                    <h2>The Challenge</h2>
+                    <p>Mission-critical banking terminals experienced periodic Process Errors leading to operational downtime and requiring significant manual intervention for diagnosis and resolution. The existing process was slow, reactive, and prone to overlooking recurring patterns.</p>
+                </div>
+
+                <div class="animated-item animate-slide-up" data-animation-delay="300ms">
+                    <h2>My Role & Approach</h2>
+                    <p>As the lead developer on this initiative, my primary responsibility was to design and implement a fully automated system. Adhering to a philosophy of "Craft with vision and precision," the approach focused on creating a robust, reliable, and user-friendly solution that provided proactive insights rather than just reactive fixes. Simplicity in data presentation was key for quick adoption by the operations team.</p>
+                    <!-- Add more details about your specific contributions -->
+                </div>
+
+                <div class="animated-item animate-slide-up" data-animation-delay="400ms">
+                    <h2>The Solution Delivered</h2>
+                    <p>A Python-based automated system was developed to continuously monitor and manage Process Errors. Key components included:</p>
+                    <ul>
+                        <li><strong>Automated Log Parsing:</strong> Scripts to ingest and parse complex terminal logs in real-time.</li>
+                        <li><strong>Intelligent Error Classification:</strong> Algorithms to categorize errors and identify known issues versus new anomalies.</li>
+                        <li><strong>Database Integration:</strong> Structured storage of error data for historical analysis and trend identification.</li>
+                        <li><strong>Visualization Dashboard:</strong> A web-based UI (e.g., using Flask/Dash or similar) presenting key metrics, error rates, and trends in an easily digestible format.</li>
+                        <li><strong>Automated Alerts:</strong> Real-time notifications (e.g., email, Slack) for critical or frequently recurring errors, enabling faster response.</li>
+                    </ul>
+                    <p>The system was built with modularity in mind, allowing for easy updates to parsing logic and alert rules.</p>
+                </div>
+
+                <!-- Optional: More images/diagrams within the content -->
+                <!-- <img src="../images/case-study-details/project-a-dashboard.webp" alt="Dashboard Screenshot" class="inline-image animated-item animate-scale-in"> -->
+
+                <div class="animated-item animate-slide-up" data-animation-delay="500ms">
+                    <h2>Technologies Utilized</h2>
+                    <ul>
+                        <li>Python (Core scripting, Pandas for data manipulation)</li>
+                        <li>Regular Expressions (for log parsing)</li>
+                        <li>SQL Database (e.g., PostgreSQL, SQLite for error data storage)</li>
+                        <li>Flask / Dash (for the visualization UI - specify which)</li>
+                        <li>Appium (mentioned for other projects, clarify if used here or separate)</li>
+                        <li>Git (for version control)</li>
+                        <!-- Add any other relevant tools/libraries -->
+                    </ul>
+                </div>
+
+                <div class="animated-item animate-slide-up" data-animation-delay="600ms">
+                    <h2>Results & Impact</h2>
+                    <p>The implementation of this automated system yielded significant improvements:</p>
+                    <ul>
+                        <li><strong>Drastically Reduced Error Detection Time:</strong> From hours of manual checking to near real-time identification.</li>
+                        <li><strong>Increased Operational Efficiency:</strong> Freed up significant man-hours previously spent on manual log analysis.</li>
+                        <li><strong>Proactive Problem Resolution:</strong> Enabled the team to identify and address root causes of recurring errors.</li>
+                        <li><strong>Enhanced System Reliability:</strong> Contributed to overall stability of the banking terminal network.</li>
+                        <li>While specific financial savings are confidential, the efficiency gains were estimated to save several hundreds of hours of specialized labor annually.</li>
+                    </ul>
+                </div>
+                <p style="margin-top:3rem; font-style:italic;" class="animated-item animate-fade-in" data-animation-delay="700ms">
+                    Due to confidentiality agreements, further specific details about internal metrics and proprietary technologies cannot be publicly shared.
+                </p>
+            </section>
+
+             <!-- Optional: Back to Case Studies Link or CTA -->
+            <div style="text-align: center; margin-top: 4rem;" class="animated-item animate-fade-in" data-animation-delay="800ms">
+                <a href="../case-studies.html" class="btn btn-secondary"><span class="btn-text">← Back to All Case Studies</span></a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+             <p id="footer-text">© 2024 Loukas-Nikolaos Vetoulis. Craft with vision and precision.</p>
+        </div>
+    </footer>
+
+    <script src="../js/data.js"></script> <!-- Note path to JS -->
+    <script src="../js/main.js"></script>   <!-- Note path to JS -->
+</body>
+</html>

@@ -11,73 +11,36 @@ const HERO_CONTENT = {
     email: "loukasvetoulis@gmail.com",
 };
 
-const ABOUT_CONTENT = {
-    bio: [
-        "A highly motivated and results-driven individual, dedicated to continuous learning and professional growth.",
-        "Adept at adapting to new challenges, with a strong focus on software engineering, particularly in the development of automated solutions and data science.",
-        "Committed to leveraging knowledge and skills to contribute to future innovations."
-    ],
-    profileImage: "images/profile.webp", // Optional: Add your photo
-};
+const CASE_STUDIES_DATA = [
+    {
+        id: "project-a", // Corresponds to a project in your main PROJECTS array if you want to link them
+        title: "Automated Banking Error Resolution",
+        subtitle: "Reducing operational overhead and improving system reliability for enterprise banking.",
+        thumbnailUrl: "images/case-study-thumbnails/project-a-thumbnail.webp", // Create this image
+        link: "case-studies/case-study-project-a.html", // Path to the detail page
+        tags: ["Python", "Automation", "Enterprise Systems", "FinTech"], // Optional tags
+        introduction: "A deep dive into developing a mission-critical system that revolutionized error processing..."
+    },
+    {
+        id: "project-b",
+        title: "EFTPOS Test Automation Framework",
+        subtitle: "Architecting a reusable Appium library to enhance QA for Android payment terminals.",
+        thumbnailUrl: "images/case-study-thumbnails/project-b-thumbnail.webp",
+        link: "case-studies/case-study-project-b.html",
+        tags: ["Appium", "Test Automation", "Android", "Payment Systems"],
+        introduction: "Exploring the design and implementation of a scalable testing framework for EFTPOS devices."
 
-const EXPERIENCES = [
-    {
-        role: "Junior Software Developer",
-        company: "Mellon Group (Piraeus Headquarters)",
-        period: "Oct 2024 - Present",
-        location: "Piraeus, Greece",
-        description: [
-            "Developed an automated system to monitor and manage Process Errors in banking terminals, improving error detection efficiency.",
-            "Implemented a Python-based solution with key features: daily script execution for terminal log files, automated database storage and processing of error data, robust UI for error visualization, and automated email notifications for recurring error patterns.",
-            "Currently working on Android EFTPOS testing automations.",
-        ],
     },
     {
-        role: "Barista, Bartender",
-        company: "Food Services, FAMILY VOULA",
-        period: "Mar 2024 - Oct 2024",
-        location: "Voula, Greece",
-        description: ["Provided customer service, prepared beverages, and managed bar operations."],
-    },
-    {
-        role: "Food Service Professional",
-        company: "Food Services, ICE ROLL GLYFADA",
-        period: "Apr 2023 - Mar 2024",
-        location: "Glyfada, Greece",
-        description: ["Involved in ice cream production, coffee preparation, production of cold and hot beverages, shop preparation, cashier duties, customer service, and food preparation."],
-    },
-];
-
-const EDUCATION = [
-    {
-        degree: "Bachelor of Science in Informatics",
-        institution: "Athens University of Economics and Business (AUEB)",
-        period: "Oct 2022 - Present",
-        description: "Focusing on software engineering, data science, and algorithms."
-    },
-    {
-        degree: "High School Diploma (Apolytirion)",
-        institution: "2nd General High School of Glyfada",
-        period: "Graduated 2022",
-        description: "Field of Economic and Informatics Sciences."
+        id: "project-c", // Example if you do a case study on an academic project
+        title: "AI-Powered Sentiment Analysis System",
+        subtitle: "Achieving high accuracy in sentiment classification through custom ML models.",
+        thumbnailUrl: "images/case-study-thumbnails/project-c-thumbnail.webp",
+        link: "case-studies/case-study-project-c.html",
+        tags: ["Machine Learning", "Python", "NLP", "Data Science"],
+        introduction: "From data preprocessing to model evaluation: building an effective sentiment classifier from scratch."
     }
-];
-
-const SKILLS = {
-    languages: ["Python", "Java", "C++", "JavaScript", "SQL", "HTML", "CSS"],
-    frameworksLibraries: ["Flask", "PyTorch", "Scikit-learn", "Selenium", "Node.js (basic)", "SGG Library (C++)"],
-    toolsDatabases: ["Git & GitHub", "Docker (basic)", "Android Studio", "VS Code", "PostgreSQL (basic)", "MySQL (basic)"],
-    methodologiesConcepts: ["Object-Oriented Programming (OOP)", "Data Structures & Algorithms", "Machine Learning", "NLP", "Web Scraping", "Automation", "Distributed Systems Concepts", "REST APIs"],
-};
-
-const AWARDS_CERTIFICATES = [
-    "1st in the Panhellenic Exams in the field of Economic and Informatics Sciences at the 2nd General High School of Glyfada (Year: 2022)",
-    "2nd in the Panhellenic Exams in the field of Economic and Informatics Sciences at Romvos Tutorial Center (Year: 2022)",
-    "Ranked 51st in the Informatics Department at AUEB (Academic Year 2022-2023)",
-    "MIT GSW 2023 Athens Participant",
-    "Commendation from the 9th Mathematics Competition of the Hellenic Mathematical Society",
-    "Commendation from the 10th Mathematics Competition of the Hellenic Mathematical Society",
-    "Certificate of Lower in English - Michigan Language Assessment (B2)"
+    // Add more case studies as needed
 ];
 
 const PROJECTS = [

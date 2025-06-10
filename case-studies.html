@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Loukas-Nikolaos Vetoulis, Software Developer. Specializing in automation, data science, and modern web technologies.">
+    <title>Loukas-Nikolaos Vetoulis | Software Developer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/dark_logo.png">
+</head>"
+<body>
+    <div id="loader-wrapper">
+        <div class="loader-content"> <!-- New wrapper for logo and spinner -->
+            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="images/dark_logo.png" alt="LNV Logo"/>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
+                <span class="icon-wrapper">
+                    <!-- SVGs will be injected here by JS -->
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="case-studies-hub" class="container">
+            <div class="section-title-container animated-item animate-slide-up">
+                <h2>Deep Dives into Solutions</h2> <!-- Or "Case Studies", "Featured Work" -->
+                <p class="secondary animated-item animate-slide-up" data-animation-delay="100ms">
+                    Exploring the challenges, processes, and impactful results behind key projects.
+                    Each study reflects a commitment to crafting solutions with vision and precision.
+                </p>
+            </div>
+
+            <div class="case-studies-grid" id="case-studies-grid-container">
+                <!-- Case study cards will be dynamically injected here by js/main.js -->
+            </div>
+        </section>
+
+        <!-- Optional: CTA to contact after viewing case studies -->
+        <section class="inquiry-cta container animated-item animate-fade-in" data-animation-delay="500ms">
+            <p class="inquiry-text">
+                Inspired by these solutions? Let's discuss how precision can shape your vision.
+                <a href="contact.html" class="inquiry-link">
+                    Start the Conversation<span class="arrow"> →</span>
+                </a>
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p id="footer-text">© 2024 Loukas-Nikolaos Vetoulis. Craft with vision and precision.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

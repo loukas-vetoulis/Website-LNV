@@ -771,6 +771,218 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     transform: scaleX(1);
     transform-origin: bottom left;
 }
+
+#case-studies-hub .section-title-container { /* Title block for this page */
+    margin-bottom: 4rem; /* Generous space before cards */
+}
+#case-studies-hub .section-title-container h2 {
+    font-size: clamp(2.2rem, 5.5vw, 3rem); /* Slightly larger for page title */
+}
+#case-studies-hub .section-title-container p.secondary {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem); /* Slightly larger intro text */
+    max-width: 720px;
+}
+
+.case-studies-grid {
+    display: grid;
+    /* For Apple-like feel, often 1 or 2 columns for these larger preview cards */
+    grid-template-columns: 1fr; /* Default to single column for mobile */
+    gap: 3rem; /* Gap between cards */
+}
+
+@media (min-width: 768px) { /* Tablet and up */
+    .case-studies-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Aim for 2 on tablets, might fit 1 wider */
+        /* If you want strict 2 columns on tablets & up until very large screens: */
+        /* grid-template-columns: repeat(2, 1fr); */
+        gap: 2.5rem;
+    }
+}
+
+@media (min-width: 1024px) { /* Desktop */
+    .case-studies-grid {
+        /* Strict two column often looks best for substantial case study cards */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3.5rem;
+    }
+}
+
+
+.case-study-card {
+    display: block; /* Make the whole card a link */
+    text-decoration: none;
+    background-color: var(--current-card-bg);
+    border-radius: var(--border-radius-main); /* e.g., 16px */
+    border: 1px solid var(--current-border);
+    box-shadow: var(--current-box-shadow);
+    overflow: hidden;
+    transition: transform var(--transition-duration-medium) var(--easing-out-quad),
+                box-shadow var(--transition-duration-medium) var(--easing-out-quad);
+    will-change: transform, box-shadow;
+    position: relative; /* For pseudo-elements or absolutely positioned content if any */
+}
+
+.case-study-card:hover {
+    transform: translateY(-6px) scale(1.01); /* Subtle lift and scale */
+    box-shadow: var(--current-box-shadow-hover);
+}
+.case-study-card:active {
+    transform: translateY(-2px) scale(0.99);
+    transition-duration: var(--transition-duration-fast);
+}
+
+
+.case-study-card-thumbnail {
+    width: 100%;
+    height: 280px; /* Adjust height for your thumbnails, make it consistent */
+                   /* Could also use aspect-ratio: 16 / 9; */
+    overflow: hidden; /* Ensure image doesn't break out of rounded top corners */
+}
+.case-study-card-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fill the space, might crop image edges */
+    transition: transform var(--transition-duration-slow) var(--easing-smooth-in-out);
+}
+.case-study-card:hover .case-study-card-thumbnail img {
+    transform: scale(1.05); /* Subtle zoom on image inside thumbnail */
+}
+
+.case-study-card-content {
+    padding: 2rem 2.25rem; /* Generous padding */
+}
+
+.case-study-card-content h3 { /* Case Study Title */
+    font-size: clamp(1.3rem, 3vw, 1.6rem); /* Responsive title size */
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--current-text);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.case-study-card-content .cs-subtitle { /* Specific class for subtitle */
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    color: var(--current-secondary-text);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+}
+.case-study-card-content .cs-introduction {
+    font-size: 0.95rem;
+    color: var(--current-secondary-text);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+     /* Optional: truncate introduction text */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.case-study-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: auto; /* Push tags and link to bottom if content above is short */
+    padding-top: 1rem; /* Space above tags if content is short */
+}
+.case-study-tags .tag {
+    font-size: 0.75rem; /* Smaller tags */
+    font-weight: 500;
+    background-color: var(--current-subtle-highlight);
+    color: var(--current-secondary-text);
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--border-radius-small);
+    border: 1px solid var(--current-border);
+}
+
+.case-study-card .read-more-link { /* The "Read Case Study ->" text */
+    display: inline-block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--current-accent);
+    margin-top: 1.25rem; /* Space after intro or tags */
+    text-decoration: none;
+    position: relative;
+}
+.case-study-card .read-more-link .arrow {
+    display: inline-block;
+    margin-left: 0.3em;
+    transition: transform var(--transition-duration-fast) var(--easing-out-quad);
+}
+.case-study-card:hover .read-more-link .arrow {
+    transform: translateX(4px);
+}
+
+
+/* --- Individual Case Study Page (e.g., case-studies/case-study-project-a.html) --- */
+/* Basic styling - you'll expand this significantly */
+.case-study-detail-page {
+    /* Standard .container will apply for width and padding */
+}
+.case-study-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--current-border);
+}
+.case-study-header h1 { /* Page title */
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: 0.75rem;
+}
+.case-study-header .cs-meta-info {
+    font-size: 0.9rem;
+    color: var(--current-secondary-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.case-study-hero-image img { /* If you have a large hero image for the study */
+    width: 100%;
+    max-height: 500px; /* Limit height */
+    object-fit: cover;
+    border-radius: var(--border-radius-medium);
+    margin-bottom: 3rem;
+    box-shadow: var(--current-box-shadow);
+}
+.case-study-content {
+    max-width: 750px; /* Optimal width for reading long-form text */
+    margin: 0 auto; /* Center the content column */
+}
+.case-study-content h2 { /* Subheadings within the case study */
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--current-subtle-highlight);
+}
+.case-study-content h3 { /* Sub-subheadings */
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--current-secondary-text);
+}
+.case-study-content p, .case-study-content ul, .case-study-content ol {
+    font-size: 1.05rem; /* Slightly larger for readability of body text */
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+.case-study-content ul { list-style: disc; padding-left: 1.5rem; }
+.case-study-content ol { list-style: decimal; padding-left: 1.5rem; }
+.case-study-content blockquote {
+    border-left: 3px solid var(--current-accent);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--current-secondary-text);
+}
+.case-study-content img.inline-image { /* For images within the text content */
+    max-width: 100%;
+    border-radius: var(--border-radius-medium);
+    margin: 2rem 0;
+    box-shadow: var(--current-box-shadow);
+}
 /* --- Contact Page --- */
 .contact-grid {
     display: grid;
