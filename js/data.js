@@ -52,6 +52,7 @@ const PROJECTS = [
         imageUrl: "images/projects-logo/ai-chatbot-logo.webp", // REPLACE
         liveLink: "#", // Optional
         githubLink: "https://github.com/loukas-vetoulis/Ai-Chatbot", // Or specific repo
+
     },
     {
         type: "Freelance", // Added type to differentiate
@@ -59,6 +60,7 @@ const PROJECTS = [
         description: "Engineered a bespoke web scraping solution for a real estate agency, automating the extraction of private property listings from multiple platforms into Google Sheets and CSVs. Implemented sophisticated anti-bot measures and automation, resulting in a 5-10 hour weekly productivity gain per agent.",
         stack: ["Python", "Selenium", "Google Sheets API", "CSV"],
         imageUrl: "images/projects-logo/spitogatos-scraper-logo.png", // REPLACE
+        caseStudyLink: "case-studies/case-study-project-a.html", // Link to case study if available
         liveLink: "#", // Optional
     },
     {

@@ -237,11 +237,18 @@ document.addEventListener('DOMContentLoaded', () => {
             let githubButtonHTML = '';
             if (project.githubLink && project.githubLink.trim() !== '') {
                 githubButtonHTML = `<a href="${project.githubLink}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><span class="btn-text">GitHub</span></a>`;
-            } else if (!project.isConfidential) {
+            } 
+            else if (!project.isConfidential) {
                 githubButtonHTML = `<span class="btn btn-secondary btn-disabled" aria-disabled="true" title="Repository is private or not publicly available."><span class="btn-text">Private Repo</span></span>`;
             }
             const liveButtonHTML = (!project.isConfidential && project.liveLink && project.liveLink !== "#")
                 ? `<a href="${project.liveLink}" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><span class="btn-text">View Live</span></a>` : '';
+            
+            let caseStudyButtonHTML = '';
+            if (project.caseStudyLink && project.caseStudyLink.trim() !== '') {
+                caseStudyButtonHTML = `<a href="${project.caseStudyLink}" class="btn btn-outline project-card-cs-link"><span class="btn-text">Read Case Study</span> <span class="arrow">→</span></a>`;
+            }
+
             let imageAltText = project.isConfidential ? `${project.title} icon` : (project.imageUrl && project.imageUrl.endsWith('.svg') ? `${project.title} logo` : `${project.title} preview`);
             card.innerHTML = `
                 <div class="project-card-inner">
@@ -251,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h3>${project.title}</h3>
                         <p>${project.description}</p>
                         <div class="project-stack">${stackHtml}</div>
-                        <div class="project-links">${githubButtonHTML}${liveButtonHTML}</div>
+                        <div class="project-links">${githubButtonHTML}${liveButtonHTML}${caseStudyButtonHTML}</div>
                     </div>
                 </div>`;
             projectsGrid.appendChild(card);
