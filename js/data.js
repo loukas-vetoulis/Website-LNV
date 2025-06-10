@@ -17,28 +17,19 @@ const CASE_STUDIES_DATA = [
         title: "Revolutionizing Real Estate Intelligence for Aquarium Real Estate",
         subtitle: " Transforming tedious data collection into a strategic asset with an advanced, self-adapting web scraper.",
         thumbnailUrl: "images/case-study-thumbnails/real_estate-screenshot.png", // Create this image
-        link: "case-studies/case-study-project-a.html", // Path to the detail page
+        link: "case-studies/case-study-real-estate-scraper.html", // Path to the detail page
         tags: ["Python", "Automation", "Enterprise Systems", "FinTech"], // Optional tags
         introduction: "Deep dive into the development of a sophisticated web scraping solution that automates data extraction for real estate agents, enhancing productivity and strategic decision-making."
     },
     {
         id: "project-b",
-        title: "EFTPOS Test Automation Framework",
-        subtitle: "Architecting a reusable Appium library to enhance QA for Android payment terminals.",
-        thumbnailUrl: "images/case-study-thumbnails/project-b-thumbnail.webp",
-        link: "case-studies/case-study-project-b.html",
-        tags: ["Appium", "Test Automation", "Android", "Payment Systems"],
-        introduction: "Exploring the design and implementation of a scalable testing framework for EFTPOS devices."
+        title: "Ai Chatbot for Real Estate",
+        subtitle: "Enhancing Real Estate Workflows with AI",
+        thumbnailUrl: "images/case-study-thumbnails/ai-chatbot-use-case-thumbnail.webp",
+        link: "case-studies/case-study-ai-chatbot.html",
+        tags:  ["Python", "Flask", "GPT-4 API", "JavaScript", "HTML", "CSS"],
+        introduction: "Building a secure, property-contextual AI chatbot for real estate agents, leveraging advanced GPT-4 capabilities to streamline workflows and enhance customer interactions."
 
-    },
-    {
-        id: "project-c", // Example if you do a case study on an academic project
-        title: "AI-Powered Sentiment Analysis System",
-        subtitle: "Achieving high accuracy in sentiment classification through custom ML models.",
-        thumbnailUrl: "images/case-study-thumbnails/project-c-thumbnail.webp",
-        link: "case-studies/case-study-project-c.html",
-        tags: ["Machine Learning", "Python", "NLP", "Data Science"],
-        introduction: "From data preprocessing to model evaluation: building an effective sentiment classifier from scratch."
     }
     // Add more case studies as needed
 ];
@@ -52,6 +43,8 @@ const PROJECTS = [
         imageUrl: "images/projects-logo/ai-chatbot-logo.webp", // REPLACE
         liveLink: "#", // Optional
         githubLink: "https://github.com/loukas-vetoulis/Ai-Chatbot", // Or specific repo
+        caseStudyLink: "case-studies/case-study-ai-chatbot.html", // Link to case study if available
+
 
     },
     {
@@ -60,7 +53,7 @@ const PROJECTS = [
         description: "Engineered a bespoke web scraping solution for a real estate agency, automating the extraction of private property listings from multiple platforms into Google Sheets and CSVs. Implemented sophisticated anti-bot measures and automation, resulting in a 5-10 hour weekly productivity gain per agent.",
         stack: ["Python", "Selenium", "Google Sheets API", "CSV"],
         imageUrl: "images/projects-logo/spitogatos-scraper-logo.png", // REPLACE
-        caseStudyLink: "case-studies/case-study-project-a.html", // Link to case study if available
+        caseStudyLink: "case-studies/case-study-real-estate-scraper.html", // Link to case study if available
         liveLink: "#", // Optional
     },
     {
