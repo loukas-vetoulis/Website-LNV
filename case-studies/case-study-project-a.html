@@ -22,7 +22,22 @@
 <body>
     <div id="loader-wrapper">
         <div class="loader-content">
-            <img id="loader-logo-img" src="fallback.png" alt="LNV Logo">
+            <!-- dark‐mode logo: only shows when html.dark-mode is set -->
+            <img
+            class="loader-logo dark-logo"
+            src="../images/dark_logo.png"
+            onerror="this.onerror=null;this.src='/images/dark_logo.png';"
+            alt="LNV Logo"
+            />
+
+            <!-- light‐mode logo: only shows when html.light-mode is set -->
+            <img
+            class="loader-logo light-logo"
+            src="../images/light_logo.png"
+            onerror="this.onerror=null;this.src='/images/light_logo.png';"
+            alt="LNV Logo"
+            />
+
             <div class="loader-spinner"></div>
         </div>
     </div>
