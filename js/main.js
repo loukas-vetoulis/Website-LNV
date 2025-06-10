@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof FOOTER_CONTENT !== 'undefined') {
         const footerTextEl = document.getElementById('footer-text');
         if (footerTextEl) {
-            footerTextEl.innerHTML = `© ${FOOTER_CONTENT.year || new Date().getFullYear()} ${FOOTER_CONTENT.name || "Loukas-Nikolaos Vetoulis"}. Craft with vision and precision.`;
+            footerTextEl.innerHTML = `© ${FOOTER_CONTENT.year || new Date().getFullYear()} ${FOOTER_CONTENT.name || "Loukas-Nikolaos Vetoulis"}. Simplicity crafted through vision and precision.`;
         }
     }
 
