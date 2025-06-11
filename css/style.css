@@ -219,78 +219,192 @@ a:hover { color: var(--current-accent-hover); }
     max-width: 1200px;
 }
 
+/* "The Logo That Remembers" - Steve Jobs: "What if logos could learn?" */
+.nav-logo {
+    position: relative;
+    --interactions: 0;
+    --familiarity: 0;
+}
+
 .nav-logo a {
     display: flex;
     align-items: center;
     position: relative;
     padding: 0.75rem;
-    border-radius: var(--border-radius-main);
-    overflow: hidden;
-    transition: all var(--transition-duration-medium) var(--easing-expressive);
+    background: transparent;
+    border: none;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
 }
 
 .nav-logo a::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle, 
-        color-mix(in srgb, var(--current-accent) 15%, transparent) 0%,
-        color-mix(in srgb, var(--current-accent) 8%, transparent) 50%,
-        transparent 100%);
-    transform: translate(-50%, -50%);
-    transition: all var(--transition-duration-slow) var(--easing-expressive);
-    z-index: 0;
-}
-
-.nav-logo a::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        color-mix(in srgb, var(--current-accent) 20%, transparent) 50%, 
-        transparent 100%);
-    transition: left var(--transition-duration-slow) var(--easing-smooth-in-out);
-    z-index: 1;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: inherit;
+    opacity: 0;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease-out;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .nav-logo img {
-    height: 60px;
+    height: 28px;
+    width: auto;
     position: relative;
-    z-index: 2;
-    transition: all var(--transition-duration-medium) var(--easing-expressive);
-    transform-origin: center;
-    filter: brightness(1) contrast(1);
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: calc(0.88 + var(--familiarity) * 0.12);
+    transform: scale(calc(1 + var(--familiarity) * 0.04));
+}
+
+/* First hover - cautious recognition */
+.nav-logo a:hover {
+    transform: translateY(calc(-2px - var(--familiarity) * 2px)) 
+               scale(calc(1.01 + var(--familiarity) * 0.02));
 }
 
 .nav-logo a:hover::before {
-    width: 120%;
-    height: 120%;
-    opacity: 0.8;
-}
-
-.nav-logo a:hover::after {
-    left: 100%;
+    opacity: calc(0.6 + var(--familiarity) * 0.4);
+    background: rgba(255, 255, 255, calc(0.04 + var(--familiarity) * 0.04));
+    border-color: rgba(255, 255, 255, calc(0.1 + var(--familiarity) * 0.1));
+    box-shadow: 0 calc(8px + var(--familiarity) * 8px) 
+                calc(24px + var(--familiarity) * 16px) 
+                rgba(0, 0, 0, calc(0.1 + var(--familiarity) * 0.05));
 }
 
 .nav-logo a:hover img {
-    transform: rotateY(12deg) rotateX(3deg) scale(1.05);
-    filter: brightness(1.1) contrast(1.05) 
-            drop-shadow(0 4px 12px color-mix(in srgb, var(--current-accent) 30%, transparent));
+    transform: translateZ(calc(4px + var(--familiarity) * 4px)) 
+               scale(calc(1.02 + var(--familiarity) * 0.03));
+    filter: brightness(calc(1.05 + var(--familiarity) * 0.05)) 
+            drop-shadow(0 calc(2px + var(--familiarity) * 2px) 
+                       calc(8px + var(--familiarity) * 4px) 
+                       rgba(0, 0, 0, calc(0.15 + var(--familiarity) * 0.1)));
 }
 
-.nav-logo a:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-        0 8px 25px color-mix(in srgb, var(--current-accent) 15%, transparent),
-        0 2px 8px color-mix(in srgb, var(--current-accent) 25%, transparent);
+/* Each click builds familiarity */
+.nav-logo a:active {
+    transform: translateY(calc(-1px - var(--familiarity) * 1px)) 
+               scale(calc(1.005 + var(--familiarity) * 0.015));
+    transition-duration: 0.1s;
+}
+
+.nav-logo a:active::before {
+    background: rgba(255, 255, 255, calc(0.06 + var(--familiarity) * 0.04));
+}
+
+/* Focus shows growing trust */
+.nav-logo a:focus {
+    outline: calc(1px + var(--familiarity) * 1px) solid 
+             rgba(0, 125, 251, calc(0.3 + var(--familiarity) * 0.2));
+    outline-offset: calc(2px + var(--familiarity) * 2px);
+    border-radius: calc(16px - var(--familiarity) * 4px);
+}
+
+/* Memory states - calculated progression */
+/* Stranger (0-2 interactions) */
+.nav-logo[data-familiarity="0"] {
+    --familiarity: 0;
+}
+
+/* Acquaintance (3-7 interactions) */
+.nav-logo[data-familiarity="1"] {
+    --familiarity: 0.25;
+}
+
+.nav-logo[data-familiarity="1"] a::before {
+    transition-duration: 0.25s;
+}
+
+/* Friend (8-15 interactions) */
+.nav-logo[data-familiarity="2"] {
+    --familiarity: 0.5;
+}
+
+.nav-logo[data-familiarity="2"] a {
+    border-radius: 14px;
+}
+
+.nav-logo[data-familiarity="2"] a::before {
+    transition-duration: 0.2s;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Companion (16+ interactions) */
+.nav-logo[data-familiarity="3"] {
+    --familiarity: 0.75;
+}
+
+.nav-logo[data-familiarity="3"] a {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.nav-logo[data-familiarity="3"] a::before {
+    transition-duration: 0.15s;
+    background: rgba(255, 255, 255, 0.04);
+    opacity: 0.3;
+}
+
+.nav-logo[data-familiarity="3"] img {
+    opacity: 0.95;
+}
+
+/* Best friend (25+ interactions) - ultimate trust */
+.nav-logo[data-familiarity="4"] {
+    --familiarity: 1;
+}
+
+.nav-logo[data-familiarity="4"] a {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-logo[data-familiarity="4"] a::before {
+    transition-duration: 0.1s;
+    background: rgba(255, 255, 255, 0.06);
+    opacity: 0.5;
+    backdrop-filter: blur(20px);
+}
+
+.nav-logo[data-familiarity="4"] img {
+    opacity: 1;
+    transform: scale(1.04);
+}
+
+.nav-logo[data-familiarity="4"] a:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Dark mode memory */
+@media (prefers-color-scheme: dark) {
+    .nav-logo a::before {
+        background: rgba(255, 255, 255, calc(0.01 + var(--familiarity) * 0.02));
+        border-color: rgba(255, 255, 255, calc(0.03 + var(--familiarity) * 0.05));
+    }
+    
+    .nav-logo a:hover::before {
+        background: rgba(255, 255, 255, calc(0.03 + var(--familiarity) * 0.03));
+        box-shadow: 0 calc(8px + var(--familiarity) * 8px) 
+                    calc(24px + var(--familiarity) * 16px) 
+                    rgba(0, 0, 0, calc(0.3 + var(--familiarity) * 0.2));
+    }
+}
+
+/* Respect those who prefer consistency */
+@media (prefers-reduced-motion: reduce) {
+    .nav-logo a,
+    .nav-logo img,
+    .nav-logo a::before {
+        transition-duration: 0.01s;
+    }
+    
+    .nav-logo a:hover {
+        transform: translateY(-1px) scale(1.01);
+    }
 }
 
 
