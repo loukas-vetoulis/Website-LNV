@@ -757,23 +757,23 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 .dark-mode .btn-secondary { background-color: transparent; color: var(--current-accent); border-color: var(--current-accent); }
 
 .btn-disabled {
-    background-color: var(--current-subtle-highlight) !important; /* Override regular btn styles */
+    background-color: var(--current-subtle-highlight) !important;
     border-color: var(--current-border) !important;
     color: var(--current-secondary-text) !important;
     opacity: 0.7;
-    cursor: not-allowed; /* Indicate it's not clickable */
-    /* Ensure it still takes up space like a button */
-    padding: 1rem 2.25rem; /* Match your .btn padding */
-    font-weight: 600; /* Match .btn */
-    font-size: 1.1rem; /* Match .btn */
-    border-radius: var(--border-radius-main); /* Match .btn */
-    display: inline-flex; /* To align text inside if using btn-text span */
+    cursor: not-allowed;
+    display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    text-decoration: none;
-    box-shadow: none !important; /* Remove hover shadows */
-    transform: none !important; /* Remove hover transforms */
+    /* Match other button sizes */
+    font-size: 0.85rem;  /* Match project-links a.btn font-size */
+    padding: 0.6rem 1.2rem; /* Match project-links a.btn padding */
+    border-radius: var(--border-radius-main);
+    font-weight: 600;
+    box-shadow: none !important;
+    transform: none !important;
 }
+
 
 .btn-disabled .btn-text {
     position: relative; /* For consistency if shimmer was there, though shimmer shouldn't apply */
