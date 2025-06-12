@@ -94,7 +94,30 @@ const PROJECTS = [
         imageUrl: "images/projects-logo/confidential-logo.svg"
     },
 ];
+// Define only the featured projects for the index page
+const FEATURED_PROJECTS = [
+    {
+        type: "Freelance",
+        title: "Real Estate AI Chatbot",
+        description: "Leveraged Flask and advanced GPT-4 capabilities to construct a secure, property-contextual AI chatbot for the real estate industry. This system, featuring robust data protection via encrypted identifiers and simplified iframe embedding, optimizes agent workflow by saving 3-5 hours in follow-up activities per property weekly.",
+        stack: ["Python", "Flask", "GPT-4 API", "JavaScript", "HTML", "CSS"],
+        imageUrl: "images/projects-logo/ai-chatbot-logo.webp", // REPLACE
+        liveLink: "#", // Optional
+        githubLink: "https://github.com/loukas-vetoulis/Ai-Chatbot", // Or specific repo
+        caseStudyLink: "case-studies/case-study-ai-chatbot.html", // Link to case study if available
 
+
+    },
+    {
+        type: "Freelance", // Added type to differentiate
+        title: "Real Estate Scraper",
+        description: "Engineered a bespoke web scraping solution for a real estate agency, automating the extraction of private property listings from multiple platforms into Google Sheets and CSVs. Implemented sophisticated anti-bot measures and automation, resulting in a 5-10 hour weekly productivity gain per agent.",
+        stack: ["Python", "Selenium", "Google Sheets API", "CSV"],
+        imageUrl: "images/projects-logo/spitogatos-scraper-logo.png", // REPLACE
+        caseStudyLink: "case-studies/case-study-real-estate-scraper.html", // Link to case study if available
+        liveLink: "#", // Optional
+    },
+];
 const CONTACT_DETAILS = {
   email: HERO_CONTENT.email,
   phone: "+30 6940504661",

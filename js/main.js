@@ -1,3 +1,66 @@
+class ProjectShowcase {
+    constructor(containerId) {
+        this.container = document.getElementById(containerId);
+    }
+
+    renderFeatured() {
+        if (!this.container) return;
+        
+        this.container.innerHTML = '';
+        
+        const featuredProjects = FEATURED_PROJECTS;
+
+        featuredProjects.forEach((project, index) => {
+            const card = document.createElement('article');
+            card.classList.add('project-card', 'animated-item', 'animate-scale-in');
+            card.dataset.animationDelay = `${index * 120}ms`;
+            
+            const stackHtml = project.stack.map(tech => `<span class="tech-pill">${tech}</span>`).join('');
+            
+            // Add GitHub button logic
+            let githubButtonHTML = '';
+            if (project.githubLink && project.githubLink.trim() !== '') {
+                githubButtonHTML = `<a href="${project.githubLink}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                    <span class="btn-text">GitHub</span>
+                </a>`;
+            } else {
+                githubButtonHTML = `<span class="btn btn-secondary btn-disabled" aria-disabled="true" title="Repository is private or not publicly available.">
+                    <span class="btn-text">Private Repo</span>
+                </span>`;
+            }
+
+            // Add Live button logic
+            const liveButtonHTML = (project.liveLink && project.liveLink !== "#") 
+                ? `<a href="${project.liveLink}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <span class="btn-text">View Live</span>
+                  </a>` 
+                : '';
+
+            card.innerHTML = `
+                <div class="project-card-inner">
+                    ${project.imageUrl ? `<img src="${project.imageUrl}" alt="${project.title}" loading="lazy">` : ''}
+                    <div class="project-card-content">
+                        <p class="project-type">${project.type}</p>
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div class="project-stack">${stackHtml}</div>
+                        <div class="project-links">
+                            ${githubButtonHTML}
+                            ${liveButtonHTML}
+                            ${project.caseStudyLink ? `
+                                <a href="${project.caseStudyLink}" class="btn btn-primary btn-premium">
+                                    <span class="btn-text">View Case Study</span>
+                                    <span class="arrow">→</span>
+                                </a>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>`;
+
+            this.container.appendChild(card);
+        });
+    }
+}
 // js/main.js
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element References ---
@@ -8,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinksUl = document.getElementById('nav-links'); // This is the UL for navigation links
     const mainNavbarLogo = document.querySelector('.nav-logo img');
     const heroTitleEl = document.querySelector('.hero h1#hero-name'); // Homepage specific
-
+    
     // --- Path & SVGs ---
     const currentPath = window.location.pathname.split("/").pop() || "index.html";
     // TODO: Replace with better/custom SVGs if desired
@@ -226,7 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Projects Page Specific Logic ---
     const projectsGrid = document.getElementById('projects-grid');
-    if (projectsGrid && typeof PROJECTS !== 'undefined') {
+    if (projectsGrid && currentPath === 'index.html') {
+        // Only render featured projects on index page
+        const showcase = new ProjectShowcase('projects-grid');
+        showcase.renderFeatured();
+    } else if (projectsGrid && currentPath === 'projects.html') {
         projectsGrid.innerHTML = '';
         PROJECTS.forEach((project, index) => {
             const card = document.createElement('article');
