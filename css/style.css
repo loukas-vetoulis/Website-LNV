@@ -521,6 +521,46 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 .footer a { color: var(--current-secondary-text); font-weight: 500; }
 .footer a:hover { color: var(--current-accent); text-decoration: underline; }
 
+/* Add to your style.css */
+.footer-nav {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+.footer-nav a {
+    color: var(--current-secondary-text);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.footer-nav a:hover {
+    color: var(--current-accent);
+    text-decoration: underline;
+}
+.footer-socials a {
+    display: inline-block;
+    color: var(--current-secondary-text);
+    transition: color 0.2s;
+    vertical-align: middle;
+}
+.footer-socials a:hover {
+    color: var(--current-accent);
+}
+.footer-contact {
+    font-size: 1rem;
+    color: var(--current-secondary-text);
+}
+.footer-contact a {
+    color: var(--current-secondary-text);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.footer-contact a:hover {
+    color: var(--current-accent);
+    text-decoration: underline;
+}
+
 /* --- Hero Section --- */
 .hero {
     min-height: calc(90vh - 100px); display: flex; flex-direction: column;

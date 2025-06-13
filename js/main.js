@@ -441,4 +441,59 @@ document.addEventListener('DOMContentLoaded', () => {
         // even if page loads extremely fast. Also helps if any late-loading resources affect layout.
         setTimeout(hideLoader, 300);
     });
+    // ...existing code...
+
+    // Footer rendering
+    const footerEl = document.getElementById('footer-content');
+    if (footerEl && typeof CONTACT_DETAILS !== 'undefined' && typeof FOOTER_CONTENT !== 'undefined') {
+        footerEl.innerHTML = `
+            <div class="footer-brand" style="margin-bottom:1.2rem;">
+                <img src="images/light_logo.png" alt="LNV Logo" id="footer-logo-img" style="height:36px;width:auto;display:block;margin:0 auto 0.5rem;">
+                <div class="footer-moto" style="font-size:1.05rem;color:var(--current-secondary-text);font-style:italic;">
+                    Simplicity crafted through vision and precision.
+                </div>
+            </div>
+            <nav class="footer-nav" aria-label="Footer Navigation">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="case-studies.html">Case Studies</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="footer-socials" style="margin:1.2rem 0;">
+                <a href="${CONTACT_DETAILS.github}" target="_blank" aria-label="GitHub" style="margin-right:1.2rem;">
+                    <svg width="22" height="22" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.1 3.29 9.43 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.75-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.7.42.36.8 1.09.8 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.45 24 17.12 24 12.02 24 5.74 18.27.5 12 .5z"/></svg>
+                </a>
+                <a href="${CONTACT_DETAILS.linkedin}" target="_blank" aria-label="LinkedIn">
+                    <svg width="22" height="22" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.28c-.97 0-1.75-.79-1.75-1.75s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.75-1.75 1.75zm13.5 10.28h-3v-4.5c0-1.08-.02-2.47-1.5-2.47-1.5 0-1.73 1.17-1.73 2.39v4.58h-3v-9h2.89v1.23h.04c.4-.76 1.37-1.56 2.82-1.56 3.01 0 3.57 1.98 3.57 4.56v4.77z"/></svg>
+                </a>
+            </div>
+            <div class="footer-contact" style="margin-bottom:1.2rem;">
+                <a href="mailto:${CONTACT_DETAILS.email}">${CONTACT_DETAILS.email}</a>
+                <span style="margin:0 0.7rem;">|</span>
+                <a href="tel:${CONTACT_DETAILS.phone.replace(/\s+/g, '')}">${CONTACT_DETAILS.phone}</a>
+                <span style="margin:0 0.7rem;">|</span>
+                <span>${CONTACT_DETAILS.address}</span>
+            </div>
+            <div class="footer-copy" style="font-size:0.97rem;color:var(--current-secondary-text);margin-top:0.7rem;">
+                &copy; ${FOOTER_CONTENT.year} ${FOOTER_CONTENT.name}
+            </div>
+        `;
+
+        // Logo color swap for dark mode (opposite of navigation)
+        const updateFooterLogo = () => {
+            const html = document.documentElement;
+            const footerLogo = document.getElementById('footer-logo-img');
+            if (!footerLogo) return;
+            if (html.classList.contains('dark-mode')) {
+                footerLogo.src = 'images/dark_logo.png';
+            } else {
+                footerLogo.src = 'images/light_logo.png';
+            }
+        };
+
+        updateFooterLogo();
+        // Listen for theme changes if your theme toggle changes the class on <html>
+        const observer = new MutationObserver(updateFooterLogo);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    }
 });
