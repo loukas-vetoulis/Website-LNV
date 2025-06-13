@@ -97,16 +97,17 @@ const PROJECTS = [
 // Define only the featured projects for the index page
 const FEATURED_PROJECTS = [
     {
-        type: "Freelance",
-        title: "Real Estate AI Chatbot",
-        description: "Leveraged Flask and advanced GPT-4 capabilities to construct a secure, property-contextual AI chatbot for the real estate industry. This system, featuring robust data protection via encrypted identifiers and simplified iframe embedding, optimizes agent workflow by saving 3-5 hours in follow-up activities per property weekly.",
-        stack: ["Python", "Flask", "GPT-4 API", "JavaScript", "HTML", "CSS"],
-        imageUrl: "images/projects-logo/ai-chatbot-logo.webp", // REPLACE
-        liveLink: "#", // Optional
-        githubLink: "https://github.com/loukas-vetoulis/Ai-Chatbot", // Or specific repo
-        caseStudyLink: "case-studies/case-study-ai-chatbot.html", // Link to case study if available
-
-
+        type: "Professional",
+        title: "Enterprise Systems Development & Automation", // Broader, more encompassing title
+        company: "Mellon Group", // Use if permissible and as on your CV
+        description: "Contributed to mission-critical enterprise systems, enhancing process automation and reliability. Developed a Python-based system for banking terminals that automated Process Error monitoring and management (log parsing, DB integration, visualization UI, alerts), significantly boosting error detection. Currently architecting and building a reusable Appium test automation library for Android EFTPOS terminals to improve QA and payment system testing coverage. (Specific project details are confidential.)",
+        stack: [
+            "Appium",
+            "Data Processing & Analysis",
+            "Automation",
+            "System Monitoring",
+        ], // Consolidate relevant skills
+        imageUrl: "images/projects-logo/confidential-logo.svg"
     },
     {
         type: "Freelance", // Added type to differentiate

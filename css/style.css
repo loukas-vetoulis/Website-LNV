@@ -554,10 +554,23 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     overflow: hidden;
 }
 
+.hero-unveiling.full-height-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
 .hero-landing-content {
-    max-width: 960px;
-    position: relative;
-    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 700px;
+    margin: 0;
+    text-align: center;
 }
 
 .overline {
@@ -634,6 +647,20 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 /* Premium Manifesto Styling */
 .manifesto-section {
     padding: 8rem 0;
+}
+
+.manifesto-section.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh; /* Adjust as needed for your design */
+    padding: 0;
+}
+
+.manifesto-content {
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
 }
 
 .prfyout {
