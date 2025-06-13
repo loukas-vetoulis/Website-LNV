@@ -1121,7 +1121,52 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
     transform: scaleX(1);
     transform-origin: bottom left;
 }
-/* --- Case Studies Hub Page --- */
+
+/* --- Services Section --- */
+
+.services-section {
+    text-align: center;
+    padding: 4rem 0 2rem 0;
+}
+
+.services-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.services-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+.service-card {
+    flex: 1 1 220px;
+    max-width: 320px;
+    padding: 2rem 1.5rem;
+    background: var(--current-card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--current-border);
+    box-shadow: var(--current-box-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+
+.service-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--current-accent);
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: var(--current-secondary-text);
+}
 /* Case Studies Hub - Precision Design */
 #case-studies-hub .section-title-container {
     margin-bottom: 5rem;
