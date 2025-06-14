@@ -54,13 +54,22 @@
                 <h1 class="hero-landing-title">
                     Simplicity crafted through vision and precision.
                 </h1>
-                <section class="intro-section container" style="padding: 4rem 0; text-align: center; max-width: 800px; margin: 0 auto;">
+                        <section class="intro-section">
                         <p style="font-size: 1.45rem; line-height: 1.8; color: var(--current-text);">
-                        I’m Loukas-Nicolaos Vetoulis — a software engineer focused on building smart, elegant solutions that help businesses run better. I specialize in automation and data science, with a deep commitment to understanding how your business works before writing a single line of code. Every project begins with a clear goal: solve the right problem, the right way. Guided by the principle that “simplicity is the ultimate sophistication,” I combine technical precision with a clean, thoughtful design approach to deliver real, lasting impact.
+                        I'm Loukas-Nicolaos Vetoulis, a software engineer specializing in automation and data science. My core focus is on building smart, elegant solutions that directly enhance business operations. I believe effective engineering starts not with code, but with a deep understanding of your business and its unique challenges. My goal is always to solve the right problem, the right way, ensuring every project delivers real, lasting impact through technical precision and thoughtful design, embodying the principle that "simplicity is the ultimate sophistication."
                     </p>
                 </section>
             </div>
         </section>
+        <script>
+            const video = document.querySelector('.hero-background-video');
+            if (video) {
+                video.addEventListener('ended', () => {
+                    video.currentTime = 0;
+                    video.play();
+                });
+            }
+        </script>
 
         <!-- PHILOSOPHY: The Why -->
         <section class="manifesto-section container" id="philosophy">

@@ -647,6 +647,10 @@ body:not(.dark-mode) .hero-overlay {
 .hero-landing-content {
     position: relative;
     z-index: 3; /* Above video and overlay */
+    padding: 0 1.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.1s;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -654,17 +658,21 @@ body:not(.dark-mode) .hero-overlay {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
-    padding: 0 2rem; /* Add padding for mobile */
     text-align: center;
 }
 
 /* ENHANCED TEXT VISIBILITY WITH DARKER BACKGROUND */
 .hero-landing-title {
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     line-height: 1.1;
+    font-weight: 500; /* Lighter weight for elegance */
     letter-spacing: -0.02em;
+    color: var(--current-text);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1.2s var(--easing-expressive) forwards;
+    animation-delay: 0.3s;
     margin-bottom: 1.5rem;
-    color: var(--current-text); /* Use theme color for elegance */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(255, 255, 255, 0.1); /* Enhanced shadow for better contrast */
     position: relative;
     z-index: 4;
@@ -682,12 +690,31 @@ body:not(.dark-mode) .hero-overlay {
 }
 
 .intro-section p {
-    font-size: 1.45rem;
+    font-size: clamp(1.25rem, 3vw, 1.45rem);
     line-height: 1.8;
-    color: var(--current-text); /* Theme color for consistency */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0.5px 1px rgba(255, 255, 255, 0.05); /* Enhanced text shadow */
-    font-weight: 300; /* Light weight for elegance */
-    opacity: 0.95; /* Slightly increased opacity for better readability */
+    font-weight: 300; /* Lighter weight for elegance */
+    color: var(--current-text);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.2s var(--easing-expressive) forwards;
+    animation-delay: 0.6s;
+}
+
+/* Premium Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .intro-section em {
@@ -697,36 +724,56 @@ body:not(.dark-mode) .hero-overlay {
     opacity: 1; /* Emphasize the quote */
 }
 
-/* MOBILE OPTIMIZATIONS */
+/* Mobile Optimizations */
+/* Mobile Typography Refinements */
 @media (max-width: 768px) {
-    .hero-visual-backdrop {
-        width: 100vw;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .hero-landing-content {
-        padding: 0 1.5rem;
-        max-width: 100%;
-    }
-    
     .hero-landing-title {
-        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        font-size: clamp(2rem, 6vw, 2.75rem);
+        line-height: 1.2;
+        letter-spacing: -0.025em;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        /* Improved text shadow for better contrast */
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
+
+    .intro-section {
+        padding: 1.5rem 0;
+    }
+
     .intro-section p {
-        font-size: clamp(1.1rem, 4vw, 1.3rem);
-        line-height: 1.6;
+        font-size: 1rem; /* Reduced from 1.25rem */
+        line-height: 1.7;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        /* Improved spacing */
+        margin: 0 auto;
+        max-width: 90%;
+    }
+
+    .hero-landing-content {
+        padding: 2rem 1rem;
+    }
+
+    /* Adjust vertical spacing */
+    .hero-unveiling {
+        min-height: 90vh;
+        padding: 2rem 0;
+        display: flex;
+        align-items: center;
     }
 }
 
+/* Additional refinements for very small screens */
 @media (max-width: 480px) {
-    .hero-landing-content {
-        padding: 0 1rem;
+    .hero-landing-title {
+        font-size: clamp(1.75rem, 5vw, 2.25rem);
+        margin-bottom: 1.5rem;
     }
-    
-    .intro-section {
-        padding: 2rem 0;
+
+    .intro-section p {
+        font-size: 0.95rem;
+        line-height: 1.65;
     }
 }
 
