@@ -17,6 +17,7 @@
             <div class="loader-spinner"></div>
         </div>
     </div>
+    
     <header class="navbar">
         <div class="container">
             <div class="nav-logo">
@@ -42,34 +43,27 @@
     </header>
  
     <main>
-        <!-- HERO: The Essence -->
-        <section class="hero-unveiling full-height-section">
+        <div class="hero-section" id="heroSection">
             <div class="hero-visual-backdrop">
-                <video autoplay muted loop playsinline class="hero-background-video">
+                <video autoplay muted loop playsinline class="hero-background-video" id="heroVideo">
                     <source src="videos/programming_video.mp4" type="video/mp4">
                 </video>
                 <div class="hero-overlay"></div>
             </div>
-            <div class="hero-landing-content container">
-                <h1 class="hero-landing-title">
-                    Simplicity crafted through vision and precision.
-                </h1>
-                        <section class="intro-section">
-                        <p style="font-size: 1.45rem; line-height: 1.8; color: var(--current-text);">
-                        I'm Loukas-Nicolaos Vetoulis, a software engineer specializing in automation and data science. My core focus is on building smart, elegant solutions that directly enhance business operations. I believe effective engineering starts not with code, but with a deep understanding of your business and its unique challenges. My goal is always to solve the right problem, the right way, ensuring every project delivers real, lasting impact through technical precision and thoughtful design, embodying the principle that "simplicity is the ultimate sophistication."
-                    </p>
-                </section>
+            <h1 class="hero-title" id="heroTitle">Simplicity</h1>
+            <h2 class="hero-subtitle" id="heroSubtitle">Crafted Through Vision & Precision</h2>
+            
+            <div class="intro-container" id="introContainer">
+                <p class="intro-text">
+                    <span id="typewriterText"></span><span class="typewriter" id="cursor"></span>
+                </p>
             </div>
-        </section>
-        <script>
-            const video = document.querySelector('.hero-background-video');
-            if (video) {
-                video.addEventListener('ended', () => {
-                    video.currentTime = 0;
-                    video.play();
-                });
-            }
-        </script>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-dot"></div>
+                <div class="scroll-text">Scroll to explore</div>
+            </div>
+        </div>
 
         <!-- PHILOSOPHY: The Why -->
         <section class="manifesto-section container" id="philosophy">

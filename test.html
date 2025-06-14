@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple-Inspired Title Animations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #1d1d1f;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 15vh;
+            padding: 8vh 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 40vh;
+            justify-content: center;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #86868b;
+            margin-bottom: 3rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* 1. Gentle Fade-In with Letter Spacing */
+        .title-fade {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: gentleFadeIn 2.5s ease-out forwards;
+            color: #1d1d1f;
+            line-height: 1.1;
+        }
+
+        @keyframes gentleFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+                letter-spacing: 0.3em;
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                letter-spacing: -0.02em;
+            }
+        }
+
+        /* 2. Blur Focus Effect */
+        .title-blur {
+            font-size: clamp(2.5rem, 7vw, 7rem);
+            font-weight: 600;
+            text-align: center;
+            color: #1d1d1f;
+            filter: blur(20px);
+            opacity: 0;
+            transform: scale(1.1);
+            animation: blurFocus 3s ease-out forwards;
+            line-height: 1.2;
+        }
+
+        @keyframes blurFocus {
+            0% {
+                filter: blur(20px);
+                opacity: 0;
+                transform: scale(1.1);
+            }
+            60% {
+                filter: blur(0px);
+                opacity: 0.7;
+            }
+            100% {
+                filter: blur(0px);
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 3. Staggered Letter Reveal */
+        .title-stagger {
+            font-size: clamp(2.5rem, 7vw, 7rem);
+            font-weight: 700;
+            text-align: center;
+            color: #1d1d1f;
+            line-height: 1.1;
+        }
+
+        .title-stagger .letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: letterReveal 0.8s ease-out forwards;
+        }
+
+        .title-stagger .letter:nth-child(1) { animation-delay: 0.1s; }
+        .title-stagger .letter:nth-child(2) { animation-delay: 0.2s; }
+        .title-stagger .letter:nth-child(3) { animation-delay: 0.3s; }
+        .title-stagger .letter:nth-child(4) { animation-delay: 0.4s; }
+        .title-stagger .letter:nth-child(5) { animation-delay: 0.5s; }
+        .title-stagger .letter:nth-child(6) { animation-delay: 0.6s; }
+        .title-stagger .letter:nth-child(7) { animation-delay: 0.7s; }
+        .title-stagger .letter:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes letterReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 4. Elegant Scale & Fade */
+        .title-scale {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 300;
+            text-align: center;
+            color: #1d1d1f;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: elegantScale 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        @keyframes elegantScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            60% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 5. Breathing Text */
+        .title-breathe {
+            font-size: clamp(2.5rem, 7vw, 7rem);
+            font-weight: 500;
+            text-align: center;
+            color: #1d1d1f;
+            animation: breathe 4s ease-in-out infinite;
+            line-height: 1.2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .title-breathe:hover {
+            transform: scale(1.02);
+            color: #007aff;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.01);
+                opacity: 0.95;
+            }
+        }
+
+        /* 6. Scroll-Triggered Parallax */
+        .title-parallax {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-align: center;
+            color: #1d1d1f;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .title-parallax.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 7. Typewriter with Cursor */
+        .title-typewriter {
+            font-size: clamp(2.5rem, 7vw, 7rem);
+            font-weight: 600;
+            text-align: center;
+            color: #1d1d1f;
+            line-height: 1.2;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        }
+
+        .typewriter-text {
+            border-right: 3px solid #1d1d1f;
+            animation: blink 1.5s infinite;
+            padding-right: 5px;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #1d1d1f; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        /* Interactive Hover Enhancement */
+        .interactive-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 600;
+            text-align: center;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .interactive-title:hover {
+            transform: translateY(-5px);
+            color: #007aff;
+            text-shadow: 0 20px 40px rgba(0, 122, 255, 0.1);
+        }
+
+        .interactive-title:hover::before {
+            left: 100%;
+        }
+
+        /* Subtle background enhancement */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            z-index: -1;
+            animation: gradientShift 20s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+            50% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                gap: 10vh;
+                padding: 5vh 1rem;
+            }
+            
+            .section-label {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <div class="demo-section">
+            <div class="section-label">Gentle Fade with Letter Spacing</div>
+            <h1 class="title-fade">Elegant</h1>
+        </div>
+
+        <div class="demo-section">
+            <div class="section-label">Blur to Focus</div>
+            <h1 class="title-blur">Refined</h1>
+        </div>
+
+        <div class="demo-section">
+            <div class="section-label">Staggered Letter Reveal</div>
+            <h1 class="title-stagger">
+                <span class="letter">P</span>
+                <span class="letter">r</span>
+                <span class="letter">e</span>
+                <span class="letter">m</span>
+                <span class="letter">i</span>
+                <span class="letter">u</span>
+                <span class="letter">m</span>
+            </h1>
+        </div>
+
+        <div class="demo-section">
+            <div class="section-label">Elegant Scale & Fade</div>
+            <h1 class="title-scale">Design</h1>
+        </div>
+
+        <div class="demo-section">
+            <div class="section-label">Breathing Effect</div>
+            <h1 class="title-breathe">Minimal</h1>
+        </div>
+
+        <div class="demo-section">
+            <div class="section-label">Scroll-Triggered Parallax</div>
+            <h1 class="title-parallax">Smooth</h1>
+        </div>
+
+        <div class="demo-section">
+            <div class="section-label">Typewriter Effect</div>
+            <h1 class="title-typewriter">
+                <span class="typewriter-text">Apple-like</span>
+            </h1>
+        </div>
+
+        <div class="demo-section">
+            <div class="section-label">Interactive Hover Enhancement</div>
+            <h1 class="interactive-title">Polished</h1>
+        </div>
+    </div>
+
+    <script>
+        // Typewriter effect
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typewriter
+        const typewriterElement = document.querySelector('.typewriter-text');
+        setTimeout(() => {
+            typeWriter(typewriterElement, 'Apple-like', 150);
+        }, 1000);
+
+        // Scroll-triggered animation
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe parallax title
+        const parallaxTitle = document.querySelector('.title-parallax');
+        observer.observe(parallaxTitle);
+
+        // Enhanced breathing effect with scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            
+            const breatheTitle = document.querySelector('.title-breathe');
+            breatheTitle.style.animationPlayState = 'paused';
+            
+            scrollTimeout = setTimeout(() => {
+                breatheTitle.style.animationPlayState = 'running';
+            }, 150);
+        });
+
+        // Smooth scroll behavior
+        document.querySelectorAll('h1').forEach(title => {
+            title.addEventListener('click', (e) => {
+                // Add subtle click feedback
+                e.target.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    e.target.style.transform = '';
+                }, 100);
+            });
+        });
+
+        // Refined hover interactions
+        const interactiveTitle = document.querySelector('.interactive-title');
+        let hoverTimeout;
+
+        interactiveTitle.addEventListener('mouseenter', () => {
+            clearTimeout(hoverTimeout);
+        });
+
+        interactiveTitle.addEventListener('mouseleave', () => {
+            hoverTimeout = setTimeout(() => {
+                // Subtle reset animation
+            }, 300);
+        });
+
+        // Add subtle parallax to background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.title-parallax');
+            
+            parallaxElements.forEach(element => {
+                const speed = 0.5;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Preload and optimize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Force hardware acceleration
+            const titles = document.querySelectorAll('h1');
+            titles.forEach(title => {
+                title.style.willChange = 'transform, opacity';
+            });
+
+            // Clean up will-change after animations
+            setTimeout(() => {
+                titles.forEach(title => {
+                    title.style.willChange = 'auto';
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

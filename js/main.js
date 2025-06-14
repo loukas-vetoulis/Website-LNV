@@ -497,3 +497,153 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
 });
+
+class PremiumHeroAnimation {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        // Hide hero section initially to prevent flash
+        const heroSection = document.getElementById('heroSection');
+        if (heroSection) {
+            heroSection.style.opacity = '0';
+            heroSection.style.visibility = 'hidden';
+        }
+        
+        this.setupVideoAnimation();
+        this.setupTextAnimation();
+        this.setupTypewriter();
+        this.setupScrollAnimation();
+        
+        // Show hero section after brief delay to ensure everything is set up
+        setTimeout(() => {
+            if (heroSection) {
+                heroSection.style.opacity = '1';
+                heroSection.style.visibility = 'visible';
+            }
+        }, 100);
+    }
+
+    setupVideoAnimation() {
+        const video = document.querySelector('.hero-background-video');
+        
+        if (video) {
+            // Immediately add loaded class to prevent flash
+            video.classList.add('loaded');
+        }
+    }
+
+    setupTextAnimation() {
+        const title = document.getElementById('heroTitle');
+        const subtitle = document.getElementById('heroSubtitle');
+        
+        // Make titles ready for animation (show them)
+        setTimeout(() => {
+            if (title) {
+                title.classList.add('ready');
+                this.animateText(title, 200);
+            }
+        }, 800);
+        
+        // Animate subtitle with delay
+        setTimeout(() => {
+            if (subtitle) {
+                subtitle.classList.add('ready');
+                this.animateText(subtitle, 0);
+            }
+        }, 1400);
+    }
+
+    animateText(element, delay) {
+        const text = element.textContent;
+        element.innerHTML = '';
+        
+        [...text].forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.className = 'letter';
+            element.appendChild(span);
+            
+            // Stagger animation with Apple-like timing
+            setTimeout(() => {
+                span.classList.add('animate');
+            }, delay + (index * 80) + Math.random() * 50);
+        });
+    }
+
+    setupTypewriter() {
+        const text = "I'm Loukas-Nicolaos Vetoulis, a software engineer specializing in automation and data science. My core focus is on building smart, elegant solutions that directly enhance business operations. I believe effective engineering starts not with code, but with a deep understanding of your business and its unique challenges. My goal is always to solve the right problem, the right way, ensuring every project delivers real, lasting impact through technical precision and thoughtful design, embodying the principle that simplicity is the ultimate sophistication.";
+        const typewriterElement = document.getElementById('typewriterText');
+        const cursor = document.getElementById('cursor');
+        const container = document.getElementById('introContainer');
+        
+        let index = 0;
+        
+        // Start typewriter after title animations
+        setTimeout(() => {
+            if (container) container.classList.add('show');
+            
+            if (typewriterElement) {
+                const typeInterval = setInterval(() => {
+                    if (index < text.length) {
+                        typewriterElement.textContent += text[index];
+                        index++;
+                    } else {
+                        clearInterval(typeInterval);
+                        // Remove cursor after typing is done
+                        setTimeout(() => {
+                            if (cursor) cursor.style.display = 'none';
+                        }, 1000);
+                    }
+                }, 30);
+            }
+        }, 2400);
+    }
+
+    setupScrollAnimation() {
+        let hasScrolled = false;
+        
+        window.addEventListener('scroll', () => {
+            if (!hasScrolled && window.scrollY > 100) {
+                hasScrolled = true;
+                this.triggerScrollAnimation();
+            }
+        });
+        
+        // Also trigger on wheel event for better responsiveness
+        window.addEventListener('wheel', (e) => {
+            if (!hasScrolled && e.deltaY > 0) {
+                hasScrolled = true;
+                this.triggerScrollAnimation();
+            }
+        });
+    }
+
+    triggerScrollAnimation() {
+        
+        const heroSection = document.getElementById('heroSection');
+        const mainContent = document.getElementById('mainContent');
+        
+        // Animate hero section out
+        if (heroSection) heroSection.classList.add('scrolled');
+        
+        // Delay main content reveal until hero starts moving
+        setTimeout(() => {
+            if (mainContent) mainContent.classList.add('reveal');
+        }, 400);
+        
+        // Remove hero from DOM after animation
+        setTimeout(() => {
+            if (heroSection) heroSection.style.display = 'none';
+        }, 1200);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        document.body.classList.add('hero-started');
+    }, 500);
+    new PremiumHeroAnimation();
+});
