@@ -497,153 +497,235 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
 });
-
 class PremiumHeroAnimation {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        // Hide hero section initially to prevent flash
-        const heroSection = document.getElementById('heroSection');
-        if (heroSection) {
-            heroSection.style.opacity = '0';
-            heroSection.style.visibility = 'hidden';
-        }
-        
-        this.setupVideoAnimation();
-        this.setupTextAnimation();
-        this.setupTypewriter();
-        this.setupScrollAnimation();
-        
-        // Show hero section after brief delay to ensure everything is set up
-        setTimeout(() => {
-            if (heroSection) {
-                heroSection.style.opacity = '1';
-                heroSection.style.visibility = 'visible';
+            constructor() {
+                this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                this.init();
             }
-        }, 100);
-    }
 
-    setupVideoAnimation() {
-        const video = document.querySelector('.hero-background-video');
-        
-        if (video) {
-            // Immediately add loaded class to prevent flash
-            video.classList.add('loaded');
-        }
-    }
-
-    setupTextAnimation() {
-        const title = document.getElementById('heroTitle');
-        const subtitle = document.getElementById('heroSubtitle');
-        
-        // Make titles ready for animation (show them)
-        setTimeout(() => {
-            if (title) {
-                title.classList.add('ready');
-                this.animateText(title, 200);
-            }
-        }, 800);
-        
-        // Animate subtitle with delay
-        setTimeout(() => {
-            if (subtitle) {
-                subtitle.classList.add('ready');
-                this.animateText(subtitle, 0);
-            }
-        }, 1400);
-    }
-
-    animateText(element, delay) {
-        const text = element.textContent;
-        element.innerHTML = '';
-        
-        [...text].forEach((char, index) => {
-            const span = document.createElement('span');
-            span.textContent = char === ' ' ? '\u00A0' : char;
-            span.className = 'letter';
-            element.appendChild(span);
-            
-            // Stagger animation with Apple-like timing
-            setTimeout(() => {
-                span.classList.add('animate');
-            }, delay + (index * 80) + Math.random() * 50);
-        });
-    }
-
-    setupTypewriter() {
-        const text = "I'm Loukas-Nicolaos Vetoulis, a software engineer specializing in automation and data science. My core focus is on building smart, elegant solutions that directly enhance business operations. I believe effective engineering starts not with code, but with a deep understanding of your business and its unique challenges. My goal is always to solve the right problem, the right way, ensuring every project delivers real, lasting impact through technical precision and thoughtful design, embodying the principle that simplicity is the ultimate sophistication.";
-        const typewriterElement = document.getElementById('typewriterText');
-        const cursor = document.getElementById('cursor');
-        const container = document.getElementById('introContainer');
-        
-        let index = 0;
-        
-        // Start typewriter after title animations
-        setTimeout(() => {
-            if (container) container.classList.add('show');
-            
-            if (typewriterElement) {
-                const typeInterval = setInterval(() => {
-                    if (index < text.length) {
-                        typewriterElement.textContent += text[index];
-                        index++;
-                    } else {
-                        clearInterval(typeInterval);
-                        // Remove cursor after typing is done
-                        setTimeout(() => {
-                            if (cursor) cursor.style.display = 'none';
-                        }, 1000);
+            init() {
+                // Hide hero section initially to prevent flash
+                const heroSection = document.getElementById('heroSection');
+                if (heroSection) {
+                    heroSection.style.opacity = '0';
+                    heroSection.style.visibility = 'hidden';
+                }
+                
+                this.setupVideoAnimation();
+                this.setupTextAnimation();
+                this.setupTypewriter();
+                this.setupScrollAnimation();
+                
+                // Show hero section after brief delay
+                setTimeout(() => {
+                    if (heroSection) {
+                        heroSection.style.opacity = '1';
+                        heroSection.style.visibility = 'visible';
                     }
-                }, 30);
-            }
-        }, 2400);
-    }
+                }, 100);
 
-    setupScrollAnimation() {
-        let hasScrolled = false;
-        
-        window.addEventListener('scroll', () => {
-            if (!hasScrolled && window.scrollY > 100) {
-                hasScrolled = true;
-                this.triggerScrollAnimation();
+                // iOS specific fixes
+                if (this.isIOS) {
+                    this.setupIOSFixes();
+                }
             }
+
+            setupIOSFixes() {
+                // Prevent iOS bounce scrolling during hero
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+                
+                // Re-enable scrolling after hero animation
+                setTimeout(() => {
+                    document.body.classList.add('hero-started');
+                    document.body.style.position = '';
+                    document.body.style.width = '';
+                }, 4000);
+
+                // Force repaint to prevent iOS animation glitches
+                const forceRepaint = () => {
+                    const heroSection = document.getElementById('heroSection');
+                    if (heroSection) {
+                        heroSection.style.transform = 'translateZ(0)';
+                    }
+                };
+                
+                setTimeout(forceRepaint, 50);
+            }
+
+            setupVideoAnimation() {
+                const video = document.querySelector('.hero-background-video');
+                
+                if (video) {
+                    // Mobile-specific video handling
+                    if (this.isMobile) {
+                        video.muted = true;
+                        video.playsInline = true;
+                        
+                        // Ensure video plays on mobile
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                // Auto-play failed, handle gracefully
+                                console.log('Video autoplay failed, continuing without video');
+                            });
+                        }
+                    }
+                    
+                    video.addEventListener('loadeddata', () => {
+                        video.classList.add('loaded');
+                    });
+                    
+                    // Fallback for slow loading
+                    setTimeout(() => {
+                        video.classList.add('loaded');
+                    }, 1000);
+                }
+            }
+
+            setupTextAnimation() {
+                const title = document.getElementById('heroTitle');
+                const subtitle = document.getElementById('heroSubtitle');
+                
+                // Faster animations on mobile
+                const titleDelay = this.isMobile ? 600 : 800;
+                const subtitleDelay = this.isMobile ? 1000 : 1400;
+                
+                setTimeout(() => {
+                    if (title) {
+                        title.classList.add('ready');
+                        this.animateText(title, this.isMobile ? 100 : 200);
+                    }
+                }, titleDelay);
+                
+                setTimeout(() => {
+                    if (subtitle) {
+                        subtitle.classList.add('ready');
+                        this.animateText(subtitle, 0);
+                    }
+                }, subtitleDelay);
+            }
+
+            animateText(element, delay) {
+                const text = element.textContent;
+                element.innerHTML = '';
+                
+                [...text].forEach((char, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    span.className = 'letter';
+                    element.appendChild(span);
+                    
+                    // Faster timing on mobile
+                    const timing = this.isMobile ? 50 : 80;
+                    const randomDelay = this.isMobile ? Math.random() * 30 : Math.random() * 50;
+                    
+                    setTimeout(() => {
+                        span.classList.add('animate');
+                    }, delay + (index * timing) + randomDelay);
+                });
+            }
+
+            setupTypewriter() {
+                const text = "I'm Loukas-Nicolaos Vetoulis, a software engineer specializing in automation and data science. My core focus is on building smart, elegant solutions that directly enhance business operations.";
+                const typewriterElement = document.getElementById('typewriterText');
+                const cursor = document.getElementById('cursor');
+                const container = document.getElementById('introContainer');
+                
+                let index = 0;
+                const typeSpeed = this.isMobile ? 40 : 30; // Slightly slower on mobile
+                
+                setTimeout(() => {
+                    if (container) container.classList.add('show');
+                    
+                    if (typewriterElement) {
+                        const typeInterval = setInterval(() => {
+                            if (index < text.length) {
+                                typewriterElement.textContent += text[index];
+                                index++;
+                                
+                                // Force repaint on iOS to prevent text jumping
+                                if (this.isIOS) {
+                                    typewriterElement.style.transform = 'translateZ(0)';
+                                }
+                            } else {
+                                clearInterval(typeInterval);
+                                setTimeout(() => {
+                                    if (cursor) cursor.style.display = 'none';
+                                }, 1000);
+                            }
+                        }, typeSpeed);
+                    }
+                }, this.isMobile ? 1800 : 2400);
+            }
+
+            setupScrollAnimation() {
+                let hasScrolled = false;
+                
+                const handleScroll = () => {
+                    if (!hasScrolled && window.scrollY > 50) { // Lower threshold for mobile
+                        hasScrolled = true;
+                        this.triggerScrollAnimation();
+                    }
+                };
+                
+                const handleWheel = (e) => {
+                    if (!hasScrolled && e.deltaY > 0) {
+                        hasScrolled = true;
+                        this.triggerScrollAnimation();
+                    }
+                };
+                
+                const handleTouch = () => {
+                    if (!hasScrolled) {
+                        setTimeout(() => {
+                            if (window.scrollY > 20) {
+                                hasScrolled = true;
+                                this.triggerScrollAnimation();
+                            }
+                        }, 100);
+                    }
+                };
+                
+                // Use passive listeners for better mobile performance
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                window.addEventListener('wheel', handleWheel, { passive: true });
+                window.addEventListener('touchstart', handleTouch, { passive: true });
+                window.addEventListener('touchmove', handleTouch, { passive: true });
+            }
+
+            triggerScrollAnimation() {
+                const heroSection = document.getElementById('heroSection');
+                const mainContent = document.getElementById('mainContent');
+                
+                if (heroSection) heroSection.classList.add('scrolled');
+                
+                setTimeout(() => {
+                    if (mainContent) mainContent.classList.add('reveal');
+                }, 300);
+                
+                setTimeout(() => {
+                    if (heroSection) heroSection.style.display = 'none';
+                }, 1000);
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Prevent flash of unstyled content
+            document.body.style.visibility = 'visible';
+            
+            setTimeout(() => {
+                document.body.classList.add('hero-started');
+            }, 500);
+            
+            new PremiumHeroAnimation();
         });
-        
-        // Also trigger on wheel event for better responsiveness
-        window.addEventListener('wheel', (e) => {
-            if (!hasScrolled && e.deltaY > 0) {
-                hasScrolled = true;
-                this.triggerScrollAnimation();
+
+        // Prevent iOS rubber band scrolling
+        document.addEventListener('touchmove', function(e) {
+            if (document.body.classList.contains('hero-active')) {
+                e.preventDefault();
             }
-        });
-    }
-
-    triggerScrollAnimation() {
-        
-        const heroSection = document.getElementById('heroSection');
-        const mainContent = document.getElementById('mainContent');
-        
-        // Animate hero section out
-        if (heroSection) heroSection.classList.add('scrolled');
-        
-        // Delay main content reveal until hero starts moving
-        setTimeout(() => {
-            if (mainContent) mainContent.classList.add('reveal');
-        }, 400);
-        
-        // Remove hero from DOM after animation
-        setTimeout(() => {
-            if (heroSection) heroSection.style.display = 'none';
-        }, 1200);
-    }
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        document.body.classList.add('hero-started');
-    }, 500);
-    new PremiumHeroAnimation();
-});
+        }, { passive: false });
