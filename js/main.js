@@ -729,3 +729,38 @@ class PremiumHeroAnimation {
                 e.preventDefault();
             }
         }, { passive: false });
+
+const scrollIndicator = document.getElementById('scrollIndicator');
+        let lastScrollY = 0;
+
+        function handleScroll() {
+            const currentScrollY = window.scrollY;
+            const shouldHide = currentScrollY > 50 || currentScrollY > lastScrollY;
+            
+            if (shouldHide && !scrollIndicator.classList.contains('hidden')) {
+                scrollIndicator.classList.add('hidden');
+            } else if (!shouldHide && currentScrollY < 20) {
+                scrollIndicator.classList.remove('hidden');
+            }
+            
+            lastScrollY = currentScrollY;
+        }
+
+        // Smooth scroll handling with RAF
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Hide on any user interaction
+        ['click', 'keydown', 'touchstart'].forEach(event => {
+            document.addEventListener(event, () => {
+                scrollIndicator.classList.add('hidden');
+            }, { once: true });
+        });
