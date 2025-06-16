@@ -9,6 +9,7 @@ const HERO_CONTENT = {
     github: "https://github.com/loukas-vetoulis",
     linkedin: "https://www.linkedin.com/in/loukas-vetoulis/", // REPLACE with your LinkedIn
     email: "loukasvetoulis@gmail.com",
+    premiumHeroTypewriter: "I'm Loukas-Nicolaos Vetoulis, a software engineer specializing in automation and data science. My core focus is on building smart, elegant solutions that directly enhance business operations. I believe effective engineering starts not with code, but with a deep understanding of your business and its unique challenges. My goal is always to solve the right problem, the right way, ensuring every project delivers real, lasting impact through technical precision and thoughtful design, embodying the principle that \"simplicity is the ultimate sophistication.\"",
 };
 
 const CASE_STUDIES_DATA = [

@@ -139,19 +139,50 @@ html.dark-mode #loader-logo-img {
 }
 
 
-/* Ensure content is hidden initially if JS is disabled or slow */
-body > header,
-body > main,
-body > footer {
-    opacity: 0; /* Hide content initially */
-    transition: opacity 0.5s ease-in-out;
+body.premium-hero-ready, 
+body.general-page-ready {
+    visibility: visible !important; /* Override the inline 'hidden' */
 }
 
-body.page-loaded > header,
-body.page-loaded > main,
-body.page-loaded > footer {
-    opacity: 1; /* Reveal content when page-loaded class is added */
+/* --- HOMEPAGE STYLING --- */
+/* Initial state for navbar and main content on HOMEPAGE (they are hidden under the hero) */
+body.home-page .navbar,
+body.home-page #mainContent { /* Target the main content wrapper */
+    opacity: 0;
+    visibility: hidden; /* Start hidden to prevent layout shifts */
+    transition: opacity 0.5s ease-in-out, visibility 0s 0.5s; /* Delay visibility transition */
 }
+
+/* Revealed state for navbar and main content on HOMEPAGE
+   (JS adds '.hero-content-revealed' to body after hero animation ends/scrolls) */
+body.home-page.hero-content-revealed .navbar,
+body.home-page.hero-content-revealed #mainContent {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out, visibility 0s 0s;
+}
+
+
+/* --- OTHER PAGES STYLING --- */
+/* Initial state for navbar, main, footer on OTHER PAGES */
+body:not(.home-page) .navbar,
+body:not(.home-page) > main, /* Or #mainContent if you add that ID to other pages too */
+body:not(.home-page) > footer {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0s 0.5s;
+}
+
+/* Revealed state for navbar, main, footer on OTHER PAGES
+   (JS adds '.page-loaded' to body after general loader) */
+body.page-loaded:not(.home-page) .navbar,
+body.page-loaded:not(.home-page) > main,
+body.page-loaded:not(.home-page) > footer {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out, visibility 0s 0s;
+}
+
 
 body {
     font-family: var(--font-family-system);
@@ -199,6 +230,7 @@ a:hover { color: var(--current-accent-hover); }
 /* --- Navbar --- */
 /* --- Navbar --- */
 .navbar {
+    z-index: 1000; /* Standard z-index */
     padding: 2rem 0;
     border-bottom: 1px solid var(--current-border);
     background-color: color-mix(in srgb, var(--current-bg) 75%, transparent);
@@ -582,6 +614,8 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
 
         /* Mobile-first approach */
         .hero-section {
+            z-index: 20000; /* Higher than navbar */
+            background: #000; /* Fallback/initial background from your hero styles */
             position: fixed;
             top: 0;
             left: 0;
@@ -834,18 +868,27 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
         }
 
         /* Main Content */
-        .main-content {
+       .main-content { /* This is likely #mainContent in your HTML */
             background: var(--current-bg);
             min-height: 200vh;
             padding: 2rem 1rem;
             position: relative;
             z-index: 1;
-            margin-top: 100vh;
+            margin-top: 100vh; /* This pushes it below the viewport */
             margin-top: 100dvh;
             transform: translateY(0);
             transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
             visibility: hidden;
             opacity: 0;
+        }
+
+        .main-content.reveal {
+            transform: translateY(-100vh); /* This slides it up into view */
+            transform: translateY(-100dvh);
+            visibility: visible;
+            opacity: 1;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1),
+                        opacity 0.8s ease-out;
         }
 
         .main-content.reveal {

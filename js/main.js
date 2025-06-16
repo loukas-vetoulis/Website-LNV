@@ -1,3 +1,5 @@
+// --- START OF FILE main.js ---
+
 class ProjectShowcase {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
@@ -8,7 +10,9 @@ class ProjectShowcase {
         
         this.container.innerHTML = '';
         
-        const featuredProjects = FEATURED_PROJECTS;
+        // Ensure FEATURED_PROJECTS is defined in data.js
+        const featuredProjects = (typeof FEATURED_PROJECTS !== 'undefined') ? FEATURED_PROJECTS : [];
+
 
         featuredProjects.forEach((project, index) => {
             const card = document.createElement('article');
@@ -17,7 +21,6 @@ class ProjectShowcase {
             
             const stackHtml = project.stack.map(tech => `<span class="tech-pill">${tech}</span>`).join('');
             
-            // Add GitHub button logic
             let githubButtonHTML = '';
             if (project.githubLink && project.githubLink.trim() !== '') {
                 githubButtonHTML = `<a href="${project.githubLink}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
@@ -29,7 +32,6 @@ class ProjectShowcase {
                 </span>`;
             }
 
-            // Add Live button logic
             const liveButtonHTML = (project.liveLink && project.liveLink !== "#") 
                 ? `<a href="${project.liveLink}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                     <span class="btn-text">View Live</span>
@@ -61,24 +63,283 @@ class ProjectShowcase {
         });
     }
 }
-// js/main.js
+
+
+class PremiumHeroAnimation {
+    constructor() {
+        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        // Ensure elements exist before proceeding
+        this.heroSection = document.getElementById('heroSection');
+        this.video = document.querySelector('.hero-background-video');
+        this.title = document.getElementById('heroTitle');
+        this.subtitle = document.getElementById('heroSubtitle');
+        this.typewriterElement = document.getElementById('typewriterText');
+        this.cursor = document.getElementById('cursor');
+        this.introContainer = document.getElementById('introContainer');
+        this.mainContent = document.getElementById('mainContent'); // Added for triggerScrollAnimation
+
+        if (!this.heroSection) {
+            console.warn("PremiumHeroAnimation: heroSection not found. Animation will not run.");
+            return;
+        }
+        this.init();
+    }
+
+    init() {
+        // Body visibility is handled by 'premium-hero-ready' class added before instantiation.
+        // Inline CSS for #heroSection ensures it covers everything.
+
+        if (this.isIOS) {
+            document.body.classList.add('hero-active');
+        }
+        
+        this.setupVideoAnimation();
+        this.setupTextAnimation();
+        this.setupTypewriter();
+        this.setupScrollAnimation();
+
+        if (this.isIOS) {
+            this.setupIOSFixes();
+        }
+
+        setTimeout(() => {
+            document.body.classList.add('hero-started');
+        }, 300);
+    }
+
+    setupIOSFixes() {
+        if (this.heroSection) {
+            this.heroSection.style.webkitTransform = 'translateZ(0)';
+            this.heroSection.style.webkitBackfaceVisibility = 'hidden';
+            this.heroSection.style.webkitPerspective = '1000px';
+        }
+        const forceRepaint = () => {
+            if (this.heroSection) {
+                this.heroSection.style.webkitTransform = 'translateZ(0)';
+                this.heroSection.offsetHeight; // Trigger reflow
+            }
+        };
+        setTimeout(forceRepaint, 50);
+        setTimeout(forceRepaint, 200);
+        setTimeout(forceRepaint, 500);
+
+        setTimeout(() => {
+            document.body.classList.remove('hero-active');
+            // document.body.classList.add('hero-started'); // Already added in init
+        }, 4000); // This delay might be too long if hero animates faster
+    }
+
+    setupVideoAnimation() {
+        if (this.video) {
+            if (this.isMobile) {
+                this.video.muted = true;
+                this.video.playsInline = true;
+                this.video.setAttribute('webkit-playsinline', '');
+                this.video.setAttribute('playsinline', '');
+                
+                const playVideo = () => {
+                    if (this.video.paused) { // Only attempt to play if paused
+                        const playPromise = this.video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch((error) => {
+                                console.log('Video autoplay failed:', error);
+                                this.video.classList.add('loaded'); // Mark as loaded anyway
+                            });
+                        }
+                    }
+                };
+                playVideo();
+                ['touchstart', 'click'].forEach(event => {
+                    document.addEventListener(event, playVideo, { once: true });
+                });
+            }
+            
+            this.video.addEventListener('loadeddata', () => {
+                this.video.classList.add('loaded');
+            });
+            
+            setTimeout(() => { // Fallback if loadeddata doesn't fire quickly
+                if (!this.video.classList.contains('loaded')) {
+                    this.video.classList.add('loaded');
+                }
+            }, 800);
+        }
+    }
+
+    setupTextAnimation() {
+        const titleDelay = this.isMobile ? 400 : 600;
+        const subtitleDelay = this.isMobile ? 800 : 1200;
+        
+        if (this.title) {
+            setTimeout(() => {
+                this.title.classList.add('ready');
+                this.animateText(this.title, this.isMobile ? 50 : 100);
+            }, titleDelay);
+        }
+        
+        if (this.subtitle) {
+            setTimeout(() => {
+                this.subtitle.classList.add('ready');
+                this.animateText(this.subtitle, 0); // Subtitle might not need per-letter animation if it's simpler
+            }, subtitleDelay);
+        }
+    }
+
+    animateText(element, delay) {
+        if (!element || !element.textContent) return;
+        const text = element.textContent;
+        element.innerHTML = '';
+        
+        [...text].forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.className = 'letter';
+            
+            if (this.isIOS) {
+                span.style.webkitTransform = 'translateZ(0)';
+                span.style.webkitBackfaceVisibility = 'hidden';
+            }
+            element.appendChild(span);
+            
+            const timing = this.isMobile ? 40 : 60;
+            const randomDelay = this.isMobile ? Math.random() * 20 : Math.random() * 30;
+            
+            setTimeout(() => {
+                span.classList.add('animate');
+                if (this.isIOS) span.offsetHeight;
+            }, delay + (index * timing) + randomDelay);
+        });
+    }
+
+    setupTypewriter() {
+        // Ensure HERO_CONTENT is defined and has the necessary properties
+        const text = (typeof HERO_CONTENT !== 'undefined' && HERO_CONTENT.premiumHeroTypewriter) 
+                     ? HERO_CONTENT.premiumHeroTypewriter
+                     : "Default typewriter text if HERO_CONTENT is missing."; // Fallback
+
+        if (this.typewriterElement && this.introContainer) {
+            let index = 0;
+            const typeSpeed = this.isMobile ? 35 : 25;
+            
+            setTimeout(() => {
+                this.introContainer.classList.add('show');
+                
+                const typeInterval = setInterval(() => {
+                    if (index < text.length) {
+                        this.typewriterElement.textContent += text[index];
+                        index++;
+                        if (this.isIOS) this.typewriterElement.offsetHeight;
+                    } else {
+                        clearInterval(typeInterval);
+                        if (this.cursor) {
+                            setTimeout(() => { this.cursor.style.display = 'none'; }, 1000);
+                        }
+                    }
+                }, typeSpeed);
+            }, this.isMobile ? 1400 : 1800);
+        }
+    }
+
+    setupScrollAnimation() {
+        let hasScrolled = false;
+        
+        const handleScroll = () => {
+            if (!hasScrolled && window.scrollY > 30) {
+                hasScrolled = true;
+                this.triggerScrollAnimation();
+            }
+        };
+        const handleWheel = (e) => {
+            if (!hasScrolled && e.deltaY > 0) {
+                hasScrolled = true;
+                this.triggerScrollAnimation();
+            }
+        };
+        const handleTouch = () => {
+            if (!hasScrolled) {
+                setTimeout(() => {
+                    if (window.scrollY > 15) {
+                        hasScrolled = true;
+                        this.triggerScrollAnimation();
+                    }
+                }, 100);
+            }
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true, once: true }); // Use once if it only triggers once
+        window.addEventListener('wheel', handleWheel, { passive: true, once: true });
+        window.addEventListener('touchstart', handleTouch, { passive: true, once: true });
+        // window.addEventListener('touchmove', handleTouch, { passive: true }); // Might be too aggressive
+    }
+
+    triggerScrollAnimation() {
+        if (this.heroSection) this.heroSection.classList.add('scrolled');
+        
+        setTimeout(() => {
+            if (this.mainContent) this.mainContent.classList.add('reveal');
+            
+            // Reveal navbar and main content area for homepage
+            if (document.body.classList.contains('home-page')) {
+                document.body.classList.add('hero-content-revealed');
+            }
+        }, 300); // This should align with .main-content.reveal transition
+        
+        setTimeout(() => {
+            if (this.heroSection) this.heroSection.style.display = 'none';
+            if (this.isIOS) {
+                document.body.classList.remove('hero-active');
+            }
+        }, 1200); // Match or be slightly after .hero-section.scrolled transition + .main-content.reveal transform transition
+    }
+}
+
+// Initialize PremiumHeroAnimation only on the homepage
+if (document.body.classList.contains('home-page')) {
+    const initPremiumHero = () => {
+        document.body.classList.add('premium-hero-ready'); // Make body visible
+        new PremiumHeroAnimation();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPremiumHero, { once: true });
+    } else {
+        initPremiumHero();
+    }
+}
+
+
+// --- General Site Logic (runs on all pages after DOMContentLoaded) ---
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM Element References ---
+    const isHomepage = document.body.classList.contains('home-page');
+    
     const loaderWrapper = document.getElementById('loader-wrapper');
     const loaderLogoImg = document.getElementById('loader-logo-img');
     const themeToggleBtn = document.getElementById('theme-toggle');
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-    const navLinksUl = document.getElementById('nav-links'); // This is the UL for navigation links
-    const mainNavbarLogo = document.querySelector('.nav-logo img');
-    const heroTitleEl = document.querySelector('.hero h1#hero-name'); // Homepage specific
+    const navLinksUl = document.getElementById('nav-links');
+    const mainNavbarLogo = document.getElementById('navbar-logo-img'); // Use ID from HTML
     
-    // --- Path & SVGs ---
     const currentPath = window.location.pathname.split("/").pop() || "index.html";
-    // TODO: Replace with better/custom SVGs if desired
     const sunIconSVG = `<svg class="icon icon-sun" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1s-1-.448-1-1V6c0-.552.448-1 1-1zm0 12c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1s-1-.448-1-1v-2c0-.552.448-1 1-1zm7.778-8.707l1.414-1.414a.997.997 0 000-1.414.999.999 0 00-1.414 0l-1.414 1.414a.999.999 0 001.414 1.414zM4.222 19.778l1.414-1.414a.999.999 0 10-1.414-1.414l-1.414 1.414a.999.999 0 001.414 1.414zM20 12c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1s.448-1 1-1h2c.552 0 1 .448 1 1zM5 12c0 .552-.448 1-1 1H2c-.552 0-1-.448-1-1s.448-1 1-1h2c.552 0 1 .448 1 1zm12.778-5.707a.999.999 0 000-1.414l-1.414-1.414a.999.999 0 10-1.414 1.414l1.414 1.414a.997.997 0 001.414 0zm-11.314 11.314a.999.999 0 000-1.414l-1.414-1.414a.999.999 0 00-1.414 1.414l1.414 1.414a.997.997 0 001.414 0zM12 9a3 3 0 100 6 3 3 0 000-6z"></path></svg>`;
     const moonIconSVG = `<svg class="icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.578 16.838a.998.998 0 01.487-1.925 7.992 7.992 0 00-2.649-1.887C17.781 11.56 18.5 9.33 18.5 7c0-4.136-3.364-7.5-7.5-7.5S3.5 2.864 3.5 7c0 2.443.796 4.686 2.064 6.407a8.024 8.024 0 00-3.61 11.131.998.998 0 001.579.566 10.018 10.018 0 0116.045-8.266zM11 19.5a5.984 5.984 0 01-3.397-1.006A7.968 7.968 0 005.5 13.44V7c0-2.982 2.208-5.5 5.5-5.5S16.5 4.018 16.5 7v.012A6 6 0 0111 19.5z"></path></svg>`;
 
-    // --- Helper function to close mobile menu ---
+    if (!isHomepage) {
+        // If body doesn't have premium-hero-ready (added for homepage)
+        // and doesn't have general-page-ready yet, add it.
+        if (!document.body.classList.contains('premium-hero-ready') && 
+            !document.body.classList.contains('general-page-ready')) {
+            document.body.classList.add('general-page-ready'); // Make body visible for other pages
+        }
+        if (loaderWrapper) {
+             // loaderWrapper.style.display = 'flex'; // Ensure general loader is visible
+        }
+    } else {
+        if (loaderWrapper) {
+            loaderWrapper.style.display = 'none'; // Hide general loader on homepage
+        }
+    }
+    
     const closeMobileMenu = () => {
         if (navLinksUl && navLinksUl.classList.contains('active')) {
             navLinksUl.classList.remove('active');
@@ -91,12 +352,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Theme Management ---
     const applyTheme = (theme, isInitialLoad = false) => {
         const body = document.body;
         const toggleWrapper = themeToggleBtn ? themeToggleBtn.querySelector('.icon-wrapper') : null;
 
-        if (isInitialLoad && loaderWrapper) {
+        if (isInitialLoad && loaderWrapper && !isHomepage && loaderWrapper.style.display !== 'none') {
             const lightBg = '#FDFDFE'; const darkBg = '#0B1726';
             const lightAccent = '#111113'; const darkAccent = '#389BFF';
             loaderWrapper.style.backgroundColor = (theme === 'dark') ? darkBg : lightBg;
@@ -113,13 +373,13 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.add('dark-mode'); body.classList.remove('light-mode');
             if (toggleWrapper) toggleWrapper.innerHTML = moonIconSVG + sunIconSVG;
             if (mainNavbarLogo) mainNavbarLogo.src = 'images/dark_logo.png';
-            if (loaderLogoImg) loaderLogoImg.src = 'images/dark_logo.png';
+            if (loaderLogoImg && !isHomepage) loaderLogoImg.src = 'images/dark_logo.png';
         } else {
             document.documentElement.classList.remove('dark-mode');
             body.classList.add('light-mode'); body.classList.remove('dark-mode');
             if (toggleWrapper) toggleWrapper.innerHTML = sunIconSVG + moonIconSVG;
             if (mainNavbarLogo) mainNavbarLogo.src = 'images/light_logo.png';
-            if (loaderLogoImg) loaderLogoImg.src = 'images/light_logo.png';
+            if (loaderLogoImg && !isHomepage) loaderLogoImg.src = 'images/light_logo.png';
         }
         if (toggleWrapper) void toggleWrapper.offsetHeight;
     };
@@ -149,7 +409,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Mobile Navigation ---
     if (mobileNavToggle && navLinksUl) {
         mobileNavToggle.addEventListener('click', () => {
             const isActive = navLinksUl.classList.toggle('active');
@@ -159,25 +418,21 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.toggle('mobile-menu-open', isActive);
         });
 
-        // Close menu if a link is clicked, or specific CSS ::before close area is clicked (complex to detect reliably)
         navLinksUl.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') { // Link inside menu
+            if (e.target.tagName === 'A') { 
                 closeMobileMenu();
-            } else if (e.target === navLinksUl && navLinksUl.classList.contains('active')) {
-                // Attempt to detect click on ::before (CSS close button) based on click position relative to top-right
+            } else if (e.target.matches('ul.nav-links::before') || (e.target === navLinksUl && navLinksUl.classList.contains('active'))) {
+                // Check for click on pseudo-element or outer area of active menu
                 const rect = navLinksUl.getBoundingClientRect();
-                const styles = window.getComputedStyle(navLinksUl, '::before'); // If ::before is used as close
-                const top = parseFloat(styles.top) || 0;
-                const right = parseFloat(styles.right) || 0;
-                const width = parseFloat(styles.width) || 0;
-                const height = parseFloat(styles.height) || 0;
+                const styles = window.getComputedStyle(navLinksUl, '::before');
+                const closeBtnSize = 50; // approx from your CSS
+                const closeBtnTop = parseFloat(styles.top) || (2 * 16); // 2rem
+                const closeBtnRight = parseFloat(styles.right) || (2*16); // 2rem
 
-                // Define the pseudo-element's approximate click area based on its CSS
-                // These values need to match your CSS for ::before pseudo-element (if you are using it)
-                const closeButtonXstart = rect.width - right - width;
-                const closeButtonXend = rect.width - right;
-                const closeButtonYstart = top;
-                const closeButtonYend = top + height;
+                const closeButtonXstart = rect.width - closeBtnRight - closeBtnSize;
+                const closeButtonXend = rect.width - closeBtnRight;
+                const closeButtonYstart = closeBtnTop;
+                const closeButtonYend = closeBtnTop + closeBtnSize;
                 
                 const clickXRelative = e.clientX - rect.left;
                 const clickYRelative = e.clientY - rect.top;
@@ -189,92 +444,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
-    // Close menu on outside click
     document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 880 && navLinksUl && navLinksUl.classList.contains('active')) { // Adjust 880 to your mobile breakpoint
+         // Using 3768px from your media query, adjust if needed
+        if (window.innerWidth <= 3768 && navLinksUl && navLinksUl.classList.contains('active')) {
             if (!navLinksUl.contains(e.target) && !mobileNavToggle.contains(e.target)) {
                 closeMobileMenu();
             }
         }
     });
-    // Close menu on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navLinksUl && navLinksUl.classList.contains('active')) {
             closeMobileMenu();
         }
     });
 
-
-    // --- HOMEPAGE SPECIFIC LOGIC (Hero Animation & Content) ---
-    if (heroTitleEl) { // This IF makes this block homepage-specific
-        if (typeof HERO_CONTENT !== 'undefined' && HERO_CONTENT.name) {
-            const text = HERO_CONTENT.name.trim();
-            heroTitleEl.innerHTML = '';
-            let cumulativeDelay = 0;
-            text.split('').forEach((char) => {
-                const charSpan = document.createElement('span');
-                charSpan.classList.add('char');
-                charSpan.textContent = char === ' ' ? '\u00A0' : char;
-                charSpan.style.animationDelay = `${cumulativeDelay}ms`;
-                heroTitleEl.appendChild(charSpan);
-                cumulativeDelay += (char === ' ' ? 100 : 40);
-            });
-        } else {
-            console.warn("Hero title element found, but HERO_CONTENT.name is not defined.");
-        }
-
-        if (typeof HERO_CONTENT !== 'undefined') {
-            const heroSubtitleEl = document.getElementById('hero-subtitle');
-            if (heroSubtitleEl && HERO_CONTENT.subtitle) {
-                heroSubtitleEl.textContent = HERO_CONTENT.subtitle;
-                heroSubtitleEl.classList.add('animated-item', 'animate-slide-up');
-                heroSubtitleEl.dataset.animationDelay = '600ms';
-            }
-            const ctaProjects = document.getElementById('hero-cta-projects');
-            if (ctaProjects) {
-                const btnTextSpan = ctaProjects.querySelector('.btn-text');
-                if(btnTextSpan) btnTextSpan.textContent = HERO_CONTENT.ctaText || 'View My Work';
-                else ctaProjects.textContent = HERO_CONTENT.ctaText || 'View My Work';
-                ctaProjects.href = HERO_CONTENT.ctaLink || "projects.html";
-                ctaProjects.classList.add('animated-item', 'animate-slide-up');
-                ctaProjects.dataset.animationDelay = `800ms`;
-            }
-            const ctaCv = document.getElementById('hero-cta-cv');
-            if (ctaCv && HERO_CONTENT.cvLink) {
-                const btnTextSpan = ctaCv.querySelector('.btn-text');
-                if(btnTextSpan) btnTextSpan.textContent = 'Download CV';
-                else ctaCv.textContent = 'Download CV';
-                ctaCv.href = HERO_CONTENT.cvLink;
-                ctaCv.classList.add('animated-item', 'animate-slide-up');
-                ctaCv.dataset.animationDelay = `950ms`;
-            }
-            const socialLinksContainer = document.querySelector('.social-links-hero');
-            if (socialLinksContainer) {
-                socialLinksContainer.classList.add('animated-item', 'animate-slide-up');
-                socialLinksContainer.dataset.animationDelay = '1100ms';
-                const heroGithub = document.getElementById('hero-github-link');
-                if (heroGithub && HERO_CONTENT.github) heroGithub.href = HERO_CONTENT.github;
-                const heroLinkedin = document.getElementById('hero-linkedin-link');
-                if (heroLinkedin && HERO_CONTENT.linkedin) heroLinkedin.href = HERO_CONTENT.linkedin;
-                const heroEmail = document.getElementById('hero-email-link');
-                if (heroEmail && HERO_CONTENT.email) heroEmail.href = `mailto:${HERO_CONTENT.email}`;
-            }
-        }
+    // Old Hero Content population (if HERO_CONTENT is used for things not in PremiumHeroAnimation)
+    // This is less relevant if PremiumHeroAnimation handles all hero text, title, subtitle.
+    const heroNameEl = document.querySelector('.hero h1#hero-name'); // Your old hero name element
+    if (isHomepage && heroNameEl && typeof HERO_CONTENT !== 'undefined' && HERO_CONTENT.name) {
+        // This assumes PremiumHeroAnimation is NOT handling an element with ID 'hero-name'
+        // And that you still have a separate #hero-name element for this.
+        // If PremiumHeroAnimation handles all text, this can be removed or adapted.
+        // ... (your existing logic for populating #hero-name)
     }
+    // ... (rest of old HERO_CONTENT population for CTAs, social links if they are separate from PremiumHero)
 
 
-    // --- Case Studies Page Specific Logic ---
     const caseStudiesGridContainer = document.getElementById('case-studies-grid-container');
     if (caseStudiesGridContainer && typeof CASE_STUDIES_DATA !== 'undefined' && CASE_STUDIES_DATA.length > 0) {
         CASE_STUDIES_DATA.forEach((study, index) => {
-            const cardLink = document.createElement('a'); // Whole card is a link
+            const cardLink = document.createElement('a');
             cardLink.href = study.link;
             cardLink.classList.add('case-study-card', 'animated-item', 'animate-scale-in');
             cardLink.dataset.animationDelay = `${index * 150}ms`;
             let tagsHtml = study.tags && study.tags.length > 0 ? `<div class="case-study-tags">${study.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>` : '';
             cardLink.innerHTML = `
-                <div class="case-study-card-thumbnail"><img src="${study.thumbnailUrl}" alt="${study.title} Thumbnail"></div>
+                <div class="case-study-card-thumbnail"><img src="${study.thumbnailUrl}" alt="${study.title} Thumbnail" loading="lazy"></div>
                 <div class="case-study-card-content">
                     <h3>${study.title}</h3>
                     ${study.subtitle ? `<p class="cs-subtitle">${study.subtitle}</p>` : ''}
@@ -286,16 +491,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-    // --- Projects Page Specific Logic ---
     const projectsGrid = document.getElementById('projects-grid');
+    // Ensure PROJECTS is defined (from data.js)
+    const allProjects = (typeof PROJECTS !== 'undefined') ? PROJECTS : [];
+
     if (projectsGrid && currentPath === 'index.html') {
-        // Only render featured projects on index page
-        const showcase = new ProjectShowcase('projects-grid');
+        const showcase = new ProjectShowcase('projects-grid'); // Assumes FEATURED_PROJECTS is in data.js
         showcase.renderFeatured();
     } else if (projectsGrid && currentPath === 'projects.html') {
         projectsGrid.innerHTML = '';
-        PROJECTS.forEach((project, index) => {
+        allProjects.forEach((project, index) => {
             const card = document.createElement('article');
             card.classList.add('project-card', 'animated-item', 'animate-scale-in');
             if (project.isConfidential) card.classList.add('project-card-confidential');
@@ -319,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let imageAltText = project.isConfidential ? `${project.title} icon` : (project.imageUrl && project.imageUrl.endsWith('.svg') ? `${project.title} logo` : `${project.title} preview`);
             card.innerHTML = `
                 <div class="project-card-inner">
-                    ${project.imageUrl ? `<img src="${project.imageUrl}" alt="${imageAltText}" class="${project.isConfidential ? 'confidential-project-image' : ''}">` : ''}
+                    ${project.imageUrl ? `<img src="${project.imageUrl}" alt="${imageAltText}" class="${project.isConfidential ? 'confidential-project-image' : ''}" loading="lazy">` : ''}
                     <div class="project-card-content">
                         <p class="project-type">${project.type} ${project.company ? `| ${project.company}` : ''} ${project.period ? `(${project.period})` : ''}</p>
                         <h3>${project.title}</h3>
@@ -332,47 +537,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-
-    // --- Contact Page Specific Logic (Direct Buttons & Socials) ---
-    // These elements are only on contact.html
     const emailBtn = document.getElementById('email-contact-btn');
     const phoneBtn = document.getElementById('phone-contact-btn');
-    const contactGithubLinkOnContactPage = document.getElementById('contact-github-link'); // Make sure ID is unique if also on hero
-    const contactLinkedinLinkOnContactPage = document.getElementById('contact-linkedin-link'); // Make sure ID is unique
+    const contactGithubLinkOnContactPage = document.getElementById('contact-github-link'); 
+    const contactLinkedinLinkOnContactPage = document.getElementById('contact-linkedin-link'); 
 
     if (typeof CONTACT_DETAILS !== 'undefined') {
-        if (emailBtn && CONTACT_DETAILS.email) {
-            emailBtn.href = `mailto:${CONTACT_DETAILS.email}`;
-        }
-        if (phoneBtn && CONTACT_DETAILS.phone) {
-            const cleanPhoneNumber = CONTACT_DETAILS.phone.replace(/[\s()-]/g, '');
-            phoneBtn.href = `tel:${cleanPhoneNumber}`;
-        }
-        if (contactGithubLinkOnContactPage && CONTACT_DETAILS.github) {
-            contactGithubLinkOnContactPage.href = CONTACT_DETAILS.github;
-        }
-        if (contactLinkedinLinkOnContactPage && CONTACT_DETAILS.linkedin) {
-            contactLinkedinLinkOnContactPage.href = CONTACT_DETAILS.linkedin;
-        }
+        if (emailBtn && CONTACT_DETAILS.email) emailBtn.href = `mailto:${CONTACT_DETAILS.email}`;
+        if (phoneBtn && CONTACT_DETAILS.phone) phoneBtn.href = `tel:${CONTACT_DETAILS.phone.replace(/[\s()-]/g, '')}`;
+        if (contactGithubLinkOnContactPage && CONTACT_DETAILS.github) contactGithubLinkOnContactPage.href = CONTACT_DETAILS.github;
+        if (contactLinkedinLinkOnContactPage && CONTACT_DETAILS.linkedin) contactLinkedinLinkOnContactPage.href = CONTACT_DETAILS.linkedin;
     }
 
-
-    // --- Footer ---
-    if (typeof FOOTER_CONTENT !== 'undefined') {
-        const footerTextEl = document.getElementById('footer-text');
-        if (footerTextEl) {
-            footerTextEl.innerHTML = `© ${FOOTER_CONTENT.year || new Date().getFullYear()} ${FOOTER_CONTENT.name || "Loukas-Nikolaos Vetoulis"}. Simplicity crafted through vision and precision.`;
-        }
-    }
-
-
-    // --- Intersection Observer Setup ---
     const animatedItems = document.querySelectorAll('.animated-item');
-    let observer; // Declare observer globally within this scope
+    let intersectionObserverInstance; 
 
     if (typeof IntersectionObserver !== 'undefined') {
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.05 };
-        observer = new IntersectionObserver((entries, observerInstance) => { // Assign to global observer
+        intersectionObserverInstance = new IntersectionObserver((entries, observerInstance) => { 
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const delay = entry.target.dataset.animationDelay || '0ms';
@@ -383,33 +565,26 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, observerOptions);
         animatedItems.forEach(item => {
-            if(observer) observer.observe(item); // Check if observer was successfully created
+            if(intersectionObserverInstance) intersectionObserverInstance.observe(item); 
         });
 
-        // Re-observe dynamically added items (this part was slightly problematic before)
-        // Ensure the grid containers themselves are part of `animatedItems` or their children are caught
-        // The following will add NEW items to the SAME observer, which is good.
         if (caseStudiesGridContainer) {
             const newCSItems = caseStudiesGridContainer.querySelectorAll('.animated-item');
-            newCSItems.forEach(item => {if(observer) observer.observe(item)});
+            newCSItems.forEach(item => {if(intersectionObserverInstance) intersectionObserverInstance.observe(item)});
         }
         if (projectsGrid) {
             const newProjItems = projectsGrid.querySelectorAll('.animated-item');
-            newProjItems.forEach(item => {if(observer) observer.observe(item)});
+            newProjItems.forEach(item => {if(intersectionObserverInstance) intersectionObserverInstance.observe(item)});
         }
-
-    } else if (animatedItems.length > 0) {
-        // Fallback if IntersectionObserver is not supported: make all items visible
+    } else {
         animatedItems.forEach(item => item.classList.add('is-visible'));
     }
 
-
-    // --- Project Card Tilt Effect ---
     const projectCards = document.querySelectorAll('.project-card');
     if (projectCards.length > 0) {
         projectCards.forEach(card => {
             const innerCard = card.querySelector('.project-card-inner');
-            if (!innerCard) return; // Safety check for innerCard
+            if (!innerCard) return; 
 
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -427,23 +602,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // (No dummy contact form listener - you are using Calendly & direct buttons)
-
-    // --- LOADING SCREEN LOGIC ---
-    function hideLoader() {
+    function hideGeneralLoader() {
         if (loaderWrapper) {
             loaderWrapper.classList.add('loaded');
         }
-        document.body.classList.add('page-loaded');
+        if (!isHomepage) {
+            document.body.classList.add('page-loaded');
+        }
     }
-    window.addEventListener('load', () => {
-        // Using a timeout ensures loader is visible for a minimum duration,
-        // even if page loads extremely fast. Also helps if any late-loading resources affect layout.
-        setTimeout(hideLoader, 300);
-    });
-    // ...existing code...
 
-    // Footer rendering
+    if (!isHomepage) {
+        window.addEventListener('load', () => {
+            setTimeout(hideGeneralLoader, 300);
+        });
+    }
+
     const footerEl = document.getElementById('footer-content');
     if (footerEl && typeof CONTACT_DETAILS !== 'undefined' && typeof FOOTER_CONTENT !== 'undefined') {
         footerEl.innerHTML = `
@@ -475,329 +648,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>${CONTACT_DETAILS.address}</span>
             </div>
             <div class="footer-copy" style="font-size:0.97rem;color:var(--current-secondary-text);margin-top:0.7rem;">
-                &copy; ${FOOTER_CONTENT.year} ${FOOTER_CONTENT.name}
+                © ${FOOTER_CONTENT.year || new Date().getFullYear()} ${FOOTER_CONTENT.name}
             </div>
         `;
 
-        // Logo color swap for dark mode (opposite of navigation)
         const updateFooterLogo = () => {
-            const html = document.documentElement;
-            const footerLogo = document.getElementById('footer-logo-img');
-            if (!footerLogo) return;
-            if (html.classList.contains('dark-mode')) {
-                footerLogo.src = 'images/dark_logo.png';
+            const htmlEl = document.documentElement;
+            const footerLogoImgEl = document.getElementById('footer-logo-img');
+            if (!footerLogoImgEl) return;
+            if (htmlEl.classList.contains('dark-mode')) {
+                footerLogoImgEl.src = 'images/dark_logo.png';
             } else {
-                footerLogo.src = 'images/light_logo.png';
+                footerLogoImgEl.src = 'images/light_logo.png';
             }
         };
-
         updateFooterLogo();
-        // Listen for theme changes if your theme toggle changes the class on <html>
-        const observer = new MutationObserver(updateFooterLogo);
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        const themeMutationObserver = new MutationObserver(updateFooterLogo);
+        themeMutationObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
-});
- class PremiumHeroAnimation {
-            constructor() {
-                this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                this.init();
-            }
 
-            init() {
-                // CRITICAL: Show body immediately to prevent flash
-                document.body.classList.add('ready');
-                
-                // Add hero-active class for iOS fixes
-                if (this.isIOS) {
-                    document.body.classList.add('hero-active');
-                }
-                
-                this.setupVideoAnimation();
-                this.setupTextAnimation();
-                this.setupTypewriter();
-                this.setupScrollAnimation();
-
-                // iOS specific fixes
-                if (this.isIOS) {
-                    this.setupIOSFixes();
-                }
-            }
-
-            setupIOSFixes() {
-                // Enhanced iOS fixes
-                const heroSection = document.getElementById('heroSection');
-                if (heroSection) {
-                    // Force hardware acceleration
-                    heroSection.style.webkitTransform = 'translateZ(0)';
-                    heroSection.style.webkitBackfaceVisibility = 'hidden';
-                    heroSection.style.webkitPerspective = '1000px';
-                }
-
-                // Force repaint multiple times for iOS
-                const forceRepaint = () => {
-                    if (heroSection) {
-                        heroSection.style.webkitTransform = 'translateZ(0)';
-                        // Trigger reflow
-                        heroSection.offsetHeight;
-                    }
-                };
-                
-                setTimeout(forceRepaint, 50);
-                setTimeout(forceRepaint, 200);
-                setTimeout(forceRepaint, 500);
-
-                // Re-enable scrolling after hero animation
-                setTimeout(() => {
-                    document.body.classList.remove('hero-active');
-                    document.body.classList.add('hero-started');
-                }, 4000);
-            }
-
-            setupVideoAnimation() {
-                const video = document.querySelector('.hero-background-video');
-                
-                if (video) {
-                    // Enhanced mobile handling
-                    if (this.isMobile) {
-                        video.muted = true;
-                        video.playsInline = true;
-                        video.setAttribute('webkit-playsinline', '');
-                        video.setAttribute('playsinline', '');
-                        
-                        // Force play on iOS
-                        const playVideo = () => {
-                            const playPromise = video.play();
-                            if (playPromise !== undefined) {
-                                playPromise.catch((error) => {
-                                    console.log('Video autoplay failed:', error);
-                                    // Fallback: show video as loaded anyway
-                                    video.classList.add('loaded');
-                                });
-                            }
-                        };
-
-                        // Try to play immediately and on user interaction
-                        playVideo();
-                        
-                        // Fallback for iOS
-                        ['touchstart', 'click'].forEach(event => {
-                            document.addEventListener(event, playVideo, { once: true });
-                        });
-                    }
-                    
-                    video.addEventListener('loadeddata', () => {
-                        video.classList.add('loaded');
-                    });
-                    
-                    // Faster fallback for slow loading
-                    setTimeout(() => {
-                        video.classList.add('loaded');
-                    }, 800);
-                }
-            }
-
-            setupTextAnimation() {
-                const title = document.getElementById('heroTitle');
-                const subtitle = document.getElementById('heroSubtitle');
-                
-                // Faster animations on mobile
-                const titleDelay = this.isMobile ? 400 : 600;
-                const subtitleDelay = this.isMobile ? 800 : 1200;
-                
-                setTimeout(() => {
-                    if (title) {
-                        title.classList.add('ready');
-                        this.animateText(title, this.isMobile ? 50 : 100);
-                    }
-                }, titleDelay);
-                
-                setTimeout(() => {
-                    if (subtitle) {
-                        subtitle.classList.add('ready');
-                        this.animateText(subtitle, 0);
-                    }
-                }, subtitleDelay);
-            }
-
-            animateText(element, delay) {
-                const text = element.textContent;
-                element.innerHTML = '';
-                
-                [...text].forEach((char, index) => {
-                    const span = document.createElement('span');
-                    span.textContent = char === ' ' ? '\u00A0' : char;
-                    span.className = 'letter';
-                    
-                    // iOS specific optimizations
-                    if (this.isIOS) {
-                        span.style.webkitTransform = 'translateZ(0)';
-                        span.style.webkitBackfaceVisibility = 'hidden';
-                    }
-                    
-                    element.appendChild(span);
-                    
-                    // Faster timing on mobile
-                    const timing = this.isMobile ? 40 : 60;
-                    const randomDelay = this.isMobile ? Math.random() * 20 : Math.random() * 30;
-                    
-                    setTimeout(() => {
-                        span.classList.add('animate');
-                        
-                        // Force repaint on iOS
-                        if (this.isIOS) {
-                            span.offsetHeight;
-                        }
-                    }, delay + (index * timing) + randomDelay);
-                });
-            }
-
-            setupTypewriter() {
-                const text = "I'm Loukas-Nicolaos Vetoulis, a software engineer specializing in automation and data science. My core focus is on building smart, elegant solutions that directly enhance business operations. I believe effective engineering starts not with code, but with a deep understanding of your business and its unique challenges. My goal is always to solve the right problem, the right way, ensuring every project delivers real, lasting impact through technical precision and thoughtful design, embodying the principle that simplicity is the ultimate sophistication.";
-                const typewriterElement = document.getElementById('typewriterText');
-                const cursor = document.getElementById('cursor');
-                const container = document.getElementById('introContainer');
-                
-                let index = 0;
-                const typeSpeed = this.isMobile ? 35 : 25;
-                
-                setTimeout(() => {
-                    if (container) container.classList.add('show');
-                    
-                    if (typewriterElement) {
-                        const typeInterval = setInterval(() => {
-                            if (index < text.length) {
-                                typewriterElement.textContent += text[index];
-                                index++;
-                                
-                                // Force repaint on iOS
-                                if (this.isIOS) {
-                                    typewriterElement.offsetHeight;
-                                }
-                            } else {
-                                clearInterval(typeInterval);
-                                setTimeout(() => {
-                                    if (cursor) cursor.style.display = 'none';
-                                }, 1000);
-                            }
-                        }, typeSpeed);
-                    }
-                }, this.isMobile ? 1400 : 1800);
-            }
-
-            setupScrollAnimation() {
-                let hasScrolled = false;
-                
-                const handleScroll = () => {
-                    if (!hasScrolled && window.scrollY > 30) {
-                        hasScrolled = true;
-                        this.triggerScrollAnimation();
-                    }
-                };
-                
-                const handleWheel = (e) => {
-                    if (!hasScrolled && e.deltaY > 0) {
-                        hasScrolled = true;
-                        this.triggerScrollAnimation();
-                    }
-                };
-                
-                const handleTouch = () => {
-                    if (!hasScrolled) {
-                        setTimeout(() => {
-                            if (window.scrollY > 15) {
-                                hasScrolled = true;
-                                this.triggerScrollAnimation();
-                            }
-                        }, 100);
-                    }
-                };
-                
-                // Enhanced event listeners
-                window.addEventListener('scroll', handleScroll, { passive: true });
-                window.addEventListener('wheel', handleWheel, { passive: true });
-                window.addEventListener('touchstart', handleTouch, { passive: true });
-                window.addEventListener('touchmove', handleTouch, { passive: true });
-            }
-
-            triggerScrollAnimation() {
-                const heroSection = document.getElementById('heroSection');
-                const mainContent = document.getElementById('mainContent');
-                
-                if (heroSection) heroSection.classList.add('scrolled');
-                
-                setTimeout(() => {
-                    if (mainContent) mainContent.classList.add('reveal');
-                }, 300);
-                
-                setTimeout(() => {
-                    if (heroSection) heroSection.style.display = 'none';
-                    // Remove iOS fixes when hero is done
-                    if (this.isIOS) {
-                        document.body.classList.remove('hero-active');
-                    }
-                }, 1000);
-            }
-        }
-
-        // Enhanced initialization
-        const initAnimation = () => {
-            // Show body immediately
-            document.body.classList.add('ready');
-            
-            setTimeout(() => {
-                document.body.classList.add('hero-started');
-            }, 300);
-            
-            new PremiumHeroAnimation();
-        };
-
-        // Initialize as soon as possible
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initAnimation);
-        } else {
-            initAnimation();
-        }
-
-        // Scroll indicator handling
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrollIndicator = document.getElementById('scrollIndicator');
-            let lastScrollY = 0;
-
-            function handleScroll() {
-                const currentScrollY = window.scrollY;
-                const shouldHide = currentScrollY > 50 || currentScrollY > lastScrollY;
-                
+    if (isHomepage && document.getElementById('scrollIndicator')) {
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        let lastScrollY = 0;
+        function handleScrollIndicator() {
+            const currentScrollY = window.scrollY;
+            const shouldHide = currentScrollY > 50 || currentScrollY > lastScrollY;
+            if (scrollIndicator) {
                 if (shouldHide && !scrollIndicator.classList.contains('hidden')) {
                     scrollIndicator.classList.add('hidden');
                 } else if (!shouldHide && currentScrollY < 20) {
                     scrollIndicator.classList.remove('hidden');
                 }
-                
-                lastScrollY = currentScrollY;
             }
-
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        handleScroll();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }, { passive: true });
-
-            ['click', 'keydown', 'touchstart'].forEach(event => {
-                document.addEventListener(event, () => {
-                    scrollIndicator.classList.add('hidden');
-                }, { once: true });
-            });
+            lastScrollY = currentScrollY;
+        }
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScrollIndicator();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+        ['click', 'keydown', 'touchstart'].forEach(event => {
+            document.addEventListener(event, () => {
+                if (scrollIndicator) scrollIndicator.classList.add('hidden');
+            }, { once: true });
         });
+    }
+    
+    document.addEventListener('touchmove', function(e) {
+        if (document.body.classList.contains('hero-active')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
 
-        // Prevent iOS rubber band scrolling during hero
-        document.addEventListener('touchmove', function(e) {
-            if (document.body.classList.contains('hero-active')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
+}); // End of DOMContentLoaded

@@ -5,14 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Get in touch with Loukas-Nikolaos Vetoulis to discuss projects, collaborations, or any inquiries.">
     <title>Home | Loukas-Nikolaos Vetoulis</title>
+    
+    <!-- Critical Inline Styles for Preventing Flash -->
+    <style>
+        /* Critical: Hide body by default to prevent any flash */
+        body {
+            visibility: hidden !important; /* Will be made visible by JS */
+        }
+
+        /* For homepage specifically:
+           Ensure hero section is styled to cover everything from the very start.
+           This acts as an immediate opaque layer. */
+        body.home-page #heroSection {
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            width: 100vw !important; height: 100vh !important; /* Use 100dvh if preferred and tested */
+            background-color: #000 !important; /* Match your .hero-section initial background */
+            z-index: 20000 !important; /* Must be higher than navbar */
+            opacity: 1 !important; /* Ensure it's opaque */
+            visibility: visible !important; /* Hero itself must be visible */
+        }
+    </style>
+    
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="images/dark_logo.png">
 </head>
-<body>
+<body class="home-page"> <!-- Added class="home-page" -->
+    
+    <!-- General Loader - will be hidden on homepage by JS -->
     <div id="loader-wrapper">
-        <div class="loader-content"> <!-- New wrapper for logo and spinner -->
+        <div class="loader-content">
             <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
             <div class="loader-spinner"></div>
         </div>
@@ -22,7 +46,7 @@
         <div class="container">
             <div class="nav-logo">
                 <a href="index.html">
-                    <img src="images/dark_logo.png" alt="LNV Logo"/>
+                    <img src="images/dark_logo.png" alt="LNV Logo" id="navbar-logo-img"/> <!-- Added ID for JS -->
                 </a>
             </div>
             <nav class="main-nav">
@@ -42,28 +66,31 @@
         </div>
     </header>
  
-    <main>
-        <div class="hero-section" id="heroSection">
-            <div class="hero-visual-backdrop">
-                <video autoplay muted loop playsinline class="hero-background-video" id="heroVideo">
-                    <source src="videos/programming_video.mp4" type="video/mp4">
-                </video>
-                <div class="hero-overlay"></div>
-            </div>
-            <h1 class="hero-title" id="heroTitle">Simplicity</h1>
-            <h2 class="hero-subtitle" id="heroSubtitle">Crafted Through Vision & Precision</h2>
-            
-            <div class="intro-container" id="introContainer">
-                <p class="intro-text">
-                    <span id="typewriterText"></span><span class="typewriter" id="cursor"></span>
-                </p>
-            </div>
-             <div class="scroll-indicator" id="scrollIndicator">
-                <div class="scroll-orb"></div>
-                <div class="scroll-hint">explore</div>
-            </div>
+    <!-- Hero Section - This is the primary initial view on the homepage -->
+    <div class="hero-section" id="heroSection">
+        <div class="hero-visual-backdrop">
+            <video autoplay muted loop playsinline class="hero-background-video" id="heroVideo">
+                <source src="videos/programming_video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
         </div>
+        <h1 class="hero-title" id="heroTitle">Simplicity</h1>
+        <h2 class="hero-subtitle" id="heroSubtitle">Crafted Through Vision & Precision</h2>
+        
+        <div class="intro-container" id="introContainer">
+            <p class="intro-text">
+                <span id="typewriterText"></span><span class="typewriter" id="cursor"></span>
+            </p>
+        </div>
+            <div class="scroll-indicator" id="scrollIndicator">
+            <div class="scroll-orb"></div>
+            <div class="scroll-hint">explore</div>
+        </div>
+    </div>
 
+    <!-- Main Content - Revealed after Hero Animation -->
+    <main id="mainContent">
         <!-- PHILOSOPHY: The Why -->
         <section class="manifesto-section container" id="philosophy">
                 <div class="manifesto-content premium-layout" style="max-width:700px;text-align:center; margin: 0 auto;">
@@ -80,15 +107,15 @@
         <section class="services-section container">
             <h2>Services</h2>
             <div class="services-grid">
-                <article class="service-card project-card">
+                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="0ms">
                     <h3>Automation Engineering</h3>
                     <p>Streamlining business processes and eliminating repetitive tasks with robust, maintainable automation solutions.</p>
                 </article>
-                <article class="service-card project-card">
+                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="150ms">
                     <h3>AI & Data Solutions</h3>
                     <p>Applying artificial intelligence and machine learning to solve real-world problems and unlock new opportunities.</p>
                 </article>
-                <article class="service-card project-card">
+                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="300ms">
                     <h3>Custom Software</h3>
                     <p>Designing and building tailored software solutions that fit your unique business needs and drive measurable results.</p>
                 </article>
@@ -99,23 +126,22 @@
 
         <!-- SELECTED WORK: Only the best -->
         <section id="projects-showcase" class="container">
-            <div class="section-title-container fade-in-up">
+            <div class="section-title-container animated-item animate-slide-up">
                 <h2>Crafting Software Excellence</h2>
-                <p class="secondary">A portfolio of solutions where simplicity and business value come first.</p>
+                <p class="secondary animated-item animate-slide-up" data-animation-delay="100ms">A portfolio of solutions where simplicity and business value come first.</p>
             </div>
             <div class="projects-grid" id="projects-grid">
                 <!-- Project cards injected by JS -->
             </div>
         </section>
-        <div style="text-align: center;">
-            <a href="projects.html" class="inquiry-link">
+        <div style="text-align: center; margin-bottom: 2rem;"> <!-- Added margin for spacing -->
+            <a href="projects.html" class="inquiry-link animated-item animate-fade-in" data-animation-delay="400ms">
                         View All Projects<span class="arrow"> →</span>
             </a>
         </div>
 
         <div class="section-divider"></div>
 
-        <!-- INQUIRY CTA: Invitation, not a pitch -->
         <!-- CASE STUDIES: Quiet proof -->
         <section id="case-studies-hub" class="container">
             <div class="section-title-container animated-item animate-slide-up">
@@ -128,8 +154,8 @@
                 <!-- Case studies injected by JS -->
             </div>
         </section>
-        <div style="text-align: center;">
-            <a href="case-studies.html" class="inquiry-link">
+        <div style="text-align: center; margin-bottom: 2rem;"> <!-- Added margin for spacing -->
+            <a href="case-studies.html" class="inquiry-link animated-item animate-fade-in" data-animation-delay="400ms">
                         View All Case Studies<span class="arrow"> →</span>
             </a>
         </div>
