@@ -287,14 +287,14 @@ class PremiumHeroAnimation {
         // AGGRESSIVE FALLBACK for iOS if scroll events are unreliable:
         // Uncomment this block if console logs show 'scroll' events are not firing or scrollY isn't changing on iOS
         // after a touch swipe, even with body not being position:fixed.
-        /*
+        
         setTimeout(() => {
             if (!this.animationHasBeenTriggered && !this.scrollEventFiredAtLeastOnce && this.isIOS) {
                 console.warn('[PHA handleTouchStart] iOS Fallback: Scroll event has not fired shortly after touch. Forcing animation.');
                 this.triggerAnimationLogic();
             }
         }, 250); // Wait a short moment (e.g., 250ms) to see if a scroll event follows the touch
-        */
+    
     }
 
     attachEventListeners() {
