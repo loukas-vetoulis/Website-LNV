@@ -77,7 +77,14 @@ class PremiumHeroAnimation {
         this.cursor = document.getElementById('cursor');
         this.introContainer = document.getElementById('introContainer');
         this.mainContent = document.getElementById('mainContent');
-        this.hasScrolled = false; // <<< ADDED CLASS PROPERTY
+        
+        this.animationHasBeenTriggered = false; 
+        this.scrollEventFiredAtLeastOnce = false;
+
+        // Bind event handlers to `this` instance
+        this.handleScroll = this.handleScroll.bind(this);
+        this.handleWheel = this.handleWheel.bind(this);
+        this.handleTouchStart = this.handleTouchStart.bind(this);
 
         if (!this.heroSection) {
             console.warn("PremiumHeroAnimation: heroSection not found. Animation will not run.");
@@ -87,28 +94,21 @@ class PremiumHeroAnimation {
     }
 
     init() {
-        // Body visibility is handled by 'premium-hero-ready' class added before instantiation.
-        // Inline CSS for #heroSection ensures it covers everything.
-
-        // if (this.isIOS) { // <<<< KEY CHANGE: Temporarily commented out.
-            // This line was likely causing body to be position:fixed on iOS,
-            // preventing window.scrollY from changing.
-            // The visual "lock" will now come from #heroSection being position:fixed.
-            // document.body.classList.add('hero-active');
-            // console.log('iOS: body.hero-active ADDITION COMMENTED OUT for testing scrollY');
-        // }
+        console.log('[PHA] Initializing PremiumHeroAnimation. isIOS:', this.isIOS);
+        // We are NOT adding body.hero-active here for iOS scroll lock.
+        // The #heroSection CSS (position:fixed) should handle the visual appearance.
         
         this.setupVideoAnimation();
         this.setupTextAnimation();
         this.setupTypewriter();
-        this.setupScrollAnimation(); // Call this to set up listeners
+        this.attachEventListeners(); 
 
         if (this.isIOS) {
             this.setupIOSFixes();
         }
 
         setTimeout(() => {
-            document.body.classList.add('hero-started'); // This class seems related to animation states
+            document.body.classList.add('hero-started');
         }, 300);
     }
 
@@ -117,25 +117,15 @@ class PremiumHeroAnimation {
             this.heroSection.style.webkitTransform = 'translateZ(0)';
             this.heroSection.style.webkitBackfaceVisibility = 'hidden';
             this.heroSection.style.webkitPerspective = '1000px';
+            console.log('[PHA IOSFix] Applied webkit transforms to heroSection.');
         }
-        const forceRepaint = () => {
-            if (this.heroSection) {
-                this.heroSection.style.webkitTransform = 'translateZ(0)';
-                this.heroSection.offsetHeight; // Trigger reflow
-            }
-        };
-        setTimeout(forceRepaint, 50);
-        setTimeout(forceRepaint, 200);
-        setTimeout(forceRepaint, 500);
-
-        // Fallback removal of hero-active. If it's not being added in init() for iOS,
-        // this might not be strictly necessary for the scroll lock, but could be a general safety.
+        // Fallback: If no scroll or interaction triggers animation after a delay
         setTimeout(() => {
-            // if (document.body.classList.contains('hero-active')) {
-                // console.log('iOS Fixes: Fallback, found body.hero-active. Removing it.');
-                // document.body.classList.remove('hero-active');
-            // }
-        }, 4000);
+            if (!this.animationHasBeenTriggered) {
+                console.warn('[PHA IOSFix] Fallback: Animation not triggered after 5s. Forcing trigger.');
+                this.triggerAnimationLogic(); 
+            }
+        }, 5000); // 5 seconds
     }
 
     setupVideoAnimation() {
@@ -248,48 +238,14 @@ class PremiumHeroAnimation {
         }
     }
 
-    setupScrollAnimation() {
-        // Use this.hasScrolled to ensure animation triggers only once.
-        
-        const handleScroll = () => {
-            console.log('[DEBUG] Scroll event. scrollY:', window.scrollY, 'this.hasScrolled:', this.hasScrolled);
-            if (!this.hasScrolled && window.scrollY > 5) { // <<< LOWERED THRESHOLD for testing
-                this.hasScrolled = true;
-                console.log('[DEBUG] Condition met in handleScroll. Triggering scroll animation.');
-                this.triggerScrollAnimation();
-                // Optionally remove listeners if they are truly not needed after this point
-                // window.removeEventListener('scroll', handleScroll);
-                // window.removeEventListener('wheel', handleWheel);
-                // window.removeEventListener('touchstart', handleTouch);
-            }
-        };
+    triggerAnimationLogic() {
+        if (this.animationHasBeenTriggered) {
+            console.log('[PHA triggerAnimationLogic] Already triggered. Aborting.');
+            return;
+        }
+        this.animationHasBeenTriggered = true;
+        console.log('%c[PHA triggerAnimationLogic] Animation TRIGGERED!', 'color: green; font-weight: bold;');
 
-        const handleWheel = (e) => {
-            console.log('[DEBUG] Wheel event. deltaY:', e.deltaY, 'this.hasScrolled:', this.hasScrolled);
-            if (!this.hasScrolled && e.deltaY > 0) {
-                this.hasScrolled = true;
-                console.log('[DEBUG] Condition met in handleWheel. Triggering scroll animation.');
-                this.triggerScrollAnimation();
-            }
-        };
-
-        const handleTouch = () => { // Renamed from handleTouchStart for clarity
-            console.log('[DEBUG] Touchstart event. this.hasScrolled:', this.hasScrolled);
-            // This listener is mainly to ensure user interaction can initiate scroll detection.
-            // The actual scroll value change will be caught by the 'scroll' event.
-            if (!this.hasScrolled) {
-                // No specific action needed here if the 'scroll' event is reliable
-            }
-        };
-        
-        // REMOVED `once: true` and rely on `this.hasScrolled` check inside handlers
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        window.addEventListener('wheel', handleWheel, { passive: true });
-        window.addEventListener('touchstart', handleTouch, { passive: true }); // Renamed handler
-    }
-
-    triggerScrollAnimation() {
-        console.log('[DEBUG] triggerScrollAnimation CALLED. Current this.hasScrolled:', this.hasScrolled);
         if (this.heroSection) this.heroSection.classList.add('scrolled');
         
         setTimeout(() => {
@@ -297,16 +253,62 @@ class PremiumHeroAnimation {
             if (document.body.classList.contains('home-page')) {
                 document.body.classList.add('hero-content-revealed');
             }
+            console.log('[PHA triggerAnimationLogic] Main content reveal scheduled.');
         }, 300); 
         
         setTimeout(() => {
-            if (this.heroSection) this.heroSection.style.display = 'none';
-            // If body.hero-active was added for iOS in init() (now commented out), it would be removed here.
-            // if (this.isIOS && document.body.classList.contains('hero-active')) {
-            //     console.log('[DEBUG] iOS: body.hero-active REMOVED in triggerScrollAnimation');
-            //     document.body.classList.remove('hero-active');
-            // }
-        }, 1200); 
+            if (this.heroSection) {
+                this.heroSection.style.display = 'none';
+                console.log('[PHA triggerAnimationLogic] Hero section display set to none.');
+            }
+        }, 1200);
+
+        this.removeEventListeners();
+    }
+
+    handleScroll() {
+        this.scrollEventFiredAtLeastOnce = true; 
+        console.log(`[PHA handleScroll] scrollY: ${window.scrollY}, animationTriggered: ${this.animationHasBeenTriggered}`);
+        
+        if (!this.animationHasBeenTriggered && window.scrollY > 1) { 
+            this.triggerAnimationLogic();
+        }
+    }
+
+    handleWheel(e) {
+        console.log(`[PHA handleWheel] deltaY: ${e.deltaY}, animationTriggered: ${this.animationHasBeenTriggered}`);
+        if (!this.animationHasBeenTriggered && e.deltaY > 0) {
+            this.triggerAnimationLogic();
+        }
+    }
+
+    handleTouchStart() {
+        console.log(`[PHA handleTouchStart] User touched screen. animationTriggered: ${this.animationHasBeenTriggered}, scrollEventFiredAtLeastOnce: ${this.scrollEventFiredAtLeastOnce}`);
+        // AGGRESSIVE FALLBACK for iOS if scroll events are unreliable:
+        // Uncomment this block if console logs show 'scroll' events are not firing or scrollY isn't changing on iOS
+        // after a touch swipe, even with body not being position:fixed.
+        /*
+        setTimeout(() => {
+            if (!this.animationHasBeenTriggered && !this.scrollEventFiredAtLeastOnce && this.isIOS) {
+                console.warn('[PHA handleTouchStart] iOS Fallback: Scroll event has not fired shortly after touch. Forcing animation.');
+                this.triggerAnimationLogic();
+            }
+        }, 250); // Wait a short moment (e.g., 250ms) to see if a scroll event follows the touch
+        */
+    }
+
+    attachEventListeners() {
+        window.addEventListener('scroll', this.handleScroll, { passive: true });
+        window.addEventListener('wheel', this.handleWheel, { passive: true });
+        window.addEventListener('touchstart', this.handleTouchStart, { passive: true });
+        console.log('[PHA attachEventListeners] Event listeners ADDED.');
+    }
+
+    removeEventListeners() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('wheel', this.handleWheel);
+        window.removeEventListener('touchstart', this.handleTouchStart);
+        console.log('[PHA removeEventListeners] Event listeners REMOVED.');
     }
 }
 
@@ -700,9 +702,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // The problematic touchmove listener. Keep this commented out for now.
+    // Crucial: Keep the original `touchmove` preventDefault listener commented out.
     // document.addEventListener('touchmove', function(e) {
-    //     if (document.body.classList.contains('hero-active')) {
+    //     if (document.body.classList.contains('hero-active')) { // 'hero-active' is not being added for iOS anymore
     //         e.preventDefault();
     //     }
     // }, { passive: false });
