@@ -120,12 +120,12 @@ class PremiumHeroAnimation {
             console.log('[PHA IOSFix] Applied webkit transforms to heroSection.');
         }
         // Fallback: If no scroll or interaction triggers animation after a delay
-        setTimeout(() => {
-            if (!this.animationHasBeenTriggered) {
-                console.warn('[PHA IOSFix] Fallback: Animation not triggered after 5s. Forcing trigger.');
-                this.triggerAnimationLogic(); 
-            }
-        }, 5000); // 5 seconds
+        // setTimeout(() => {
+        //     if (!this.animationHasBeenTriggered) {
+        //         console.warn('[PHA IOSFix] Fallback: Animation not triggered after 5s. Forcing trigger.');
+        //         this.triggerAnimationLogic(); 
+        //     }
+        // }, 5000); // 5 seconds
     }
 
     setupVideoAnimation() {
