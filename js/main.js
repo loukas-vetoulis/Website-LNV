@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
 });
-class PremiumHeroAnimation {
+ class PremiumHeroAnimation {
             constructor() {
                 this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
                 this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -505,25 +505,18 @@ class PremiumHeroAnimation {
             }
 
             init() {
-                // Hide hero section initially to prevent flash
-                const heroSection = document.getElementById('heroSection');
-                if (heroSection) {
-                    heroSection.style.opacity = '0';
-                    heroSection.style.visibility = 'hidden';
+                // CRITICAL: Show body immediately to prevent flash
+                document.body.classList.add('ready');
+                
+                // Add hero-active class for iOS fixes
+                if (this.isIOS) {
+                    document.body.classList.add('hero-active');
                 }
                 
                 this.setupVideoAnimation();
                 this.setupTextAnimation();
                 this.setupTypewriter();
                 this.setupScrollAnimation();
-                
-                // Show hero section after brief delay
-                setTimeout(() => {
-                    if (heroSection) {
-                        heroSection.style.opacity = '1';
-                        heroSection.style.visibility = 'visible';
-                    }
-                }, 100);
 
                 // iOS specific fixes
                 if (this.isIOS) {
@@ -532,55 +525,75 @@ class PremiumHeroAnimation {
             }
 
             setupIOSFixes() {
-                // Prevent iOS bounce scrolling during hero
-                document.body.style.position = 'fixed';
-                document.body.style.width = '100%';
-                
-                // Re-enable scrolling after hero animation
-                setTimeout(() => {
-                    document.body.classList.add('hero-started');
-                    document.body.style.position = '';
-                    document.body.style.width = '';
-                }, 4000);
+                // Enhanced iOS fixes
+                const heroSection = document.getElementById('heroSection');
+                if (heroSection) {
+                    // Force hardware acceleration
+                    heroSection.style.webkitTransform = 'translateZ(0)';
+                    heroSection.style.webkitBackfaceVisibility = 'hidden';
+                    heroSection.style.webkitPerspective = '1000px';
+                }
 
-                // Force repaint to prevent iOS animation glitches
+                // Force repaint multiple times for iOS
                 const forceRepaint = () => {
-                    const heroSection = document.getElementById('heroSection');
                     if (heroSection) {
-                        heroSection.style.transform = 'translateZ(0)';
+                        heroSection.style.webkitTransform = 'translateZ(0)';
+                        // Trigger reflow
+                        heroSection.offsetHeight;
                     }
                 };
                 
                 setTimeout(forceRepaint, 50);
+                setTimeout(forceRepaint, 200);
+                setTimeout(forceRepaint, 500);
+
+                // Re-enable scrolling after hero animation
+                setTimeout(() => {
+                    document.body.classList.remove('hero-active');
+                    document.body.classList.add('hero-started');
+                }, 4000);
             }
 
             setupVideoAnimation() {
                 const video = document.querySelector('.hero-background-video');
                 
                 if (video) {
-                    // Mobile-specific video handling
+                    // Enhanced mobile handling
                     if (this.isMobile) {
                         video.muted = true;
                         video.playsInline = true;
+                        video.setAttribute('webkit-playsinline', '');
+                        video.setAttribute('playsinline', '');
                         
-                        // Ensure video plays on mobile
-                        const playPromise = video.play();
-                        if (playPromise !== undefined) {
-                            playPromise.catch(() => {
-                                // Auto-play failed, handle gracefully
-                                console.log('Video autoplay failed, continuing without video');
-                            });
-                        }
+                        // Force play on iOS
+                        const playVideo = () => {
+                            const playPromise = video.play();
+                            if (playPromise !== undefined) {
+                                playPromise.catch((error) => {
+                                    console.log('Video autoplay failed:', error);
+                                    // Fallback: show video as loaded anyway
+                                    video.classList.add('loaded');
+                                });
+                            }
+                        };
+
+                        // Try to play immediately and on user interaction
+                        playVideo();
+                        
+                        // Fallback for iOS
+                        ['touchstart', 'click'].forEach(event => {
+                            document.addEventListener(event, playVideo, { once: true });
+                        });
                     }
                     
                     video.addEventListener('loadeddata', () => {
                         video.classList.add('loaded');
                     });
                     
-                    // Fallback for slow loading
+                    // Faster fallback for slow loading
                     setTimeout(() => {
                         video.classList.add('loaded');
-                    }, 1000);
+                    }, 800);
                 }
             }
 
@@ -589,13 +602,13 @@ class PremiumHeroAnimation {
                 const subtitle = document.getElementById('heroSubtitle');
                 
                 // Faster animations on mobile
-                const titleDelay = this.isMobile ? 600 : 800;
-                const subtitleDelay = this.isMobile ? 1000 : 1400;
+                const titleDelay = this.isMobile ? 400 : 600;
+                const subtitleDelay = this.isMobile ? 800 : 1200;
                 
                 setTimeout(() => {
                     if (title) {
                         title.classList.add('ready');
-                        this.animateText(title, this.isMobile ? 100 : 200);
+                        this.animateText(title, this.isMobile ? 50 : 100);
                     }
                 }, titleDelay);
                 
@@ -615,14 +628,26 @@ class PremiumHeroAnimation {
                     const span = document.createElement('span');
                     span.textContent = char === ' ' ? '\u00A0' : char;
                     span.className = 'letter';
+                    
+                    // iOS specific optimizations
+                    if (this.isIOS) {
+                        span.style.webkitTransform = 'translateZ(0)';
+                        span.style.webkitBackfaceVisibility = 'hidden';
+                    }
+                    
                     element.appendChild(span);
                     
                     // Faster timing on mobile
-                    const timing = this.isMobile ? 50 : 80;
-                    const randomDelay = this.isMobile ? Math.random() * 30 : Math.random() * 50;
+                    const timing = this.isMobile ? 40 : 60;
+                    const randomDelay = this.isMobile ? Math.random() * 20 : Math.random() * 30;
                     
                     setTimeout(() => {
                         span.classList.add('animate');
+                        
+                        // Force repaint on iOS
+                        if (this.isIOS) {
+                            span.offsetHeight;
+                        }
                     }, delay + (index * timing) + randomDelay);
                 });
             }
@@ -634,7 +659,7 @@ class PremiumHeroAnimation {
                 const container = document.getElementById('introContainer');
                 
                 let index = 0;
-                const typeSpeed = this.isMobile ? 40 : 30; // Slightly slower on mobile
+                const typeSpeed = this.isMobile ? 35 : 25;
                 
                 setTimeout(() => {
                     if (container) container.classList.add('show');
@@ -645,9 +670,9 @@ class PremiumHeroAnimation {
                                 typewriterElement.textContent += text[index];
                                 index++;
                                 
-                                // Force repaint on iOS to prevent text jumping
+                                // Force repaint on iOS
                                 if (this.isIOS) {
-                                    typewriterElement.style.transform = 'translateZ(0)';
+                                    typewriterElement.offsetHeight;
                                 }
                             } else {
                                 clearInterval(typeInterval);
@@ -657,14 +682,14 @@ class PremiumHeroAnimation {
                             }
                         }, typeSpeed);
                     }
-                }, this.isMobile ? 1800 : 2400);
+                }, this.isMobile ? 1400 : 1800);
             }
 
             setupScrollAnimation() {
                 let hasScrolled = false;
                 
                 const handleScroll = () => {
-                    if (!hasScrolled && window.scrollY > 50) { // Lower threshold for mobile
+                    if (!hasScrolled && window.scrollY > 30) {
                         hasScrolled = true;
                         this.triggerScrollAnimation();
                     }
@@ -680,7 +705,7 @@ class PremiumHeroAnimation {
                 const handleTouch = () => {
                     if (!hasScrolled) {
                         setTimeout(() => {
-                            if (window.scrollY > 20) {
+                            if (window.scrollY > 15) {
                                 hasScrolled = true;
                                 this.triggerScrollAnimation();
                             }
@@ -688,7 +713,7 @@ class PremiumHeroAnimation {
                     }
                 };
                 
-                // Use passive listeners for better mobile performance
+                // Enhanced event listeners
                 window.addEventListener('scroll', handleScroll, { passive: true });
                 window.addEventListener('wheel', handleWheel, { passive: true });
                 window.addEventListener('touchstart', handleTouch, { passive: true });
@@ -707,60 +732,72 @@ class PremiumHeroAnimation {
                 
                 setTimeout(() => {
                     if (heroSection) heroSection.style.display = 'none';
+                    // Remove iOS fixes when hero is done
+                    if (this.isIOS) {
+                        document.body.classList.remove('hero-active');
+                    }
                 }, 1000);
             }
         }
 
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            // Prevent flash of unstyled content
-            document.body.style.visibility = 'visible';
+        // Enhanced initialization
+        const initAnimation = () => {
+            // Show body immediately
+            document.body.classList.add('ready');
             
             setTimeout(() => {
                 document.body.classList.add('hero-started');
-            }, 500);
+            }, 300);
             
             new PremiumHeroAnimation();
+        };
+
+        // Initialize as soon as possible
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAnimation);
+        } else {
+            initAnimation();
+        }
+
+        // Scroll indicator handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            let lastScrollY = 0;
+
+            function handleScroll() {
+                const currentScrollY = window.scrollY;
+                const shouldHide = currentScrollY > 50 || currentScrollY > lastScrollY;
+                
+                if (shouldHide && !scrollIndicator.classList.contains('hidden')) {
+                    scrollIndicator.classList.add('hidden');
+                } else if (!shouldHide && currentScrollY < 20) {
+                    scrollIndicator.classList.remove('hidden');
+                }
+                
+                lastScrollY = currentScrollY;
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        handleScroll();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            ['click', 'keydown', 'touchstart'].forEach(event => {
+                document.addEventListener(event, () => {
+                    scrollIndicator.classList.add('hidden');
+                }, { once: true });
+            });
         });
 
-        // Prevent iOS rubber band scrolling
+        // Prevent iOS rubber band scrolling during hero
         document.addEventListener('touchmove', function(e) {
             if (document.body.classList.contains('hero-active')) {
                 e.preventDefault();
             }
         }, { passive: false });
-
-const scrollIndicator = document.getElementById('scrollIndicator');
-        let lastScrollY = 0;
-
-        function handleScroll() {
-            const currentScrollY = window.scrollY;
-            const shouldHide = currentScrollY > 50 || currentScrollY > lastScrollY;
-            
-            if (shouldHide && !scrollIndicator.classList.contains('hidden')) {
-                scrollIndicator.classList.add('hidden');
-            } else if (!shouldHide && currentScrollY < 20) {
-                scrollIndicator.classList.remove('hidden');
-            }
-            
-            lastScrollY = currentScrollY;
-        }
-
-        // Smooth scroll handling with RAF
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    handleScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-
-        // Hide on any user interaction
-        ['click', 'keydown', 'touchstart'].forEach(event => {
-            document.addEventListener(event, () => {
-                scrollIndicator.classList.add('hidden');
-            }, { once: true });
-        });
