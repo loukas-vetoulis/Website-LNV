@@ -17,15 +17,15 @@
             <div class="loader-spinner"></div>
         </div>
     </div>
-    <header class="navbar">
+     <header class="navbar">
         <div class="container">
             <div class="nav-logo">
                 <a href="index.html">
-                    <img src="images/dark_logo.png" alt="LNV Logo"/>
+                    <img src="images/dark_logo.png" alt="LNV Logo" id="navbar-logo-img"/> <!-- Added ID for JS -->
                 </a>
             </div>
             <nav class="main-nav">
-                 <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
                 <ul class="nav-links" id="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="projects.html">Projects</a></li>
@@ -34,12 +34,10 @@
                 </ul>
             </nav>
             <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
-    <!-- Text Node for "Dark Mode" or "Light Mode" will be first child -->
-     <!-- This text will be updated by JS -->
-    <span class="icon-wrapper">
-        <!-- SVGs will be injected here by JS -->
-    </span>
-</button>
+                <span class="icon-wrapper">
+                    <!-- SVGs will be injected here by JS -->
+                </span>
+            </button>
         </div>
     </header>
 
