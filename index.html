@@ -19,11 +19,12 @@
         body.home-page #heroSection {
             position: fixed !important;
             top: 0 !important; left: 0 !important;
-            width: 100vw !important; height: 100vh !important; /* Use 100dvh if preferred and tested */
-            background-color: #000 !important; /* Match your .hero-section initial background */
-            z-index: 20000 !important; /* Must be higher than navbar */
-            opacity: 1 !important; /* Ensure it's opaque */
-            visibility: visible !important; /* Hero itself must be visible */
+            width: 100vw !important;
+            height: 100dvh !important; /* <<< CRITICAL CHANGE HERE */
+            background-color: #000 !important;
+            z-index: 20000 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
     </style>
     

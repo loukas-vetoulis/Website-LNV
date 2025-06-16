@@ -632,6 +632,9 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
             overscroll-behavior: none;
             /* Ensure no flash */
             background: #000;
+            will-change: transform; /* <<< ADD THIS */
+            /* iOS specific fixes */
+
         }
 
         .hero-section.scrolled {
@@ -880,6 +883,8 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
             transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
             visibility: hidden;
             opacity: 0;
+            will-change: transform, opacity; /* <<< ADD THIS */
+
         }
 
         .main-content.reveal {
