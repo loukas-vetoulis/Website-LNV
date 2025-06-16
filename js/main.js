@@ -69,7 +69,6 @@ class PremiumHeroAnimation {
     constructor() {
         this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        // Ensure elements exist before proceeding
         this.heroSection = document.getElementById('heroSection');
         this.video = document.querySelector('.hero-background-video');
         this.title = document.getElementById('heroTitle');
@@ -77,7 +76,8 @@ class PremiumHeroAnimation {
         this.typewriterElement = document.getElementById('typewriterText');
         this.cursor = document.getElementById('cursor');
         this.introContainer = document.getElementById('introContainer');
-        this.mainContent = document.getElementById('mainContent'); // Added for triggerScrollAnimation
+        this.mainContent = document.getElementById('mainContent');
+        this.hasScrolled = false; // <<< ADDED CLASS PROPERTY
 
         if (!this.heroSection) {
             console.warn("PremiumHeroAnimation: heroSection not found. Animation will not run.");
@@ -90,21 +90,25 @@ class PremiumHeroAnimation {
         // Body visibility is handled by 'premium-hero-ready' class added before instantiation.
         // Inline CSS for #heroSection ensures it covers everything.
 
-        if (this.isIOS) {
-            document.body.classList.add('hero-active');
-        }
+        // if (this.isIOS) { // <<<< KEY CHANGE: Temporarily commented out.
+            // This line was likely causing body to be position:fixed on iOS,
+            // preventing window.scrollY from changing.
+            // The visual "lock" will now come from #heroSection being position:fixed.
+            // document.body.classList.add('hero-active');
+            // console.log('iOS: body.hero-active ADDITION COMMENTED OUT for testing scrollY');
+        // }
         
         this.setupVideoAnimation();
         this.setupTextAnimation();
         this.setupTypewriter();
-        this.setupScrollAnimation();
+        this.setupScrollAnimation(); // Call this to set up listeners
 
         if (this.isIOS) {
             this.setupIOSFixes();
         }
 
         setTimeout(() => {
-            document.body.classList.add('hero-started');
+            document.body.classList.add('hero-started'); // This class seems related to animation states
         }, 300);
     }
 
@@ -124,10 +128,14 @@ class PremiumHeroAnimation {
         setTimeout(forceRepaint, 200);
         setTimeout(forceRepaint, 500);
 
+        // Fallback removal of hero-active. If it's not being added in init() for iOS,
+        // this might not be strictly necessary for the scroll lock, but could be a general safety.
         setTimeout(() => {
-            document.body.classList.remove('hero-active');
-            // document.body.classList.add('hero-started'); // Already added in init
-        }, 4000); // This delay might be too long if hero animates faster
+            // if (document.body.classList.contains('hero-active')) {
+                // console.log('iOS Fixes: Fallback, found body.hero-active. Removing it.');
+                // document.body.classList.remove('hero-active');
+            // }
+        }, 4000);
     }
 
     setupVideoAnimation() {
@@ -139,12 +147,12 @@ class PremiumHeroAnimation {
                 this.video.setAttribute('playsinline', '');
                 
                 const playVideo = () => {
-                    if (this.video.paused) { // Only attempt to play if paused
+                    if (this.video.paused) { 
                         const playPromise = this.video.play();
                         if (playPromise !== undefined) {
                             playPromise.catch((error) => {
                                 console.log('Video autoplay failed:', error);
-                                this.video.classList.add('loaded'); // Mark as loaded anyway
+                                this.video.classList.add('loaded');
                             });
                         }
                     }
@@ -159,7 +167,7 @@ class PremiumHeroAnimation {
                 this.video.classList.add('loaded');
             });
             
-            setTimeout(() => { // Fallback if loadeddata doesn't fire quickly
+            setTimeout(() => { 
                 if (!this.video.classList.contains('loaded')) {
                     this.video.classList.add('loaded');
                 }
@@ -181,7 +189,7 @@ class PremiumHeroAnimation {
         if (this.subtitle) {
             setTimeout(() => {
                 this.subtitle.classList.add('ready');
-                this.animateText(this.subtitle, 0); // Subtitle might not need per-letter animation if it's simpler
+                this.animateText(this.subtitle, 0); 
             }, subtitleDelay);
         }
     }
@@ -213,10 +221,9 @@ class PremiumHeroAnimation {
     }
 
     setupTypewriter() {
-        // Ensure HERO_CONTENT is defined and has the necessary properties
         const text = (typeof HERO_CONTENT !== 'undefined' && HERO_CONTENT.premiumHeroTypewriter) 
                      ? HERO_CONTENT.premiumHeroTypewriter
-                     : "Default typewriter text if HERO_CONTENT is missing."; // Fallback
+                     : "Default typewriter text if HERO_CONTENT is missing."; 
 
         if (this.typewriterElement && this.introContainer) {
             let index = 0;
@@ -242,55 +249,64 @@ class PremiumHeroAnimation {
     }
 
     setupScrollAnimation() {
-        let hasScrolled = false;
+        // Use this.hasScrolled to ensure animation triggers only once.
         
         const handleScroll = () => {
-            if (!hasScrolled && window.scrollY > 30) {
-                hasScrolled = true;
+            console.log('[DEBUG] Scroll event. scrollY:', window.scrollY, 'this.hasScrolled:', this.hasScrolled);
+            if (!this.hasScrolled && window.scrollY > 5) { // <<< LOWERED THRESHOLD for testing
+                this.hasScrolled = true;
+                console.log('[DEBUG] Condition met in handleScroll. Triggering scroll animation.');
                 this.triggerScrollAnimation();
+                // Optionally remove listeners if they are truly not needed after this point
+                // window.removeEventListener('scroll', handleScroll);
+                // window.removeEventListener('wheel', handleWheel);
+                // window.removeEventListener('touchstart', handleTouch);
             }
         };
+
         const handleWheel = (e) => {
-            if (!hasScrolled && e.deltaY > 0) {
-                hasScrolled = true;
+            console.log('[DEBUG] Wheel event. deltaY:', e.deltaY, 'this.hasScrolled:', this.hasScrolled);
+            if (!this.hasScrolled && e.deltaY > 0) {
+                this.hasScrolled = true;
+                console.log('[DEBUG] Condition met in handleWheel. Triggering scroll animation.');
                 this.triggerScrollAnimation();
             }
         };
-        const handleTouch = () => {
-            if (!hasScrolled) {
-                setTimeout(() => {
-                    if (window.scrollY > 15) {
-                        hasScrolled = true;
-                        this.triggerScrollAnimation();
-                    }
-                }, 100);
+
+        const handleTouch = () => { // Renamed from handleTouchStart for clarity
+            console.log('[DEBUG] Touchstart event. this.hasScrolled:', this.hasScrolled);
+            // This listener is mainly to ensure user interaction can initiate scroll detection.
+            // The actual scroll value change will be caught by the 'scroll' event.
+            if (!this.hasScrolled) {
+                // No specific action needed here if the 'scroll' event is reliable
             }
         };
         
-        window.addEventListener('scroll', handleScroll, { passive: true, once: true }); // Use once if it only triggers once
-        window.addEventListener('wheel', handleWheel, { passive: true, once: true });
-        window.addEventListener('touchstart', handleTouch, { passive: true, once: true });
-        // window.addEventListener('touchmove', handleTouch, { passive: true }); // Might be too aggressive
+        // REMOVED `once: true` and rely on `this.hasScrolled` check inside handlers
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('wheel', handleWheel, { passive: true });
+        window.addEventListener('touchstart', handleTouch, { passive: true }); // Renamed handler
     }
 
     triggerScrollAnimation() {
+        console.log('[DEBUG] triggerScrollAnimation CALLED. Current this.hasScrolled:', this.hasScrolled);
         if (this.heroSection) this.heroSection.classList.add('scrolled');
         
         setTimeout(() => {
             if (this.mainContent) this.mainContent.classList.add('reveal');
-            
-            // Reveal navbar and main content area for homepage
             if (document.body.classList.contains('home-page')) {
                 document.body.classList.add('hero-content-revealed');
             }
-        }, 300); // This should align with .main-content.reveal transition
+        }, 300); 
         
         setTimeout(() => {
             if (this.heroSection) this.heroSection.style.display = 'none';
-            if (this.isIOS) {
-                document.body.classList.remove('hero-active');
-            }
-        }, 1200); // Match or be slightly after .hero-section.scrolled transition + .main-content.reveal transform transition
+            // If body.hero-active was added for iOS in init() (now commented out), it would be removed here.
+            // if (this.isIOS && document.body.classList.contains('hero-active')) {
+            //     console.log('[DEBUG] iOS: body.hero-active REMOVED in triggerScrollAnimation');
+            //     document.body.classList.remove('hero-active');
+            // }
+        }, 1200); 
     }
 }
 
@@ -318,25 +334,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const mobileNavToggle = document.getElementById('mobile-nav-toggle');
     const navLinksUl = document.getElementById('nav-links');
-    const mainNavbarLogo = document.getElementById('navbar-logo-img'); // Use ID from HTML
+    const mainNavbarLogo = document.getElementById('navbar-logo-img'); 
     
     const currentPath = window.location.pathname.split("/").pop() || "index.html";
     const sunIconSVG = `<svg class="icon icon-sun" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1s-1-.448-1-1V6c0-.552.448-1 1-1zm0 12c.552 0 1 .448 1 1v2c0 .552-.448 1-1 1s-1-.448-1-1v-2c0-.552.448-1 1-1zm7.778-8.707l1.414-1.414a.997.997 0 000-1.414.999.999 0 00-1.414 0l-1.414 1.414a.999.999 0 001.414 1.414zM4.222 19.778l1.414-1.414a.999.999 0 10-1.414-1.414l-1.414 1.414a.999.999 0 001.414 1.414zM20 12c0 .552-.448 1-1 1h-2c-.552 0-1-.448-1-1s.448-1 1-1h2c.552 0 1 .448 1 1zM5 12c0 .552-.448 1-1 1H2c-.552 0-1-.448-1-1s.448-1 1-1h2c.552 0 1 .448 1 1zm12.778-5.707a.999.999 0 000-1.414l-1.414-1.414a.999.999 0 10-1.414 1.414l1.414 1.414a.997.997 0 001.414 0zm-11.314 11.314a.999.999 0 000-1.414l-1.414-1.414a.999.999 0 00-1.414 1.414l1.414 1.414a.997.997 0 001.414 0zM12 9a3 3 0 100 6 3 3 0 000-6z"></path></svg>`;
     const moonIconSVG = `<svg class="icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.578 16.838a.998.998 0 01.487-1.925 7.992 7.992 0 00-2.649-1.887C17.781 11.56 18.5 9.33 18.5 7c0-4.136-3.364-7.5-7.5-7.5S3.5 2.864 3.5 7c0 2.443.796 4.686 2.064 6.407a8.024 8.024 0 00-3.61 11.131.998.998 0 001.579.566 10.018 10.018 0 0116.045-8.266zM11 19.5a5.984 5.984 0 01-3.397-1.006A7.968 7.968 0 005.5 13.44V7c0-2.982 2.208-5.5 5.5-5.5S16.5 4.018 16.5 7v.012A6 6 0 0111 19.5z"></path></svg>`;
 
     if (!isHomepage) {
-        // If body doesn't have premium-hero-ready (added for homepage)
-        // and doesn't have general-page-ready yet, add it.
         if (!document.body.classList.contains('premium-hero-ready') && 
             !document.body.classList.contains('general-page-ready')) {
-            document.body.classList.add('general-page-ready'); // Make body visible for other pages
-        }
-        if (loaderWrapper) {
-             // loaderWrapper.style.display = 'flex'; // Ensure general loader is visible
+            document.body.classList.add('general-page-ready'); 
         }
     } else {
         if (loaderWrapper) {
-            loaderWrapper.style.display = 'none'; // Hide general loader on homepage
+            loaderWrapper.style.display = 'none'; 
         }
     }
     
@@ -422,12 +433,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.tagName === 'A') { 
                 closeMobileMenu();
             } else if (e.target.matches('ul.nav-links::before') || (e.target === navLinksUl && navLinksUl.classList.contains('active'))) {
-                // Check for click on pseudo-element or outer area of active menu
                 const rect = navLinksUl.getBoundingClientRect();
                 const styles = window.getComputedStyle(navLinksUl, '::before');
-                const closeBtnSize = 50; // approx from your CSS
-                const closeBtnTop = parseFloat(styles.top) || (2 * 16); // 2rem
-                const closeBtnRight = parseFloat(styles.right) || (2*16); // 2rem
+                const closeBtnSize = 50; 
+                const closeBtnTop = parseFloat(styles.top) || (2 * 16); 
+                const closeBtnRight = parseFloat(styles.right) || (2*16); 
 
                 const closeButtonXstart = rect.width - closeBtnRight - closeBtnSize;
                 const closeButtonXend = rect.width - closeBtnRight;
@@ -445,7 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     document.addEventListener('click', (e) => {
-         // Using 3768px from your media query, adjust if needed
         if (window.innerWidth <= 3768 && navLinksUl && navLinksUl.classList.contains('active')) {
             if (!navLinksUl.contains(e.target) && !mobileNavToggle.contains(e.target)) {
                 closeMobileMenu();
@@ -458,17 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Old Hero Content population (if HERO_CONTENT is used for things not in PremiumHeroAnimation)
-    // This is less relevant if PremiumHeroAnimation handles all hero text, title, subtitle.
-    const heroNameEl = document.querySelector('.hero h1#hero-name'); // Your old hero name element
+    const heroNameEl = document.querySelector('.hero h1#hero-name'); 
     if (isHomepage && heroNameEl && typeof HERO_CONTENT !== 'undefined' && HERO_CONTENT.name) {
-        // This assumes PremiumHeroAnimation is NOT handling an element with ID 'hero-name'
-        // And that you still have a separate #hero-name element for this.
-        // If PremiumHeroAnimation handles all text, this can be removed or adapted.
-        // ... (your existing logic for populating #hero-name)
+        // This part would be relevant if #hero-name was separate from PremiumHeroAnimation's #heroTitle
     }
-    // ... (rest of old HERO_CONTENT population for CTAs, social links if they are separate from PremiumHero)
-
 
     const caseStudiesGridContainer = document.getElementById('case-studies-grid-container');
     if (caseStudiesGridContainer && typeof CASE_STUDIES_DATA !== 'undefined' && CASE_STUDIES_DATA.length > 0) {
@@ -492,11 +494,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const projectsGrid = document.getElementById('projects-grid');
-    // Ensure PROJECTS is defined (from data.js)
     const allProjects = (typeof PROJECTS !== 'undefined') ? PROJECTS : [];
 
     if (projectsGrid && currentPath === 'index.html') {
-        const showcase = new ProjectShowcase('projects-grid'); // Assumes FEATURED_PROJECTS is in data.js
+        const showcase = new ProjectShowcase('projects-grid'); 
         showcase.renderFeatured();
     } else if (projectsGrid && currentPath === 'projects.html') {
         projectsGrid.innerHTML = '';
@@ -699,6 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // The problematic touchmove listener. Keep this commented out for now.
     // document.addEventListener('touchmove', function(e) {
     //     if (document.body.classList.contains('hero-active')) {
     //         e.preventDefault();
