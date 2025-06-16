@@ -1017,8 +1017,6 @@ nav.main-nav ul.nav-links a.active { color: var(--current-text); }
         /* iOS Safari Fixes */
         @supports (-webkit-touch-callout: none) {
             body.hero-active {
-                position: fixed;
-                overflow: hidden;
                 width: 100%;
                 height: 100%;
             }
