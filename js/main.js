@@ -699,10 +699,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    document.addEventListener('touchmove', function(e) {
-        if (document.body.classList.contains('hero-active')) {
-            e.preventDefault();
-        }
-    }, { passive: false });
+    // document.addEventListener('touchmove', function(e) {
+    //     if (document.body.classList.contains('hero-active')) {
+    //         e.preventDefault();
+    //     }
+    // }, { passive: false });
 
 }); // End of DOMContentLoaded
