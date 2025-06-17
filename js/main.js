@@ -129,37 +129,40 @@ class PremiumHeroAnimation {
     }
 
     setupVideoAnimation() {
-        if (this.video) {
-            if (this.isMobile) {
-                this.video.muted = true;
-                this.video.playsInline = true;
-                this.video.setAttribute('webkit-playsinline', '');
-                this.video.setAttribute('playsinline', '');
-                
-                const playVideo = () => {
-                    if (this.video.paused) { 
-                        const playPromise = this.video.play();
-                        if (playPromise !== undefined) {
-                            playPromise.catch((error) => {
-                                console.log('Video autoplay failed:', error);
-                                this.video.classList.add('loaded');
-                            });
-                        }
-                    }
-                };
-                playVideo();
-                ['touchstart', 'click'].forEach(event => {
-                    document.addEventListener(event, playVideo, { once: true });
-                });
-            }
+        const video = document.querySelector('.hero-background-video');
+        
+        if (video) {
+            // iOS specific settings
+            video.playsInline = true;
+            video.muted = true;
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', '');
             
-            this.video.addEventListener('loadeddata', () => {
-                this.video.classList.add('loaded');
+            // Play video immediately
+            const playVideo = () => {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log('Video autoplay failed:', error);
+                    });
+                }
+            };
+
+            // Try to play video on various events
+            playVideo();
+            ['touchstart', 'click'].forEach(event => {
+                document.addEventListener(event, playVideo, { once: true });
             });
-            
-            setTimeout(() => { 
-                if (!this.video.classList.contains('loaded')) {
-                    this.video.classList.add('loaded');
+
+            // Add loaded class for fade in
+            video.addEventListener('loadeddata', () => {
+                video.classList.add('loaded');
+            });
+
+            // Fallback if video doesn't load within 800ms
+            setTimeout(() => {
+                if (!video.classList.contains('loaded')) {
+                    video.classList.add('loaded');
                 }
             }, 800);
         }
