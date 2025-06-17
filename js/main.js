@@ -127,46 +127,45 @@ class PremiumHeroAnimation {
         //     }
         // }, 5000); // 5 seconds
     }
-
-    setupVideoAnimation() {
-        const video = document.querySelector('.hero-background-video');
-        
-        if (video) {
-            // iOS specific settings
-            video.playsInline = true;
-            video.muted = true;
-            video.setAttribute('playsinline', '');
-            video.setAttribute('webkit-playsinline', '');
+        setupVideoAnimation() {
+            const video = document.querySelector('.hero-background-video');
             
-            // Play video immediately
-            const playVideo = () => {
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log('Video autoplay failed:', error);
-                    });
-                }
-            };
+            if (video) {
+                // iOS specific settings
+                video.playsInline = true;
+                video.muted = true;
+                video.setAttribute('playsinline', '');
+                video.setAttribute('webkit-playsinline', '');
+                
+                // Play video immediately
+                const playVideo = () => {
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.log('Video autoplay failed:', error);
+                        });
+                    }
+                };
 
-            // Try to play video on various events
-            playVideo();
-            ['touchstart', 'click'].forEach(event => {
-                document.addEventListener(event, playVideo, { once: true });
-            });
+                // Try to play video on various events
+                playVideo();
+                ['touchstart', 'click'].forEach(event => {
+                    document.addEventListener(event, playVideo, { once: true });
+                });
 
-            // Add loaded class for fade in
-            video.addEventListener('loadeddata', () => {
-                video.classList.add('loaded');
-            });
-
-            // Fallback if video doesn't load within 800ms
-            setTimeout(() => {
-                if (!video.classList.contains('loaded')) {
+                // Add loaded class for fade in
+                video.addEventListener('loadeddata', () => {
                     video.classList.add('loaded');
-                }
-            }, 800);
+                });
+
+                // Fallback if video doesn't load within 800ms
+                setTimeout(() => {
+                    if (!video.classList.contains('loaded')) {
+                        video.classList.add('loaded');
+                    }
+                }, 800);
+            }
         }
-    }
 
     setupTextAnimation() {
         const titleDelay = this.isMobile ? 400 : 600;
