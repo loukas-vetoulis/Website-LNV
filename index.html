@@ -3,198 +3,502 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get in touch with Loukas-Nikolaos Vetoulis to discuss projects, collaborations, or any inquiries.">
-    <title>Home | Loukas-Nikolaos Vetoulis</title>
-    
-    <!-- Critical Inline Styles for Preventing Flash -->
+    <title>Elegant Hero Section</title>
     <style>
-        /* Critical: Hide body by default to prevent any flash */
-        body {
-            visibility: hidden !important; /* Will be made visible by JS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* For homepage specifically:
-           Ensure hero section is styled to cover everything from the very start.
-           This acts as an immediate opaque layer. */
-        body.home-page #heroSection {
-            position: fixed !important;
-            top: 0 !important; left: 0 !important;
-            width: 100vw !important;
-            height: 100dvh !important; /* <<< CRITICAL CHANGE HERE */
-            background-color: #000 !important;
-            z-index: 20000 !important;
-            opacity: 1 !important;
-            visibility: visible !important;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            opacity: 1;
+            transition: opacity 0.4s ease-out;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            opacity: 0.7;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            padding-top: 5rem;
+            position: relative;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in-out 0.3s forwards;
+        }
+
+        /* Animated background elements */
+        .bg-orb-1 {
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .bg-orb-2 {
+            position: absolute;
+            bottom: 15%;
+            right: 15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        .accent-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.01) 0%, transparent 60%);
+            filter: blur(120px);
+            pointer-events: none;
+        }
+
+        /* Content */
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            display: inline-block;
+            background: linear-gradient(to right, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-type {
+            display: inline-block;
+            white-space: pre-wrap;
+        }
+
+        .text-type__cursor {
+            margin-left: 0.25rem;
+            display: inline-block;
+            opacity: 1;
+            font-weight: 300;
+            background: linear-gradient(to right, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: cursorBlink 1.06s infinite;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            font-weight: 400;
+            margin-bottom: 3rem;
+            color: #a0a0a0;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: #808080;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50px;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            opacity: 0.5;
+            animation: bounce 2s ease-in-out infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-indicator:hover {
+            opacity: 0.8;
+        }
+
+        .scroll-mouse {
+            width: 24px;
+            height: 36px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll 2s ease-in-out infinite;
+        }
+
+        .scroll-text {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+            color: #808080;
+        }
+
+        /* Content Section */
+        .content-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            background: #0a0a0a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .content-inner {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-text {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            line-height: 1.8;
+            color: #808080;
+            font-weight: 400;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 40px) scale(1.1); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @keyframes scroll {
+            0% { opacity: 0; transform: translateX(-50%) translateY(0); }
+            40% { opacity: 1; }
+            80% { opacity: 0; transform: translateX(-50%) translateY(16px); }
+            100% { opacity: 0; }
+        }
+
+        @keyframes cursorBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .bg-orb-1, .bg-orb-2 {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .accent-glow {
+                width: 400px;
+                height: 200px;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
         }
     </style>
-    
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/dark_logo.png">
 </head>
-<body class="home-page"> <!-- Added class="home-page" -->
-    
-    <!-- General Loader - will be hidden on homepage by JS -->
-    <div id="loader-wrapper">
-        <div class="loader-content">
-            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
-            <div class="loader-spinner"></div>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">LNV</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="case-studies.html">Case Studies</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
         </div>
-    </div>
-    
-     <header class="navbar">
-        <div class="container">
-            <div class="nav-logo">
-                <a href="index.html">
-                    <img src="images/dark_logo.png" alt="LNV Logo" id="navbar-logo-img"/> <!-- Added ID for JS -->
-                </a>
+    </nav>
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection">
+        <!-- Background elements -->
+        <div class="bg-orb-1"></div>
+        <div class="bg-orb-2"></div>
+        <div class="accent-glow"></div>
+
+        <!-- Main Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="text-type" id="typewriterText"></span>
+                <span class="text-type__cursor">|</span>
+            </h1>
+
+            <h2 class="hero-subtitle">Crafted Through Vision & Precision</h2>
+
+            <p class="hero-description">
+                I work with a limited number of clients to ensure every project receives 
+                the attention and care it deserves. My process always begins with 
+                listening—understanding your business, your challenges, and your goals.
+            </p>
+
+            <a href="projects.html" class="cta-button">
+                Explore My Work
+            </a>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator" onclick="scrollToContent()">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
             </div>
-            <nav class="main-nav">
-                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="case-studies.html">Case Studies</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
-                <span class="icon-wrapper">
-                    <!-- SVGs will be injected here by JS -->
-                </span>
-            </button>
+            <span class="scroll-text">Explore</span>
         </div>
-    </header>
- 
-    <!-- Hero Section - This is the primary initial view on the homepage -->
-    <div class="hero-section" id="heroSection">
-        <div class="hero-visual-backdrop">
-            <video 
-                autoplay 
-                muted 
-                defaultMuted
-                loop 
-                playsinline 
-                webkit-playsinline
-                class="hero-background-video"
-                preload="auto"
-            >
-                <source src="videos/programming_video.mp4" type="video/mp4">
-            </video>
-            <div class="hero-overlay"></div>
-        </div>
-        <h1 class="hero-title" id="heroTitle">Simplicity</h1>
-        <h2 class="hero-subtitle" id="heroSubtitle">Crafted Through Vision & Precision</h2>
-        
-        <div class="intro-container" id="introContainer">
-            <p class="intro-text">
-                <span id="typewriterText"></span><span class="typewriter" id="cursor"></span>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="content-inner">
+            <h2 class="section-title">Philosophy</h2>
+            <p class="section-text">
+                Only then do I design and build, with a relentless focus on clarity, 
+                maintainability, and results. Every solution is crafted to drive 
+                measurable business value while maintaining elegant simplicity.
             </p>
         </div>
-            <div class="scroll-indicator" id="scrollIndicator">
-            <div class="scroll-orb"></div>
-            <div class="scroll-hint">explore</div>
-        </div>
-    </div>
+    </section>
 
-    <!-- Main Content - Revealed after Hero Animation -->
-    <main id="mainContent">
-        <!-- PHILOSOPHY: The Why -->
-        <section class="manifesto-section container" id="philosophy">
-                <div class="manifesto-content premium-layout" style="max-width:700px;text-align:center; margin: 0 auto;">
-                <span class="section-marker" style="margin-bottom:0.5rem;">Philosophy</span>
-                    <p style="font-size:1.35rem;line-height:1.8;color:var(--current-text);margin-bottom:1rem;">
-                    I work with a limited number of clients to ensure every project receives the attention and care it deserves.<br>
-                    My process always begins with listening—understanding your business, your challenges, and your goals.<br>
-                    Only then do I design and build, with a relentless focus on clarity, maintainability, and results.
-                </p>
-            </div>
-        </section>
+    <script>
+        // Page Transition System
+        function smoothNavigate(url, event) {
+            if (event) event.preventDefault();
+            
+            // Fade out current page
+            document.body.style.transition = 'opacity 0.4s ease-out';
+            document.body.style.opacity = '0';
+            
+            // Navigate after fade completes
+            setTimeout(() => {
+                window.location.href = url;
+            }, 400);
+        }
 
-        <!-- SERVICES SECTION -->
-        <section class="services-section container">
-            <h2>Services</h2>
-            <div class="services-grid">
-                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="0ms">
-                    <h3>Automation Engineering</h3>
-                    <p>Streamlining business processes and eliminating repetitive tasks with robust, maintainable automation solutions.</p>
-                </article>
-                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="150ms">
-                    <h3>AI & Data Solutions</h3>
-                    <p>Applying artificial intelligence and machine learning to solve real-world problems and unlock new opportunities.</p>
-                </article>
-                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="300ms">
-                    <h3>Custom Software</h3>
-                    <p>Designing and building tailored software solutions that fit your unique business needs and drive measurable results.</p>
-                </article>
-            </div>
-        </section>
+        // Fade in on page load
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.6s ease-in';
+                document.body.style.opacity = '1';
+            }, 50);
+        });
 
-        <div class="section-divider"></div>
+        // Attach smooth navigation to all internal links
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('a[href]:not([href^="#"]):not([href^="http"])');
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const url = link.getAttribute('href');
+                    if (url && !url.startsWith('http') && !url.startsWith('#')) {
+                        smoothNavigate(url, e);
+                    }
+                });
+            });
+        });
 
-        <!-- SELECTED WORK: Only the best -->
-        <section id="projects-showcase" class="container">
-            <div class="section-title-container animated-item animate-slide-up">
-                <h2>Crafting Software Excellence</h2>
-                <p class="secondary animated-item animate-slide-up" data-animation-delay="100ms">A portfolio of solutions where simplicity and business value come first.</p>
-            </div>
-            <div class="projects-grid" id="projects-grid">
-                <!-- Project cards injected by JS -->
-            </div>
-        </section>
-        <div style="text-align: center; margin-bottom: 2rem;"> <!-- Added margin for spacing -->
-            <a href="projects.html" class="inquiry-link animated-item animate-fade-in" data-animation-delay="400ms">
-                        View All Projects<span class="arrow"> →</span>
-            </a>
-        </div>
+        // Typewriter Effect
+        const texts = ['Simplicity', 'Precision', 'Vision', 'Excellence'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 80;
+        let deletingSpeed = 50;
+        let pauseDuration = 2000;
+        
+        const typewriterElement = document.getElementById('typewriterText');
 
-        <div class="section-divider"></div>
+        function typeWriter() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length;
+                    setTimeout(typeWriter, pauseDuration);
+                    return;
+                }
+                
+                setTimeout(typeWriter, deletingSpeed);
+            } else {
+                typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if (charIndex === currentText.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, pauseDuration);
+                    return;
+                }
+                
+                setTimeout(typeWriter, typingSpeed);
+            }
+        }
 
-        <!-- CASE STUDIES: Quiet proof -->
-        <section id="case-studies-hub" class="container">
-            <div class="section-title-container animated-item animate-slide-up">
-                <h2>Impact & Results</h2>
-                <p class="secondary animated-item animate-slide-up" data-animation-delay="100ms">
-                    In-depth analysis of transformative solutions that drive business growth.
-                </p>
-            </div>
-            <div class="case-studies-grid" id="case-studies-grid-container">
-                <!-- Case studies injected by JS -->
-            </div>
-        </section>
-        <div style="text-align: center; margin-bottom: 2rem;"> <!-- Added margin for spacing -->
-            <a href="case-studies.html" class="inquiry-link animated-item animate-fade-in" data-animation-delay="400ms">
-                        View All Case Studies<span class="arrow"> →</span>
-            </a>
-        </div>
+        // Start typewriter effect after initial delay
+        setTimeout(typeWriter, 500);
 
-        <div class="section-divider"></div>
-
-        <!-- CTA: Invitation, not a pitch -->
-        <section class="invitation-section premium-invitation container">
-            <div class="invitation-content animated-item animate-fade-in" data-animation-delay="0.2s" style="text-align:center;">
-                <span class="section-marker centered">Let’s Collaborate</span>
-                <h2 class="invitation-headline" style="font-size:2rem;margin-bottom:1.5rem;">Simplicity crafted through vision and precision.</h2>
-                <p class="inquiry-text">
-                    I work with founders and teams who value clarity, precision, and purpose.<br>
-                    If that sounds like you—let’s start a conversation.
-                </p>
-                <a href="contact.html" class="inquiry-link">Get in touch<span class="arrow">→</span></a>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="footer">
-    <div class="container">
-        <div class="footer-content" id="footer-content">
-            <!-- Footer will be injected by JS -->
-        </div>
-    </div>
-    </footer>
-
-    <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+        // Smooth scroll function
+        function scrollToContent() {
+            const heroSection = document.getElementById('heroSection');
+            const heroHeight = heroSection.offsetHeight;
+            window.scrollTo({
+                top: heroHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
