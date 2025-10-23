@@ -3,502 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegant Hero Section</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: #000000;
-            color: #ffffff;
-            overflow-x: hidden;
-            opacity: 1;
-            transition: opacity 0.4s ease-out;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1rem 2rem;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: #ffffff;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-logo:hover {
-            opacity: 0.7;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #a0a0a0;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            letter-spacing: 0.02em;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #ffffff;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            padding-top: 5rem;
-            position: relative;
-            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
-            opacity: 0;
-            animation: fadeIn 0.8s ease-in-out 0.3s forwards;
-        }
-
-        /* Animated background elements */
-        .bg-orb-1 {
-            position: absolute;
-            top: 15%;
-            left: 15%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(100px);
-            animation: float 12s ease-in-out infinite;
-        }
-
-        .bg-orb-2 {
-            position: absolute;
-            bottom: 15%;
-            right: 15%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(100px);
-            animation: float 15s ease-in-out infinite reverse;
-        }
-
-        .accent-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 300px;
-            background: radial-gradient(ellipse, rgba(255,255,255,0.01) 0%, transparent 60%);
-            filter: blur(120px);
-            pointer-events: none;
-        }
-
-        /* Content */
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-            max-width: 900px;
-            width: 100%;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            display: inline-block;
-            background: linear-gradient(to right, #ffffff 0%, #e0e0e0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .text-type {
-            display: inline-block;
-            white-space: pre-wrap;
-        }
-
-        .text-type__cursor {
-            margin-left: 0.25rem;
-            display: inline-block;
-            opacity: 1;
-            font-weight: 300;
-            background: linear-gradient(to right, #ffffff 0%, #e0e0e0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: cursorBlink 1.06s infinite;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.25rem, 3vw, 2rem);
-            font-weight: 400;
-            margin-bottom: 3rem;
-            color: #a0a0a0;
-            letter-spacing: -0.01em;
-        }
-
-        .hero-description {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            line-height: 1.7;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            color: #808080;
-            font-weight: 400;
-        }
-
-        .cta-button {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 50px;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.02em;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            opacity: 0.5;
-            animation: bounce 2s ease-in-out infinite;
-            transition: opacity 0.3s ease;
-        }
-
-        .scroll-indicator:hover {
-            opacity: 0.8;
-        }
-
-        .scroll-mouse {
-            width: 24px;
-            height: 36px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .scroll-wheel {
-            width: 4px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 2px;
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: scroll 2s ease-in-out infinite;
-        }
-
-        .scroll-text {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-weight: 500;
-            color: #808080;
-        }
-
-        /* Content Section */
-        .content-section {
-            min-height: 100vh;
-            padding: 4rem 2rem;
-            background: #0a0a0a;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .content-inner {
-            max-width: 800px;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #ffffff 0%, #e0e0e0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-text {
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            line-height: 1.8;
-            color: #808080;
-            font-weight: 400;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, 40px) scale(1.1); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-
-        @keyframes scroll {
-            0% { opacity: 0; transform: translateX(-50%) translateY(0); }
-            40% { opacity: 1; }
-            80% { opacity: 0; transform: translateX(-50%) translateY(16px); }
-            100% { opacity: 0; }
-        }
-
-        @keyframes cursorBlink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .bg-orb-1, .bg-orb-2 {
-                width: 300px;
-                height: 300px;
-            }
-            
-            .accent-glow {
-                width: 400px;
-                height: 200px;
-            }
-
-            .navbar {
-                padding: 1rem;
-            }
-
-            .nav-links {
-                gap: 1.5rem;
-            }
-
-            .nav-links a {
-                font-size: 0.85rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+    <meta name="description" content="Get in touch with Loukas-Nikolaos Vetoulis to discuss projects, collaborations, or any inquiries.">
+    <title>Contact | Loukas-Nikolaos Vetoulis</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/dark_logo.png">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">LNV</a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="case-studies.html">Case Studies</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+    <div id="loader-wrapper">
+        <div class="loader-content"> <!-- New wrapper for logo and spinner -->
+            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
+            <div class="loader-spinner"></div>
         </div>
-    </nav>
-    <!-- Hero Section -->
-    <section class="hero-section" id="heroSection">
-        <!-- Background elements -->
-        <div class="bg-orb-1"></div>
-        <div class="bg-orb-2"></div>
-        <div class="accent-glow"></div>
-
-        <!-- Main Content -->
-        <div class="hero-content">
-            <h1 class="hero-title">
-                <span class="text-type" id="typewriterText"></span>
-                <span class="text-type__cursor">|</span>
-            </h1>
-
-            <h2 class="hero-subtitle">Crafted Through Vision & Precision</h2>
-
-            <p class="hero-description">
-                I work with a limited number of clients to ensure every project receives 
-                the attention and care it deserves. My process always begins with 
-                listening—understanding your business, your challenges, and your goals.
-            </p>
-
-            <a href="projects.html" class="cta-button">
-                Explore My Work
-            </a>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator" onclick="scrollToContent()">
-            <div class="scroll-mouse">
-                <div class="scroll-wheel"></div>
+    </div>
+     <header class="navbar">
+        <div class="container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="images/dark_logo.png" alt="LNV Logo" id="navbar-logo-img"/> <!-- Added ID for JS -->
+                </a>
             </div>
-            <span class="scroll-text">Explore</span>
+            <nav class="main-nav">
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
+                <span class="icon-wrapper">
+                    <!-- SVGs will be injected here by JS -->
+                </span>
+            </button>
         </div>
-    </section>
+    </header>
 
-    <!-- Content Section -->
-    <section class="content-section">
-        <div class="content-inner">
-            <h2 class="section-title">Philosophy</h2>
-            <p class="section-text">
-                Only then do I design and build, with a relentless focus on clarity, 
-                maintainability, and results. Every solution is crafted to drive 
-                measurable business value while maintaining elegant simplicity.
-            </p>
+    <!-- contact.html -->
+    <main>
+        <section id="contact-section" class="container">
+            <div class="section-title-container fade-in-up">
+                <h2>Let's Craft Your Vision.</h2>
+                <p class="secondary">I craft software with vision and precision. Complex problems become simple, elegant solutions—designed to empower by creating automation, AI, and custom software solutions. Let’s create something meaningful.</p>
+            </div>
+
+
+            <div class="contact-grid">
+                <div class="contact-form-container animated-item animate-slide-in-left" data-animation-delay="100ms">
+                    <h2>Schedule a Meeting</h2>
+                    <!-- Calendly inline widget begin -->
+                    <div class="calendly-inline-widget"
+                        data-url="https://calendly.com/loukasvetoulis/30min?hide_event_type_details=1&hide_gdpr_banner=1"
+                        style="min-width:300px; width: 100%; height:650px;">
+                    </div>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                    <!-- Calendly inline widget end -->
+                </div>  
+
+                <div class="contact-details-container animated-item animate-slide-in-right" data-animation-delay="200ms">
+                    <h2>Direct Contact</h2>
+                    <div class="direct-contact-options">
+                        <div class="contact-option email-option">
+                            <div class="contact-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="contact-method-icon"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"></path></svg>
+                            </div>
+                            <div class="contact-info">
+                                <h3>Email Me</h3>
+                                <p class="secondary">Best for detailed inquiries or sending documents.</p>
+                                <a href="#" class="btn btn-secondary contact-action-btn" id="email-contact-btn">
+                                    <span class="btn-text">Send an Email</span> <!-- Generic Text -->
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="contact-option phone-option">
+                            <div class="contact-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="contact-method-icon"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg>
+                            </div>
+                            <div class="contact-info">
+                                <h3>Call Me</h3>
+                                <p class="secondary">For urgent matters or a quick chat.</p>
+                                <a href="#" class="btn btn-secondary contact-action-btn" id="phone-contact-btn">
+                                    <span class="btn-text">Make a Call</span> <!-- Generic Text -->
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-socials" style="margin-top: 3rem;"> <!-- Adjusted margin -->
+                        <h4>Connect & Follow</h4>
+                        <div class="social-links-list">
+                            <a id="contact-github-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.475 2 2 6.475 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.869-.014-1.705-2.782.602-3.369-1.34-3.369-1.34-.455-1.158-1.11-1.468-1.11-1.468-.908-.62.069-.608.069-.608 1.004.071 1.532 1.03 1.532 1.03.891 1.529 2.341 1.089 2.91.833.091-.647.349-1.086.635-1.336-2.22-.251-4.555-1.111-4.555-4.942 0-1.091.39-1.984 1.029-2.682-.103-.252-.446-1.27.098-2.645 0 0 .84-.269 2.75 1.025A9.547 9.547 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.203 2.393.1 2.645.64.702 1.028 1.595 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.307.679.917.679 1.852 0 1.336-.012 2.415-.012 2.741 0 .268.18.578.688.48C19.138 20.163 22 16.419 22 12c0-5.525-4.475-10-10-10z"></path></svg>
+                            </a>
+                            <a id="contact-linkedin-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>linkedin</title><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z" /></svg>                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-content" id="footer-content">
+            <!-- Footer will be injected by JS -->
         </div>
-    </section>
+    </div>
+    </footer>
 
-    <script>
-        // Page Transition System
-        function smoothNavigate(url, event) {
-            if (event) event.preventDefault();
-            
-            // Fade out current page
-            document.body.style.transition = 'opacity 0.4s ease-out';
-            document.body.style.opacity = '0';
-            
-            // Navigate after fade completes
-            setTimeout(() => {
-                window.location.href = url;
-            }, 400);
-        }
-
-        // Fade in on page load
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.6s ease-in';
-                document.body.style.opacity = '1';
-            }, 50);
-        });
-
-        // Attach smooth navigation to all internal links
-        document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('a[href]:not([href^="#"]):not([href^="http"])');
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const url = link.getAttribute('href');
-                    if (url && !url.startsWith('http') && !url.startsWith('#')) {
-                        smoothNavigate(url, e);
-                    }
-                });
-            });
-        });
-
-        // Typewriter Effect
-        const texts = ['Simplicity', 'Precision', 'Vision', 'Excellence'];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typingSpeed = 80;
-        let deletingSpeed = 50;
-        let pauseDuration = 2000;
-        
-        const typewriterElement = document.getElementById('typewriterText');
-
-        function typeWriter() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typewriterElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-                
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    textIndex = (textIndex + 1) % texts.length;
-                    setTimeout(typeWriter, pauseDuration);
-                    return;
-                }
-                
-                setTimeout(typeWriter, deletingSpeed);
-            } else {
-                typewriterElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-                
-                if (charIndex === currentText.length) {
-                    isDeleting = true;
-                    setTimeout(typeWriter, pauseDuration);
-                    return;
-                }
-                
-                setTimeout(typeWriter, typingSpeed);
-            }
-        }
-
-        // Start typewriter effect after initial delay
-        setTimeout(typeWriter, 500);
-
-        // Smooth scroll function
-        function scrollToContent() {
-            const heroSection = document.getElementById('heroSection');
-            const heroHeight = heroSection.offsetHeight;
-            window.scrollTo({
-                top: heroHeight,
-                behavior: 'smooth'
-            });
-        }
-    </script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
