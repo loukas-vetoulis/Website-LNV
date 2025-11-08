@@ -237,10 +237,8 @@ a:hover { color: var(--current-accent-hover); }
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     position: sticky; top: 0; z-index: 1000;
-    transition: background-color var(--transition-duration-medium) var(--easing-smooth-in-out),
-                border-color var(--transition-duration-medium) var(--easing-smooth-in-out),
-                backdrop-filter var(--transition-duration-medium) var(--easing-smooth-in-out);
-    will-change: background-color, border-color, backdrop-filter;
+    transition: opacity 0.2s linear, transform 0.2s linear;
+    will-change: opacity, transform;
 }
 
 .navbar .container {

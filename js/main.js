@@ -672,6 +672,35 @@ document.addEventListener('DOMContentLoaded', () => {
         themeMutationObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     }
 
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        let lastScrollY = window.scrollY;
+        let currentOpacity = 1;
+        let currentTranslate = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentY = window.scrollY;
+            const delta = currentY - lastScrollY;
+
+            // Scrolling down → fade and slide UP
+            if (delta > 0) {
+                currentOpacity = Math.max(0.2, currentOpacity - delta * 0.002);
+                currentTranslate = Math.max(-40, currentTranslate - delta * 0.25);
+            }
+            // Scrolling up → fade in and slide back DOWN
+            else if (delta < 0) {
+                currentOpacity = Math.min(1, currentOpacity - delta * 0.002);
+                currentTranslate = Math.min(0, currentTranslate - delta * 0.25);
+            }
+
+            navbar.style.opacity = currentOpacity.toFixed(2);
+            navbar.style.transform = `translateY(${currentTranslate}px)`;
+
+            lastScrollY = currentY;
+        }, { passive: true });
+    }
+
+
     if (isHomepage && document.getElementById('scrollIndicator')) {
         const scrollIndicator = document.getElementById('scrollIndicator');
         let lastScrollY = 0;
