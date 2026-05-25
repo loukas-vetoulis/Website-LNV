@@ -1,174 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-link-prefix="../">
 <head>
-    <style>
-        /* hide the “other” logo depending on the theme class on <html> */
-        html.dark-mode .loader-logo.light-logo,
-        html.light-mode .loader-logo.dark-logo {
-            display: none;
-            }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- UPDATE TITLE AND DESCRIPTION FOR EACH SPECIFIC CASE STUDY -->
-    <meta name="description" content="Case Study: Revolutionizing real estate intelligence for Aquarium Real Estate with an advanced, self-adapting web scraper by Loukas-Nikolaos Vetoulis.">
-    <title>Case Study: Aquarium Real Estate Web Scraper | Loukas-Nikolaos Vetoulis</title>
-    <link rel="stylesheet" href="../css/style.css"> <!-- Path to CSS from subfolder -->
+    <meta name="description" content="Case Study: Property-specific AI chatbot built with Flask and GPT-4 for real estate — saving agents 3–5 hours per property weekly.">
+    <title>Case Study · AI Chatbot — Loukas-Nikolaos Vetoulis</title>
+
     <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/dark_logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/motion.css">
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("theme");
+                if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                if (t === "dark") document.documentElement.classList.add("dark-mode");
+            } catch (e) {}
+        })();
+    </script>
+
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
-
 <body>
-    <div id="loader-wrapper">
-        <div class="loader-content">
-            <!-- dark‐mode logo: only shows when html.dark-mode is set -->
-            <img
-            class="loader-logo dark-logo"
-            src="../images/dark_logo.png"
-            onerror="this.onerror=null;this.src='/images/dark_logo.png';"
-            alt="LNV Logo"
-            />
 
-            <!-- light‐mode logo: only shows when html.light-mode is set -->
-            <img
-            class="loader-logo light-logo"
-            src="../images/light_logo.png"
-            onerror="this.onerror=null;this.src='/images/light_logo.png';"
-            alt="LNV Logo"
-            />
-
-            <div class="loader-spinner"></div>
-        </div>
-    </div>
+    <div class="grain" aria-hidden="true"></div>
 
     <header class="navbar">
-        <div class="container">
-            <div class="nav-logo">
-                <a href="../index.html"> <!-- Path to root index -->
-                    <img id="navbar-logo-img" src="fallback.png" alt="LNV Logo">
-                </a>
-            </div>
-            <nav class="main-nav">
-                 <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+        <div class="container nav-inner">
+            <a href="../index.html" class="nav-logo" aria-label="Home"><span>LV</span><span class="nav-logo-dot"></span></a>
+            <nav>
                 <ul class="nav-links" id="nav-links">
-                    <!-- Populated by JS using root-relative paths from data.js -->
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../projects.html">Projects</a></li>
-                    <li><a href="../case-studies.html">Case Studies</a></li>
+                    <li><a href="../index.html">Index</a></li>
+                    <li><a href="../projects.html">Work</a></li>
+                    <li><a href="../case-studies.html">Studies</a></li>
                     <li><a href="../contact.html">Contact</a></li>
                 </ul>
             </nav>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
-                Dark Mode <span class="icon-wrapper"></span>
-            </button>
+            <div class="nav-meta">
+                <span class="nav-clock"><span class="dot"></span>Athens <span class="time">—</span></span>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="case-study-detail-page">
-        <article class="container">
+    <main class="case-study container">
+        <a href="../case-studies.html" class="cs-back"><span class="arrow">←</span> All case studies</a>
 
-            <header class="case-study-header animated-item animate-slide-up">
-                <h1>Property-Specific AI Chatbot: Revolutionizing Real Estate Client Engagement</h1>
-                <p class="cs-sub-headline animated-item animate-slide-up" data-animation-delay="100ms">
-                    Leveraging advanced AI to provide instant, accurate property answers, saving agents 3-5 hours per property and enhancing client experience.
-                </p>
-                <!-- Optional: Meta info for tags -->
-                <p class="cs-meta-info animated-item animate-fade-in" data-animation-delay="150ms">PYTHON / FLASK / GPT-4 API / JAVASCRIPT / AI</p>
-            </header>
+        <header class="cs-detail-header">
+            <p class="cs-detail-header__meta reveal-rise">Case 02 · Python / Flask / GPT-4 / JavaScript</p>
+            <h1 class="cs-detail-header__title reveal-words">Property-specific <em>AI chatbot</em> for real estate.</h1>
+            <p class="cs-detail-header__sub reveal-rise">Leveraging advanced AI to provide instant, accurate property answers — saving agents 3–5 hours per property and elevating the client experience.</p>
+        </header>
 
-            <!-- Optional Hero Image for this Case Study -->
-            <!--
-            <figure class="case-study-hero-image animated-item animate-scale-in" data-animation-delay="200ms">
-                <img src="../images/case-study-details/ai-chatbot-hero.webp" alt="AI Chatbot Interface Mockup">
-                <figcaption>Conceptual mockup of the AI chatbot assisting a client.</figcaption>
-            </figure>
-            -->
-
-            <section class="case-study-content">
-                <div class="animated-item animate-slide-up" data-animation-delay="250ms">
-                    <h2>The Challenge: Bridging the Information Gap in Real Estate</h2>
-                    <p>In the dynamic world of real estate, clients expect immediate answers. Agents, however, are often inundated with inquiries across multiple properties, leading to delays and significant time spent on repetitive Q&A. This manual follow-up process consumed valuable hours, diverting focus from high-value activities like lead nurturing and deal closures, and risked frustrating clients who desire instant, precise information. The core problem was to provide real-time, accurate, property-specific responses without overwhelming agents.</p>
+        <div class="cs-body">
+            <section class="cs-body__section reveal-rise">
+                <h2 class="cs-body__heading">The Challenge</h2>
+                <div class="cs-body__copy">
+                    <p>In the dynamic world of real estate, clients expect immediate answers. Agents, however, are often inundated with inquiries across multiple properties, leading to delays and significant time spent on repetitive Q&amp;A. This manual follow-up process consumed valuable hours, diverting focus from high-value activities like lead nurturing and deal closures — and risked frustrating clients who desire instant, precise information.</p>
+                    <p>The core problem was to provide real-time, accurate, property-specific responses without overwhelming agents.</p>
                 </div>
+            </section>
 
-                <div class="animated-item animate-slide-up" data-animation-delay="300ms">
-                    <h2>The Breakthrough Solution: Intelligent AI for Instant Answers</h2>
-                    <p>Our solution is a secure, property-specific AI chatbot, meticulously engineered using Flask and powered by OpenAI's GPT-4. This intelligent system serves as a virtual assistant, providing instant, accurate answers derived from home-specific data. This commitment to <strong>"Simplicity crafted through vision and precision"</strong> guided every aspect of its development.</p>
-
-                    <h3>Precision-Engineered AI for Property Data</h3>
-                    <p>A custom AI model was developed to process and understand comprehensive property details. Unlike generic chatbots, this solution is trained on specific home data, ensuring that every answer is precise, contextually relevant, and consistent, eliminating the agent's need for manual information retrieval.</p>
-
-                    <h3>Uncompromising Security and Privacy</h3>
+            <section class="cs-body__section reveal-rise">
+                <h2 class="cs-body__heading">The Solution</h2>
+                <div class="cs-body__copy">
+                    <p>A secure, property-specific AI chatbot, meticulously engineered using Flask and powered by OpenAI's GPT-4. This intelligent system serves as a virtual assistant, providing instant, accurate answers derived from home-specific data. The commitment to <em>"simplicity crafted through vision and precision"</em> guided every aspect of its development.</p>
+                    <h3>Precision-engineered AI for property data</h3>
+                    <p>A custom AI model was developed to process and understand comprehensive property details. Unlike generic chatbots, this solution is trained on specific home data, ensuring that every answer is precise, contextually relevant, and consistent — eliminating the agent's need for manual information retrieval.</p>
+                    <h3>Uncompromising security and privacy</h3>
                     <p>Recognizing the sensitivity of property data, the system integrates encrypted property identifiers. This foundational security measure ensures data privacy, building trust with both real estate firms and their clients, and safeguarding against unauthorized access in compliance with data privacy regulations.</p>
-
-                    <h3>Seamless Integration and Effortless Deployment</h3>
-                    <p>Designed for practicality, the chatbot integrates effortlessly via iframes directly onto property listing pages. This means no complex installations or disruptions to existing website infrastructure, making the chatbot a natural, intuitive extension of the client's property exploration experience.</p>
+                    <h3>Seamless integration and effortless deployment</h3>
+                    <p>Designed for practicality, the chatbot integrates effortlessly via iframes directly onto property listing pages — no complex installations or disruptions to existing website infrastructure. It becomes a natural extension of the client's property exploration experience.</p>
                 </div>
+            </section>
 
-                <div class="animated-item animate-slide-up" data-animation-delay="350ms">
-                    <h2>Tangible Impact & ROI: Empowering Agents, Delighting Clients</h2>
-                    <p>The implementation of the property-specific AI chatbot delivered immediate and quantifiable benefits, transforming how real estate agents manage client inquiries and interact with prospective buyers.</p>
-
-                    <h3>Quantifiable Time Savings: Reclaiming Hours for Strategic Growth</h3>
-                    <p>The most significant impact is the dramatic reduction in agent follow-up time. Our solution demonstrably saves each real estate agent **3–5 hours per property per week**. This allows agents to redirect their expertise towards revenue-generating activities:</p>
+            <section class="cs-body__section reveal-rise">
+                <h2 class="cs-body__heading">Impact &amp; ROI</h2>
+                <div class="cs-body__copy">
+                    <p>The implementation delivered immediate and quantifiable benefits, transforming how real estate agents manage client inquiries and interact with prospective buyers.</p>
+                    <h3>Quantifiable time savings</h3>
+                    <p>The most significant impact is the dramatic reduction in agent follow-up time. Our solution demonstrably saves each real estate agent <strong>3–5 hours per property per week</strong>. This allows agents to redirect their expertise toward revenue-generating activities:</p>
                     <ul>
                         <li>Nurturing high-potential client relationships</li>
                         <li>Accelerating deal closures and negotiations</li>
                         <li>Conducting more timely and effective lead follow-ups</li>
                         <li>Focusing on strategic client meetings and property showings</li>
                     </ul>
-                    <p>This shift amplifies individual agent productivity and contributes to overall business growth by optimizing resource allocation.</p>
-
-                    <h3>Enhanced Client Experience and Trust</h3>
+                    <h3>Enhanced client experience and trust</h3>
                     <p>By providing instant, accurate answers, the AI chatbot significantly enhances the client journey. Prospective buyers receive the information they need, precisely when their interest is highest, fostering responsiveness and professionalism. This immediate gratification builds confidence and trust, leading to more engaged prospects.</p>
-
-                    <h3>Agent Empowerment and Business Agility</h3>
-                    <p>The AI chatbot empowers agents by offloading routine inquiries, allowing them to apply their expertise to complex negotiations and personalized client interactions. This increased efficiency translates into greater business agility, enabling firms to handle a higher volume of leads effectively.</p>
+                    <h3>Agent empowerment and business agility</h3>
+                    <p>The chatbot empowers agents by offloading routine inquiries, allowing them to apply their expertise to complex negotiations and personalized client interactions. This increased efficiency translates into greater business agility, enabling firms to handle a higher volume of leads effectively.</p>
                 </div>
-                
-                <div class="animated-item animate-slide-up" data-animation-delay="400ms">
-                    <h2>Technologies Utilized</h2>
+            </section>
+
+            <section class="cs-body__section reveal-rise">
+                <h2 class="cs-body__heading">Technologies</h2>
+                <div class="cs-body__copy">
                     <ul>
-                        <li>Python & Flask (for the robust backend API)</li>
-                        <li>OpenAI GPT-4 API (for advanced natural language understanding and generation)</li>
-                        <li>JavaScript (for front-end integration and dynamic interactions)</li>
-                        <li>HTML/CSS (for iframe embedding and any UI elements)</li>
-                        <li>Data Encryption Techniques (for securing property identifiers)</li>
+                        <li>Python &amp; Flask — robust backend API</li>
+                        <li>OpenAI GPT-4 API — advanced natural language understanding and generation</li>
+                        <li>JavaScript — front-end integration and dynamic interactions</li>
+                        <li>HTML/CSS — iframe embedding and UI elements</li>
+                        <li>Data encryption techniques — securing property identifiers</li>
                     </ul>
                 </div>
-
-
-                <div class="animated-item animate-slide-up" data-animation-delay="450ms">
-                    <h2>Conclusion: A New Standard for Real Estate Efficiency</h2>
-                    <p>The property-specific AI chatbot exemplifies a leap forward in real estate technology. By synergizing Flask, GPT-4, and a meticulous focus on security, privacy, and seamless integration, we delivered a solution that is both technically sophisticated and profoundly impactful on daily operations.</p>
-                    <p>The quantifiable saving of 3–5 hours per agent per property underscores the immediate ROI. More than just time savings, this solution elevates the client experience, builds trust, and empowers agents to operate at their strategic best. It is a testament to our capability to translate complex technological challenges into tangible business outcomes, driven by a commitment to premium quality and innovative, user-centric software.</p>
-                </div>
-                
-                 <p style="margin-top:3rem; font-style:italic; font-size: 0.9em; color: var(--current-secondary-text);" class="animated-item animate-fade-in" data-animation-delay="500ms">
-                    This solution demonstrates a capacity for delivering high-value, AI-driven tools tailored to specific industry needs.
-                </p>
             </section>
-            
-            <div style="text-align: center; margin-top: 4rem; padding-bottom: 2rem;" class="animated-item animate-fade-in" data-animation-delay="600ms">
-                <h2 style="font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 1.5rem;">Interested in how AI can transform your business processes?</h2>
-                <a href="../contact.html" class="btn btn-primary cta-button-large">
-                    <span class="btn-text">Shape Your AI Vision</span>
-                </a>
-                <p style="margin-top: 2rem; text-align: left;">
-                    <a href="../case-studies.html" class="subtle-link">← View All Case Studies</a>
-                </p>
-            </div>
 
-        </article>
+            <section class="cs-body__section reveal-rise">
+                <h2 class="cs-body__heading">Conclusion</h2>
+                <div class="cs-body__copy">
+                    <p>The property-specific AI chatbot exemplifies a leap forward in real estate technology. By synergizing Flask, GPT-4, and a meticulous focus on security, privacy, and seamless integration, we delivered a solution that is both technically sophisticated and profoundly impactful on daily operations.</p>
+                    <p>The quantifiable saving of 3–5 hours per agent per property underscores the immediate ROI. More than just time savings, this solution elevates the client experience, builds trust, and empowers agents to operate at their strategic best.</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="cs-next">
+            <a href="case-study-real-estate-scraper.html" style="display:block;">
+                <p class="cs-next__label">Next case study →</p>
+                <p class="cs-next__title">Real estate intelligence — automated.</p>
+            </a>
+            <a href="../contact.html" class="btn btn--accent magnetic">Start a project <span class="arrow">→</span></a>
+        </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-             <p id="footer-text">© 2025 Loukas-Nikolaos Vetoulis. Simplicity crafted through vision and precision.</p>
-        </div>
-    </footer>
+    <footer class="footer" id="footer-root" data-link-prefix="../"><!-- Injected by JS --></footer>
 
     <script src="../js/data.js"></script>
-    <script src="../js/main.js"></script>
+    <script type="module" src="../js/main.js"></script>
 </body>
 </html>

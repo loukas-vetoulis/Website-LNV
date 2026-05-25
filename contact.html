@@ -1,121 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-link-prefix="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get in touch with Loukas-Nikolaos Vetoulis to discuss projects, collaborations, or any inquiries.">
-    <title>Contact | Loukas-Nikolaos Vetoulis</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Get in touch with Loukas-Nikolaos Vetoulis to discuss projects, collaborations, or inquiries.">
+    <title>Contact — Loukas-Nikolaos Vetoulis</title>
+
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="images/dark_logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/motion.css">
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("theme");
+                if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                if (t === "dark") document.documentElement.classList.add("dark-mode");
+            } catch (e) {}
+        })();
+    </script>
+
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
 <body>
-    <div id="loader-wrapper">
-        <div class="loader-content"> <!-- New wrapper for logo and spinner -->
-            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
-            <div class="loader-spinner"></div>
-        </div>
-    </div>
-     <header class="navbar">
-        <div class="container">
-            <div class="nav-logo">
-                <a href="index.html">
-                    <img src="images/dark_logo.png" alt="LNV Logo" id="navbar-logo-img"/> <!-- Added ID for JS -->
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a href="index.html" class="nav-logo" aria-label="Home"><span>LV</span><span class="nav-logo-dot"></span></a>
+            <nav>
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="index.html">Index</a></li>
+                    <li><a href="projects.html">Work</a></li>
+                    <li><a href="case-studies.html">Studies</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
-                <span class="icon-wrapper">
-                    <!-- SVGs will be injected here by JS -->
-                </span>
-            </button>
+            <div class="nav-meta">
+                <span class="nav-clock"><span class="dot"></span>Athens <span class="time">—</span></span>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- contact.html -->
     <main>
-        <section id="contact-section" class="container">
-            <div class="section-title-container fade-in-up">
-                <h2>Let's Craft Your Vision.</h2>
-                <p class="secondary">I craft software with vision and precision. Complex problems become simple, elegant solutions—designed to empower by creating automation, AI, and custom software solutions. Let’s create something meaningful.</p>
-            </div>
+        <section class="page-header container">
+            <span class="eyebrow reveal-rise">/ Contact · Let's Talk</span>
+            <h1 class="page-header__title reveal-words">Let's craft your <em>vision</em>.</h1>
+            <p class="page-header__lead reveal-rise">Tell me about the problem, the constraints, and the outcome you need. The clearer the brief, the faster we can find the right approach.</p>
+        </section>
 
-
+        <section class="section container">
             <div class="contact-grid">
-                <div class="contact-form-container animated-item animate-slide-in-left" data-animation-delay="100ms">
-                    <h2>Schedule a Meeting</h2>
-                    <!-- Calendly inline widget begin -->
+                <div class="contact-col reveal-rise">
+                    <h3>Schedule a meeting</h3>
                     <div class="calendly-inline-widget"
-                        data-url="https://calendly.com/loukasvetoulis/30min?hide_event_type_details=1&hide_gdpr_banner=1"
-                        style="min-width:300px; width: 100%; height:650px;">
+                         data-url="https://calendly.com/loukasvetoulis/30min?hide_event_type_details=1&amp;hide_gdpr_banner=1&amp;primary_color=e85c26">
                     </div>
                     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-                    <!-- Calendly inline widget end -->
-                </div>  
+                </div>
 
-                <div class="contact-details-container animated-item animate-slide-in-right" data-animation-delay="200ms">
-                    <h2>Direct Contact</h2>
-                    <div class="direct-contact-options">
-                        <div class="contact-option email-option">
-                            <div class="contact-icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="contact-method-icon"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"></path></svg>
-                            </div>
-                            <div class="contact-info">
-                                <h3>Email Me</h3>
-                                <p class="secondary">Best for detailed inquiries or sending documents.</p>
-                                <a href="#" class="btn btn-secondary contact-action-btn" id="email-contact-btn">
-                                    <span class="btn-text">Send an Email</span> <!-- Generic Text -->
-                                </a>
-                            </div>
+                <div class="contact-col reveal-rise">
+                    <h3>Direct line</h3>
+                    <div class="contact-info-list">
+                        <div class="contact-info-row">
+                            <span class="contact-info-row__label">Email</span>
+                            <span class="contact-info-row__value"><a href="#" data-contact="email">loukasvetoulis@gmail.com</a></span>
                         </div>
-
-                        <div class="contact-option phone-option">
-                            <div class="contact-icon-wrapper">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="contact-method-icon"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg>
-                            </div>
-                            <div class="contact-info">
-                                <h3>Call Me</h3>
-                                <p class="secondary">For urgent matters or a quick chat.</p>
-                                <a href="#" class="btn btn-secondary contact-action-btn" id="phone-contact-btn">
-                                    <span class="btn-text">Make a Call</span> <!-- Generic Text -->
-                                </a>
-                            </div>
+                        <div class="contact-info-row">
+                            <span class="contact-info-row__label">Phone</span>
+                            <span class="contact-info-row__value"><a href="#" data-contact="phone">+30 694 050 4661</a></span>
+                        </div>
+                        <div class="contact-info-row">
+                            <span class="contact-info-row__label">Based in</span>
+                            <span class="contact-info-row__value">Athens, Greece <span class="mono muted" style="font-size:0.7em;">— GMT+2</span></span>
+                        </div>
+                        <div class="contact-info-row">
+                            <span class="contact-info-row__label">Availability</span>
+                            <span class="contact-info-row__value">Open for new engagements · Q3 2026</span>
                         </div>
                     </div>
 
-                    <div class="contact-socials" style="margin-top: 3rem;"> <!-- Adjusted margin -->
-                        <h4>Connect & Follow</h4>
-                        <div class="social-links-list">
-                            <a id="contact-github-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                                <svg viewBox="0 0 24 24"><path d="M12 2C6.475 2 2 6.475 2 12c0 4.419 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.869-.014-1.705-2.782.602-3.369-1.34-3.369-1.34-.455-1.158-1.11-1.468-1.11-1.468-.908-.62.069-.608.069-.608 1.004.071 1.532 1.03 1.532 1.03.891 1.529 2.341 1.089 2.91.833.091-.647.349-1.086.635-1.336-2.22-.251-4.555-1.111-4.555-4.942 0-1.091.39-1.984 1.029-2.682-.103-.252-.446-1.27.098-2.645 0 0 .84-.269 2.75 1.025A9.547 9.547 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.748-1.025 2.748-1.025.546 1.375.203 2.393.1 2.645.64.702 1.028 1.595 1.028 2.682 0 3.841-2.337 4.687-4.565 4.935.359.307.679.917.679 1.852 0 1.336-.012 2.415-.012 2.741 0 .268.18.578.688.48C19.138 20.163 22 16.419 22 12c0-5.525-4.475-10-10-10z"></path></svg>
-                            </a>
-                            <a id="contact-linkedin-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>linkedin</title><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z" /></svg>                            </a>
-                        </div>
+                    <h3 style="margin-top: 3rem;">Elsewhere</h3>
+                    <div class="contact-socials-list">
+                        <a href="#" data-contact="github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.1 3.29 9.43 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.75-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.7.42.36.8 1.09.8 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.45 24 17.12 24 12.02 24 5.74 18.27.5 12 .5z"/></svg>
+                        </a>
+                        <a href="#" data-contact="linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/></svg>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-    <div class="container">
-        <div class="footer-content" id="footer-content">
-            <!-- Footer will be injected by JS -->
-        </div>
-    </div>
-    </footer>
+    <footer class="footer" id="footer-root" data-link-prefix=""><!-- Injected by JS --></footer>
 
     <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

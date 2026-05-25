@@ -1,200 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-link-prefix="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get in touch with Loukas-Nikolaos Vetoulis to discuss projects, collaborations, or any inquiries.">
-    <title>Home | Loukas-Nikolaos Vetoulis</title>
-    
-    <!-- Critical Inline Styles for Preventing Flash -->
-    <style>
-        /* Critical: Hide body by default to prevent any flash */
-        body {
-            visibility: hidden !important; /* Will be made visible by JS */
-        }
+    <meta name="description" content="Loukas-Nikolaos Vetoulis — software engineer specializing in automation, AI & custom software. Based in Athens, Greece.">
+    <title>Loukas-Nikolaos Vetoulis — Software Engineer</title>
 
-        /* For homepage specifically:
-           Ensure hero section is styled to cover everything from the very start.
-           This acts as an immediate opaque layer. */
-        body.home-page #heroSection {
-            position: fixed !important;
-            top: 0 !important; left: 0 !important;
-            width: 100vw !important;
-            height: 100dvh !important; /* <<< CRITICAL CHANGE HERE */
-            background-color: #000 !important;
-            z-index: 20000 !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-    </style>
-    
-    <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="images/dark_logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/motion.css">
+
+    <script>
+        // Apply theme before paint to avoid FOUC
+        (function () {
+            try {
+                var t = localStorage.getItem("theme");
+                if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                if (t === "dark") document.documentElement.classList.add("dark-mode");
+            } catch (e) {}
+        })();
+    </script>
+
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
-<body class="home-page"> <!-- Added class="home-page" -->
-    
-    <!-- General Loader - will be hidden on homepage by JS -->
-    <div id="loader-wrapper">
-        <div class="loader-content">
-            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
-            <div class="loader-spinner"></div>
-        </div>
-    </div>
-    
-     <header class="navbar">
-        <div class="container">
-            <div class="nav-logo">
-                <a href="index.html">
-                    <img src="images/dark_logo.png" alt="LNV Logo" id="navbar-logo-img"/> <!-- Added ID for JS -->
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+<body>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a href="index.html" class="nav-logo" aria-label="Home">
+                <span>LV</span><span class="nav-logo-dot"></span>
+            </a>
+            <nav>
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="index.html">Index</a></li>
+                    <li><a href="projects.html">Work</a></li>
+                    <li><a href="case-studies.html">Studies</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
-                <span class="icon-wrapper">
-                    <!-- SVGs will be injected here by JS -->
-                </span>
-            </button>
+            <div class="nav-meta">
+                <span class="nav-clock"><span class="dot"></span>Athens <span class="time">—</span></span>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
- 
-    <!-- Hero Section - This is the primary initial view on the homepage -->
-    <div class="hero-section" id="heroSection">
-        <div class="hero-visual-backdrop">
-            <video 
-                autoplay 
-                muted 
-                defaultMuted
-                loop 
-                playsinline 
-                webkit-playsinline
-                class="hero-background-video"
-                preload="auto"
-            >
-                <source src="videos/programming_video.mp4" type="video/mp4">
-            </video>
-            <div class="hero-overlay"></div>
-        </div>
-        <h1 class="hero-title" id="heroTitle">Simplicity</h1>
-        <h2 class="hero-subtitle" id="heroSubtitle">Crafted Through Vision & Precision</h2>
-        
-        <div class="intro-container" id="introContainer">
-            <p class="intro-text">
-                <span id="typewriterText"></span><span class="typewriter" id="cursor"></span>
-            </p>
-        </div>
-            <div class="scroll-indicator" id="scrollIndicator">
-            <div class="scroll-orb"></div>
-            <div class="scroll-hint">explore</div>
-        </div>
-    </div>
 
-    <!-- Main Content - Revealed after Hero Animation -->
-    <main id="mainContent">
-        <!-- PHILOSOPHY: The Why -->
-        <section class="manifesto-section container" id="philosophy">
-                <div class="manifesto-content premium-layout" style="max-width:700px;text-align:center; margin: 0 auto;">
-                <span class="section-marker" style="margin-bottom:0.5rem;">Philosophy</span>
-                    <p style="font-size:1.35rem;line-height:1.8;color:var(--current-text);margin-bottom:1rem;">
-                    I work with a limited number of clients to ensure every project receives the attention and care it deserves.<br>
-                    My process always begins with listening—understanding your business, your challenges, and your goals.<br>
-                    Only then do I design and build, with a relentless focus on clarity, maintainability, and results.
-                </p>
+    <main>
+
+        <!-- HERO -->
+        <section class="hero container">
+            <div class="hero-top">
+                <span class="eyebrow reveal-rise">Loukas-Nikolaos Vetoulis · Software Engineer · Athens, Gr</span>
+                <span class="eyebrow eyebrow--no-rule reveal-rise muted">[ Index / 2026 ]</span>
+            </div>
+
+            <h1 class="hero-display reveal-words">Simplicity crafted through <em>vision</em> and precision.</h1>
+
+            <div class="hero-support">
+                <p class="reveal-rise">A limited number of partnerships per year. I begin every engagement by listening — to your business, your constraints, your ambitions — and build only what moves the needle.</p>
+                <div class="reveal-rise">
+                    <a href="contact.html" class="btn btn--accent magnetic">Start a project <span class="arrow">→</span></a>
+                </div>
+            </div>
+
+            <div class="hero-bottom">
+                <div class="hairline reveal-rule"></div>
+                <div class="marquee" aria-hidden="true">
+                    <div class="marquee-track">
+                        <span>Available for Q3 2026</span><span class="dot"></span>
+                        <span>Automation Engineering</span><span class="dot"></span>
+                        <span>AI &amp; Data Solutions</span><span class="dot"></span>
+                        <span>Custom Software</span><span class="dot"></span>
+                        <span>Available for Q3 2026</span><span class="dot"></span>
+                        <span>Automation Engineering</span><span class="dot"></span>
+                        <span>AI &amp; Data Solutions</span><span class="dot"></span>
+                        <span>Custom Software</span><span class="dot"></span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- SERVICES SECTION -->
-        <section class="services-section container">
-            <h2>Services</h2>
-            <div class="services-grid">
-                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="0ms">
-                    <h3>Automation Engineering</h3>
-                    <p>Streamlining business processes and eliminating repetitive tasks with robust, maintainable automation solutions.</p>
-                </article>
-                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="150ms">
-                    <h3>AI & Data Solutions</h3>
-                    <p>Applying artificial intelligence and machine learning to solve real-world problems and unlock new opportunities.</p>
-                </article>
-                <article class="service-card project-card animated-item animate-scale-in" data-animation-delay="300ms">
-                    <h3>Custom Software</h3>
-                    <p>Designing and building tailored software solutions that fit your unique business needs and drive measurable results.</p>
-                </article>
+        <!-- MANIFESTO -->
+        <section class="manifesto">
+            <div class="container manifesto-grid">
+                <h2 class="manifesto-quote reveal-words"><em>The right</em> problem, solved the right way.</h2>
+                <div class="manifesto-body">
+                    <p class="reveal-rise">I work with a limited number of clients each year so that every engagement receives full attention. My process begins with listening — understanding your business, your constraints, and the outcome you actually need.</p>
+                    <p class="reveal-rise">Only then do I design and build, with a focus on clarity, maintainability and measurable results. The result is software that fits the problem, not a template.</p>
+                </div>
             </div>
         </section>
 
-        <div class="section-divider"></div>
-
-        <!-- SELECTED WORK: Only the best -->
-        <section id="projects-showcase" class="container">
-            <div class="section-title-container animated-item animate-slide-up">
-                <h2>Crafting Software Excellence</h2>
-                <p class="secondary animated-item animate-slide-up" data-animation-delay="100ms">A portfolio of solutions where simplicity and business value come first.</p>
+        <!-- SELECTED WORK -->
+        <section class="section container">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">Selected Work</span>
+                    <h2 class="display h-display-l reveal-words">Things I have built lately.</h2>
+                </div>
+                <p class="section-head__lead reveal-rise">A handful of recent engagements — automation systems, intelligent data pipelines, and bespoke product work.</p>
             </div>
-            <div class="projects-grid" id="projects-grid">
-                <!-- Project cards injected by JS -->
-            </div>
-        </section>
-        <div style="text-align: center; margin-bottom: 2rem;"> <!-- Added margin for spacing -->
-            <a href="projects.html" class="inquiry-link animated-item animate-fade-in" data-animation-delay="400ms">
-                        View All Projects<span class="arrow"> →</span>
-            </a>
-        </div>
 
-        <div class="section-divider"></div>
+            <div class="work-list" id="featured-work" data-stagger="120"><!-- Injected by JS --></div>
 
-        <!-- CASE STUDIES: Quiet proof -->
-        <section id="case-studies-hub" class="container">
-            <div class="section-title-container animated-item animate-slide-up">
-                <h2>Impact & Results</h2>
-                <p class="secondary animated-item animate-slide-up" data-animation-delay="100ms">
-                    In-depth analysis of transformative solutions that drive business growth.
-                </p>
-            </div>
-            <div class="case-studies-grid" id="case-studies-grid-container">
-                <!-- Case studies injected by JS -->
-            </div>
-        </section>
-        <div style="text-align: center; margin-bottom: 2rem;"> <!-- Added margin for spacing -->
-            <a href="case-studies.html" class="inquiry-link animated-item animate-fade-in" data-animation-delay="400ms">
-                        View All Case Studies<span class="arrow"> →</span>
-            </a>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- CTA: Invitation, not a pitch -->
-        <section class="invitation-section premium-invitation container">
-            <div class="invitation-content animated-item animate-fade-in" data-animation-delay="0.2s" style="text-align:center;">
-                <span class="section-marker centered">Let’s Collaborate</span>
-                <h2 class="invitation-headline" style="font-size:2rem;margin-bottom:1.5rem;">Simplicity crafted through vision and precision.</h2>
-                <p class="inquiry-text">
-                    I work with founders and teams who value clarity, precision, and purpose.<br>
-                    If that sounds like you—let’s start a conversation.
-                </p>
-                <a href="contact.html" class="inquiry-link">Get in touch<span class="arrow">→</span></a>
+            <div style="margin-top: 3rem; display: flex; justify-content: flex-end;">
+                <a href="projects.html" class="arrow-link">View all work <span class="arrow">→</span></a>
             </div>
         </section>
 
+        <!-- CASE STUDIES -->
+        <section class="section container">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">Case Studies</span>
+                    <h2 class="display h-display-l reveal-words">Deep dives into <em>outcomes</em>.</h2>
+                </div>
+                <p class="section-head__lead reveal-rise">In-depth looks at how each engagement reframes the problem, builds the system, and quantifies the impact.</p>
+            </div>
+
+            <div class="cs-grid" id="case-studies-home" data-stagger="150"><!-- Injected by JS --></div>
+
+            <div style="margin-top: 3rem; display: flex; justify-content: flex-end;">
+                <a href="case-studies.html" class="arrow-link">View all studies <span class="arrow">→</span></a>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="section container">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">What I Do</span>
+                    <h2 class="display h-display-l reveal-words">Three disciplines, one philosophy.</h2>
+                </div>
+                <p class="section-head__lead reveal-rise">Each engagement starts the same way — with the question, not the code.</p>
+            </div>
+
+            <div class="services-list" data-stagger="120">
+                <div class="service-row reveal-row">
+                    <span class="service-row__index">S / 01</span>
+                    <h3 class="service-row__title">Automation Engineering</h3>
+                    <p class="service-row__body">Robust, maintainable automation that removes the repetitive work draining your team — from log monitoring pipelines to QA test suites. Built to outlive the brittleness of off-the-shelf tools.</p>
+                </div>
+                <div class="service-row reveal-row">
+                    <span class="service-row__index">S / 02</span>
+                    <h3 class="service-row__title">AI &amp; Data Solutions</h3>
+                    <p class="service-row__body">Practical machine-learning and LLM systems built around your domain — property-specific chatbots, sentiment models, intelligent scrapers. Precision-engineered, not prompt-engineered.</p>
+                </div>
+                <div class="service-row reveal-row">
+                    <span class="service-row__index">S / 03</span>
+                    <h3 class="service-row__title">Custom Software</h3>
+                    <p class="service-row__body">Tailored backends, internal tools and integrations that fit your operations exactly. Designed for the people who use them every day.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BIG CTA -->
+        <section class="cta">
+            <div class="container">
+                <span class="eyebrow eyebrow--no-rule" style="display:inline-block; margin-bottom:2.5rem;">Let's Collaborate</span>
+                <h2 class="cta__display reveal-words">Have a problem worth <em>solving well</em>?</h2>
+                <div class="cta__actions">
+                    <a href="contact.html" class="btn btn--accent magnetic">Start a project <span class="arrow">→</span></a>
+                    <a href="mailto:loukasvetoulis@gmail.com" class="cta__email magnetic">loukasvetoulis@gmail.com</a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="footer">
-    <div class="container">
-        <div class="footer-content" id="footer-content">
-            <!-- Footer will be injected by JS -->
-        </div>
-    </div>
-    </footer>
+    <footer class="footer" id="footer-root" data-link-prefix=""><!-- Injected by JS --></footer>
 
     <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

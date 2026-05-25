@@ -1,74 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-link-prefix="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Selected projects by Loukas-Nikolaos Vetoulis, showcasing expertise in software development, AI, and creative problem-solving.">
-    <title>Projects | Loukas-Nikolaos Vetoulis</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Selected projects by Loukas-Nikolaos Vetoulis — automation, AI and custom software engagements.">
+    <title>Work — Loukas-Nikolaos Vetoulis</title>
+
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="images/dark_logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/motion.css">
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("theme");
+                if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                if (t === "dark") document.documentElement.classList.add("dark-mode");
+            } catch (e) {}
+        })();
+    </script>
+
+    <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
 <body>
-    <div id="loader-wrapper">
-        <div class="loader-content"> <!-- New wrapper for logo and spinner -->
-            <img src="images/dark_logo.png" alt="LNV Logo" class="loader-logo" id="loader-logo-img"/>
-            <div class="loader-spinner"></div>
-        </div>
-    </div>
-     <header class="navbar">
-        <div class="container">
-            <div class="nav-logo">
-                <a href="index.html">
-                    <img src="images/dark_logo.png" alt="LNV Logo" id="navbar-logo-img"/> <!-- Added ID for JS -->
-                </a>
-            </div>
-            <nav class="main-nav">
-                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">☰</button>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a href="index.html" class="nav-logo" aria-label="Home"><span>LV</span><span class="nav-logo-dot"></span></a>
+            <nav>
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="case-studies.html">Case Studies</a></li>
+                    <li><a href="index.html">Index</a></li>
+                    <li><a href="projects.html">Work</a></li>
+                    <li><a href="case-studies.html">Studies</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
-            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Scheme">
-                <span class="icon-wrapper">
-                    <!-- SVGs will be injected here by JS -->
-                </span>
-            </button>
+            <div class="nav-meta">
+                <span class="nav-clock"><span class="dot"></span>Athens <span class="time">—</span></span>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
         </div>
     </header>
 
     <main>
-        <section id="projects-showcase" class="container">
-            <div class="section-title-container fade-in-up">
-                <h2>Project Showcase.</h2>
-                <p class="secondary">Applying software development skills to craft effective solutions. Each project represents a dedication to quality and clear, simple design.</p>
-            </div>
-            <div class="projects-grid" id="projects-grid">
-                <!-- Project cards will be injected here by JS -->
-            </div>
+        <section class="page-header container">
+            <span class="eyebrow reveal-rise">/ Work · Selected Projects</span>
+            <h1 class="page-header__title reveal-words">Engineered for <em>outcomes</em>.</h1>
+            <p class="page-header__lead reveal-rise">Every project here was built to solve a real operational problem — to save hours, improve precision, or unlock a capability that didn't exist before.</p>
         </section>
 
-        <section id="project-inquiry" class="inquiry-cta container animated-item animate-fade-in" data-animation-delay="500ms">
-            <p class="inquiry-text">
-                Complexity, refined into elegant simplicity. Have a problem you want to solve?
-                <a href="contact.html" class="inquiry-link">Let's talk<span class="arrow">→</span></a>
-            </p>
+        <section class="section--tight container">
+            <div class="filter-chips" id="filter-chips" role="tablist" aria-label="Filter projects by type">
+                <button class="chip is-active" data-filter="all">All</button>
+                <button class="chip" data-filter="professional">Professional</button>
+                <button class="chip" data-filter="freelance">Freelance</button>
+                <button class="chip" data-filter="academic">Academic</button>
+            </div>
+
+            <div class="work-list" id="all-work" data-stagger="100"><!-- Injected by JS --></div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <span class="eyebrow eyebrow--no-rule" style="display:inline-block; margin-bottom:2.5rem;">Next Step</span>
+                <h2 class="cta__display reveal-words">Have something you want <em>built well</em>?</h2>
+                <div class="cta__actions">
+                    <a href="contact.html" class="btn btn--accent magnetic">Start a project <span class="arrow">→</span></a>
+                    <a href="mailto:loukasvetoulis@gmail.com" class="cta__email magnetic">loukasvetoulis@gmail.com</a>
+                </div>
+            </div>
         </section>
     </main>
 
-    <footer class="footer">
-    <div class="container">
-        <div class="footer-content" id="footer-content">
-            <!-- Footer will be injected by JS -->
-        </div>
-    </div>
-    </footer>
+    <footer class="footer" id="footer-root" data-link-prefix=""><!-- Injected by JS --></footer>
 
     <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
