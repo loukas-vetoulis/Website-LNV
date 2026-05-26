@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-link-prefix="">
+<html lang="en" class="has-crosshair" data-link-prefix="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="css/motion.css">
 
     <script>
-        // Apply theme before paint to avoid FOUC
         (function () {
             try {
                 var t = localStorage.getItem("theme");
@@ -30,13 +29,9 @@
 </head>
 <body>
 
-    <div class="grain" aria-hidden="true"></div>
-
     <header class="navbar">
         <div class="container nav-inner">
-            <a href="index.html" class="nav-logo" aria-label="Home">
-                <span>LV</span><span class="nav-logo-dot"></span>
-            </a>
+            <a href="index.html" class="nav-logo" aria-label="Home"><span>LV</span><span class="nav-logo-dot"></span></a>
             <nav>
                 <ul class="nav-links" id="nav-links">
                     <li><a href="index.html">Index</a></li>
@@ -47,17 +42,10 @@
             </nav>
             <div class="nav-meta">
                 <span class="nav-clock"><span class="dot"></span>Athens <span class="time">—</span></span>
-                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false">
-                    <span></span><span></span><span></span>
-                </button>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
-                    </svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                 </button>
             </div>
         </div>
@@ -66,55 +54,58 @@
     <main>
 
         <!-- HERO -->
-        <section class="hero container">
-            <div class="hero-top">
-                <span class="eyebrow reveal-rise">Loukas-Nikolaos Vetoulis · Software Engineer · Athens, Gr</span>
-                <span class="eyebrow eyebrow--no-rule reveal-rise muted">[ Index / 2026 ]</span>
+        <section class="hero">
+            <div class="hero-canvas-wrap" aria-hidden="true">
+                <canvas id="vector-field"></canvas>
             </div>
 
-            <h1 class="hero-display reveal-words">Simplicity crafted through <em>vision</em> and precision.</h1>
-
-            <div class="hero-support">
-                <p class="reveal-rise">A limited number of partnerships per year. I begin every engagement by listening — to your business, your constraints, your ambitions — and build only what moves the needle.</p>
-                <div class="reveal-rise">
-                    <a href="contact.html" class="btn btn--accent magnetic">Start a project <span class="arrow">→</span></a>
+            <div class="container hero-inner">
+                <div class="hero-top">
+                    <span class="eyebrow reveal-rise">Loukas-Nikolaos Vetoulis · Software Engineer · Athens, Gr</span>
+                    <span class="annot reveal-rise">Fig. 00 — Index, 2026</span>
                 </div>
-            </div>
 
-            <div class="hero-bottom">
-                <div class="hairline reveal-rule"></div>
-                <div class="marquee" aria-hidden="true">
-                    <div class="marquee-track">
-                        <span>Available for Q3 2026</span><span class="dot"></span>
-                        <span>Automation Engineering</span><span class="dot"></span>
-                        <span>AI &amp; Data Solutions</span><span class="dot"></span>
-                        <span>Custom Software</span><span class="dot"></span>
-                        <span>Available for Q3 2026</span><span class="dot"></span>
-                        <span>Automation Engineering</span><span class="dot"></span>
-                        <span>AI &amp; Data Solutions</span><span class="dot"></span>
-                        <span>Custom Software</span><span class="dot"></span>
+                <div class="hero-mid">
+                    <h1 class="hero-display reveal-words">Simplicity crafted through <em>vision</em> and precision.</h1>
+
+                    <div class="hero-support">
+                        <p class="reveal-rise">A limited number of partnerships per year. I begin every engagement by listening — to your business, your constraints, your ambitions — and build only what moves the needle.</p>
+                        <div class="reveal-rise">
+                            <a href="contact.html" class="btn btn--accent magnetic">Start a project <span class="arrow">→</span></a>
+                        </div>
                     </div>
+                </div>
+
+                <div class="hero-bottom">
+                    <span class="hero-coord">[ 37.98°N · 23.72°E ]</span>
+                    <span>Available · Q3 2026</span>
+                    <span>scroll ↘</span>
                 </div>
             </div>
         </section>
 
         <!-- MANIFESTO -->
         <section class="manifesto">
-            <div class="container manifesto-grid">
-                <h2 class="manifesto-quote reveal-words"><em>The right</em> problem, solved the right way.</h2>
-                <div class="manifesto-body">
-                    <p class="reveal-rise">I work with a limited number of clients each year so that every engagement receives full attention. My process begins with listening — understanding your business, your constraints, and the outcome you actually need.</p>
-                    <p class="reveal-rise">Only then do I design and build, with a focus on clarity, maintainability and measurable results. The result is software that fits the problem, not a template.</p>
+            <div class="container">
+                <div class="section-head" data-section="§ 01.a — Manifesto">
+                    <div>
+                        <span class="eyebrow">Philosophy</span>
+                        <h2 class="manifesto-quote reveal-words"><em>The right</em> problem, solved the right way.</h2>
+                    </div>
+                    <div class="manifesto-body">
+                        <p class="reveal-rise">I work with a limited number of clients each year so that every engagement receives full attention. My process begins with listening — understanding your business, your constraints, and the outcome you actually need.</p>
+                        <p class="reveal-rise">Only then do I design and build, with a focus on clarity, maintainability and measurable results. The result is software that fits the problem, not a template.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- SELECTED WORK -->
         <section class="section container">
-            <div class="section-head">
+            <div class="section-head" data-section="§ 01.b — Selected Work">
                 <div>
-                    <span class="eyebrow">Selected Work</span>
-                    <h2 class="display h-display-l reveal-words">Things I have built lately.</h2>
+                    <span class="eyebrow">Catalog</span>
+                    <h2 class="display h-display-l reveal-words">Things I have built <em>lately</em>.</h2>
                 </div>
                 <p class="section-head__lead reveal-rise">A handful of recent engagements — automation systems, intelligent data pipelines, and bespoke product work.</p>
             </div>
@@ -122,15 +113,15 @@
             <div class="work-list" id="featured-work" data-stagger="120"><!-- Injected by JS --></div>
 
             <div style="margin-top: 3rem; display: flex; justify-content: flex-end;">
-                <a href="projects.html" class="arrow-link">View all work <span class="arrow">→</span></a>
+                <a href="projects.html" class="arrow-link">View full catalog <span class="arrow">→</span></a>
             </div>
         </section>
 
         <!-- CASE STUDIES -->
         <section class="section container">
-            <div class="section-head">
+            <div class="section-head" data-section="§ 01.c — Case Studies">
                 <div>
-                    <span class="eyebrow">Case Studies</span>
+                    <span class="eyebrow">Plates</span>
                     <h2 class="display h-display-l reveal-words">Deep dives into <em>outcomes</em>.</h2>
                 </div>
                 <p class="section-head__lead reveal-rise">In-depth looks at how each engagement reframes the problem, builds the system, and quantifies the impact.</p>
@@ -145,9 +136,9 @@
 
         <!-- SERVICES -->
         <section class="section container">
-            <div class="section-head">
+            <div class="section-head" data-section="§ 01.d — Services">
                 <div>
-                    <span class="eyebrow">What I Do</span>
+                    <span class="eyebrow">Disciplines</span>
                     <h2 class="display h-display-l reveal-words">Three disciplines, one philosophy.</h2>
                 </div>
                 <p class="section-head__lead reveal-rise">Each engagement starts the same way — with the question, not the code.</p>
@@ -158,16 +149,19 @@
                     <span class="service-row__index">S / 01</span>
                     <h3 class="service-row__title">Automation Engineering</h3>
                     <p class="service-row__body">Robust, maintainable automation that removes the repetitive work draining your team — from log monitoring pipelines to QA test suites. Built to outlive the brittleness of off-the-shelf tools.</p>
+                    <span class="corner corner--tl"></span><span class="corner corner--tr"></span><span class="corner corner--bl"></span><span class="corner corner--br"></span>
                 </div>
                 <div class="service-row reveal-row">
                     <span class="service-row__index">S / 02</span>
                     <h3 class="service-row__title">AI &amp; Data Solutions</h3>
                     <p class="service-row__body">Practical machine-learning and LLM systems built around your domain — property-specific chatbots, sentiment models, intelligent scrapers. Precision-engineered, not prompt-engineered.</p>
+                    <span class="corner corner--tl"></span><span class="corner corner--tr"></span><span class="corner corner--bl"></span><span class="corner corner--br"></span>
                 </div>
                 <div class="service-row reveal-row">
                     <span class="service-row__index">S / 03</span>
                     <h3 class="service-row__title">Custom Software</h3>
                     <p class="service-row__body">Tailored backends, internal tools and integrations that fit your operations exactly. Designed for the people who use them every day.</p>
+                    <span class="corner corner--tl"></span><span class="corner corner--tr"></span><span class="corner corner--bl"></span><span class="corner corner--br"></span>
                 </div>
             </div>
         </section>
@@ -175,7 +169,7 @@
         <!-- BIG CTA -->
         <section class="cta">
             <div class="container">
-                <span class="eyebrow eyebrow--no-rule" style="display:inline-block; margin-bottom:2.5rem;">Let's Collaborate</span>
+                <span class="annot" style="display:inline-block; margin-bottom:2rem;">End. of document · Continue ↘</span>
                 <h2 class="cta__display reveal-words">Have a problem worth <em>solving well</em>?</h2>
                 <div class="cta__actions">
                     <a href="contact.html" class="btn btn--accent magnetic">Start a project <span class="arrow">→</span></a>
@@ -185,9 +179,9 @@
         </section>
     </main>
 
-    <footer class="footer" id="footer-root" data-link-prefix=""><!-- Injected by JS --></footer>
+    <footer class="footer" id="footer-root"><!-- Injected by JS --></footer>
 
     <script src="js/data.js"></script>
-    <script type="module" src="js/main.js"></script>
+    <script defer src="js/app.js"></script>
 </body>
 </html>

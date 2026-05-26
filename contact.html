@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-link-prefix="">
+<html lang="en" class="has-crosshair" data-link-prefix="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,8 +29,6 @@
 </head>
 <body>
 
-    <div class="grain" aria-hidden="true"></div>
-
     <header class="navbar">
         <div class="container nav-inner">
             <a href="index.html" class="nav-logo" aria-label="Home"><span>LV</span><span class="nav-logo-dot"></span></a>
@@ -55,12 +53,13 @@
 
     <main>
         <section class="page-header container">
-            <span class="eyebrow reveal-rise">/ Contact · Let's Talk</span>
+            <span class="eyebrow reveal-rise">/ Contact · Direct Line</span>
             <h1 class="page-header__title reveal-words">Let's craft your <em>vision</em>.</h1>
-            <p class="page-header__lead reveal-rise">Tell me about the problem, the constraints, and the outcome you need. The clearer the brief, the faster we can find the right approach.</p>
+            <p class="page-header__lead reveal-rise">Tell me about the problem, the constraints, and the outcome you need. The clearer the brief, the faster we find the right approach.</p>
+            <span class="page-header__annot">[ 37.98°N · 23.72°E ] — Athens, Gr</span>
         </section>
 
-        <section class="section container">
+        <section class="section container" style="padding-top: 0;">
             <div class="contact-grid">
                 <div class="contact-col reveal-rise">
                     <h3>Schedule a meeting</h3>
@@ -75,7 +74,7 @@
                     <div class="contact-info-list">
                         <div class="contact-info-row">
                             <span class="contact-info-row__label">Email</span>
-                            <span class="contact-info-row__value"><a href="#" data-contact="email">loukasvetoulis@gmail.com</a></span>
+                            <span class="contact-info-row__value"><a href="#" data-contact="email" class="magnetic">loukasvetoulis@gmail.com</a></span>
                         </div>
                         <div class="contact-info-row">
                             <span class="contact-info-row__label">Phone</span>
@@ -83,7 +82,7 @@
                         </div>
                         <div class="contact-info-row">
                             <span class="contact-info-row__label">Based in</span>
-                            <span class="contact-info-row__value">Athens, Greece <span class="mono muted" style="font-size:0.7em;">— GMT+2</span></span>
+                            <span class="contact-info-row__value">Athens, Greece <span class="annot">— GMT+2</span></span>
                         </div>
                         <div class="contact-info-row">
                             <span class="contact-info-row__label">Availability</span>
@@ -105,9 +104,9 @@
         </section>
     </main>
 
-    <footer class="footer" id="footer-root" data-link-prefix=""><!-- Injected by JS --></footer>
+    <footer class="footer" id="footer-root"><!-- Injected by JS --></footer>
 
     <script src="js/data.js"></script>
-    <script type="module" src="js/main.js"></script>
+    <script defer src="js/app.js"></script>
 </body>
 </html>

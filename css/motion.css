@@ -1,26 +1,17 @@
-/* =============================================================================
-   LNV — Motion System
-   ----------------------------------------------------------------------------
-   Element-level animation states. GSAP/Lenis orchestrate timing in motion.js.
-   All effects are gated behind `prefers-reduced-motion: reduce` at the bottom.
-   ========================================================================== */
+/* ============================================================================
+   LNV — Motion states (gated on prefers-reduced-motion)
+   ========================================================================= */
 
-/* Default: keep things ready to animate (avoid FOUC of hidden content if JS fails) */
-.motion-ready .reveal-rise > *,
+/* Default hidden states — class is added by app.js to <html> + <body> */
 .motion-ready .reveal-rise {
     opacity: 0;
     transform: translateY(28px);
-    transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    transition: opacity 0.95s var(--ease-out), transform 0.95s var(--ease-out);
 }
-
-.motion-ready .reveal-rise.is-revealed,
-.motion-ready .reveal-rise.is-revealed > * {
+.motion-ready .reveal-rise.is-revealed {
     opacity: 1;
     transform: translateY(0);
 }
-
-/* Word-by-word reveal — used by hero and section headings */
-.motion-ready .reveal-words { display: inline-block; }
 
 .motion-ready .reveal-words .word {
     display: inline-block;
@@ -28,63 +19,46 @@
     vertical-align: top;
     line-height: inherit;
 }
-
 .motion-ready .reveal-words .word > span {
     display: inline-block;
     transform: translateY(110%);
     transition: transform 1.05s var(--ease-out);
 }
+.motion-ready .reveal-words.is-revealed .word > span { transform: translateY(0); }
 
-.motion-ready .reveal-words.is-revealed .word > span {
-    transform: translateY(0);
+.motion-ready .reveal-row {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
 }
+.motion-ready .reveal-row.is-revealed { opacity: 1; transform: none; }
 
-/* Image clip-path reveal */
 .motion-ready .reveal-clip {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 1.1s var(--ease-out);
 }
-
 .motion-ready .reveal-clip.is-revealed { clip-path: inset(0 0 0 0); }
 
-/* Hairline rule draw */
 .motion-ready .reveal-rule {
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 1s var(--ease-in-out);
 }
-
 .motion-ready .reveal-rule.is-revealed { transform: scaleX(1); }
 
-/* Editorial work-row entrance: each row sweeps from left + fades */
-.motion-ready .reveal-row {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
-}
-.motion-ready .reveal-row.is-revealed { opacity: 1; transform: none; }
-
-/* Stagger helpers (data attribute consumed by motion.js) */
-.motion-ready [data-stagger-delay] { transition-delay: var(--stagger-delay, 0ms); }
-
-/* Magnetic target — JS applies translate via transform; CSS handles transition */
+/* Magnetic target */
 .magnetic {
     display: inline-block;
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
 }
 
-/* Page transition fade */
-body {
-    transition: opacity 0.38s var(--ease-out), background-color 0.5s var(--ease-out), color 0.5s var(--ease-out);
-}
-
+/* Page transition */
 body.page-leaving { opacity: 0; }
 
-/* Reduce motion overrides — strip all of the above */
+/* Reduce motion overrides */
 @media (prefers-reduced-motion: reduce) {
     .motion-ready .reveal-rise,
-    .motion-ready .reveal-rise > *,
     .motion-ready .reveal-row,
     .motion-ready .reveal-words .word > span,
     .motion-ready .reveal-clip,
@@ -94,8 +68,7 @@ body.page-leaving { opacity: 0; }
         clip-path: none !important;
         transition: none !important;
     }
-
-    .marquee-track { animation: none !important; }
     .nav-clock .dot { animation: none !important; }
-    * { scroll-behavior: auto !important; }
+    .cursor-crosshair { display: none !important; }
+    html.has-crosshair, html.has-crosshair body { cursor: auto !important; }
 }
