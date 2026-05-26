@@ -335,8 +335,9 @@
         function start() {
             cancelAnimationFrame(raf);
             resize();
+            // Hidden on mobile (display:none) — bail instead of running an idle rAF loop
+            if (w === 0 || h === 0) return;
             refreshColors();
-            // Clear once with full bg before re-seeding so theme changes look intentional
             ctx.clearRect(0, 0, w, h);
             makeParticles();
             raf = requestAnimationFrame(step);
